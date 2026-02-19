@@ -1,33 +1,55 @@
-# samuelefelici.com — GitHub Pages
+# Samuele Felici - Personal Landing Page
 
-## Struttura
-- index.html
-- css/styles.css
-- js/main.js
-- assets/cv.pdf (carica qui il tuo CV)
-- sitemap.xml
-- robots.txt
-- CNAME
+This is a static landing page built with React, Tailwind CSS, and Vite, designed for GitHub Pages deployment.
 
-## Pubblicazione su GitHub Pages
-1. Crea un repo su GitHub (es: `samuelefelici.github.io` oppure `samuelefelici.com`)
-2. Carica questi file nella root del repo
-3. Vai su **Settings → Pages**
-4. In **Build and deployment** seleziona:
-   - Source: Deploy from a branch
-   - Branch: main / root
-5. Attendi che GitHub Pages pubblica il sito
+## Project Structure
 
-## Dominio personalizzato
-1. In **Settings → Pages → Custom domain**, inserisci: `samuelefelici.com`
-2. Assicurati che il file `CNAME` contenga `samuelefelici.com`
-3. Nel pannello DNS del dominio crea:
-   - 4 record A verso GitHub Pages:
-     185.199.108.153
-     185.199.109.153
-     185.199.110.153
-     185.199.111.153
-   - record CNAME `www` → `samuelefelici.github.io` (opzionale)
+- `client/src`: Source code (React components, styles).
+- `client/public`: Static assets (images, CV, robots.txt, sitemap.xml).
+- `dist`: The output folder after running the build command (this is what you deploy).
 
-## CV
-Sostituisci `assets/cv.pdf` con il tuo file reale (stesso nome).
+## Deployment to GitHub Pages
+
+You have two main options to deploy this to GitHub Pages.
+
+### Option 1: Manual Deployment (Easiest)
+
+1.  Run the build command locally:
+    ```bash
+    npm run build
+    ```
+    This creates a `dist` folder with your static site.
+
+2.  Push the contents of the `dist` folder to your GitHub repository's `main` or `gh-pages` branch.
+    *   If you are initializing a new repo, you might want to just copy the contents of `dist` to a new folder, initialize git there, and push.
+
+### Option 2: GitHub Actions (Automated)
+
+1.  Push this entire project to a GitHub repository.
+2.  Go to Settings > Pages.
+3.  Source: GitHub Actions.
+4.  Configure a static site workflow to build `npm run build` and publish the `dist` directory.
+
+## Custom Domain Setup (samuelefelici.com)
+
+1.  Go to your GitHub Repository > Settings > Pages.
+2.  Under "Custom domain", enter `samuelefelici.com`.
+3.  Click Save. This will create a `CNAME` file in your root (or you can create it manually in `client/public/CNAME` with the content `samuelefelici.com`).
+4.  Go to your DNS provider (where you bought the domain).
+5.  Add the following records:
+    *   **A Record**: `@` points to `185.199.108.153`
+    *   **A Record**: `@` points to `185.199.109.153`
+    *   **A Record**: `@` points to `185.199.110.153`
+    *   **A Record**: `@` points to `185.199.111.153`
+    *   **CNAME Record**: `www` points to `samuelefelici.github.io` (replace with your actual GitHub username).
+
+## Editing Content
+
+- **Text/Content**: Edit the files in `client/src/components/sections/`.
+- **Styling**: Tailwind classes are used throughout. Global theme colors are in `client/src/index.css`.
+- **Assets**: Put images and PDFs in `client/public/assets/`.
+
+## Scripts
+
+- `npm run dev`: Start local development server.
+- `npm run build`: Build for production (outputs to `dist`).
