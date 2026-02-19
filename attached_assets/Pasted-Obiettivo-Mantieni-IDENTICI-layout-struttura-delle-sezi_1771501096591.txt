@@ -1,0 +1,32 @@
+Obiettivo: Mantieni IDENTICI layout, struttura delle sezioni, CSS e JS. Cambia SOLO i testi (copy) in italiano per renderli più adatti a un freelance alle prime armi, senza strafare e senza promesse esagerate.
+
+Profilo (usa queste info, non inventare):
+- Nome: Samuele Felici
+- Località: Ancona, lavoro da remoto in tutta Italia
+- Competenze reali: pulizia e riorganizzazione Excel, organizzazione dati, creazione database relazionali (MySQL/SQL), automazioni leggere con Python/SQL, dashboard in Power BI, web app/dashboard in Streamlit (con supporto AI), landing page.
+- Esperienza: lavoro operativo e di pianificazione/turni nel trasporto pubblico (non vendere consulenza TPL; è background che dimostra gestione di complessità e metodo).
+- Target: piccole imprese, professionisti, micro-aziende e PMI che hanno dati disordinati e report manuali.
+- Tono: concreto, semplice, professionale. Niente buzzword (“innovazione”, “trasformazione digitale”, “AI revolution”), niente frasi vuote (“sempre alla ricerca di nuove sfide”).
+- CTA: invito a una call breve + email. Nessun form che invia dati: ok form che apre mailto.
+
+Linee guida copy:
+1) Hero: una frase chiara di valore. Esempio concetto: “Trasformo Excel disordinati in dati chiari e report automatici.”
+2) Spiega cosa fai in modo pratico: ordine → struttura → dashboard → automazione.
+3) Servizi: 3 pacchetti semplici, con descrizione e output.
+   - “Audit dati iniziale” (micro-servizio): analisi file + KPI base + piano d’azione.
+   - “Sistema dati & database” (pulizia, modello relazionale, query).
+   - “Dashboard & report” (Power BI o Streamlit) + automazioni leggere.
+   Inserisci range indicativi (senza esagerare): Audit 150–250€, Dashboard base 400–800€, Automazioni 300–700€ (adattali se serve, ma mantieni prudenza).
+4) Processo: 4–5 step chiari (brief → audit → prototipo → iterazione → consegna).
+5) Sezione “Perché me”: sottolinea metodo, chiarezza, consegna pulita e documentata, background operativo (senza vendere TPL).
+6) “Casi d’uso”: 3 esempi generici senza clienti inventati (es. controllo fatturato per cliente, report mensile automatico, pulizia anagrafiche/ordini, dashboard KPI).
+7) Contatti: email + LinkedIn. CTA chiara “Scrivimi con: che dati hai + che obiettivo”.
+8) SEO meta description: centrata su Excel/SQL/Power BI/Streamlit e “report automatici”.
+
+Output richiesto:
+- Aggiorna il testo in tutte le sezioni già presenti (hero, servizi, perché me, esperienza, competenze, casi d’uso, processo, contatti, footer).
+- Non modificare classi CSS, id, struttura HTML o JS se non strettamente necessario.
+- Se trovi riferimenti a “logistica”, “trasporto/logistica” o promesse troppo grandi, rimuovili e sostituiscili con “piccole imprese/professionisti/PMI” e “ordine nei dati”.
+- Mantieni 1 CTA primaria (call/email) e 1 secondaria (CV facoltativo).
+
+Prima di applicare le modifiche, fammi vedere SOLO i nuovi testi proposti (in elenco per sezione). Dopo conferma, applicali nel codice.
