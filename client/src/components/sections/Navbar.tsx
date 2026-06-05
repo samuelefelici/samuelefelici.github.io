@@ -6,8 +6,8 @@ import logo from "@assets/logo_1771503161578.png";
 
 const navItems = [
   { name: "Servizi", href: "#services" },
+  { name: "Progetti", href: "#portfolio" },
   { name: "Chi Sono", href: "#about" },
-  { name: "Esperienza", href: "#timeline" },
   { name: "Processo", href: "#process" },
   { name: "Contatti", href: "#contact" },
 ];
@@ -67,7 +67,7 @@ export function Navbar() {
             </a>
           ))}
           <Button variant="default" size="sm" asChild data-testid="button-nav-call">
-            <a href="#contact">Prenota una Call</a>
+            <a href="#contact">Scrivimi</a>
           </Button>
         </div>
 
@@ -95,7 +95,7 @@ export function Navbar() {
             </a>
           ))}
           <Button className="w-full mt-2" asChild>
-            <a href="#contact" onClick={() => setIsOpen(false)}>Prenota una Call</a>
+            <a href="#contact" onClick={() => setIsOpen(false)}>Scrivimi</a>
           </Button>
         </div>
       )}

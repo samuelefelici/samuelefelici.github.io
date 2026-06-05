@@ -8,21 +8,21 @@ export function WhyMe() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">
             <h2 className="text-3xl font-bold font-heading mb-6">
-              Metodo, chiarezza e <span className="text-primary">soluzioni pronte all'uso</span>.
+              Codice pulito, consegne rapide e <span className="text-primary">zero fronzoli</span>.
             </h2>
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              Il mio background nasce dalla gestione operativa reale. Ho imparato a gestire la complessità organizzando flussi di dati critici dove l'errore non era ammesso.
+              Sviluppo software perché mi piace risolvere problemi concreti. Ogni progetto parte dall'ascolto del tuo bisogno reale, non da una soluzione preconfezionata.
             </p>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Oggi applico quel metodo per aiutare freelance e PMI a fare ordine. Non cerco l'effetto speciale, ma la consegna pulita, documentata e facile da mantenere.
+              Lavoro come freelance senza struttura: per te significa costi contenuti, rapporto diretto e progetti tagliati su misura. L'ideale per chi vuole partire in fretta e senza grandi budget.
             </p>
-            
+
             <div className="space-y-4">
               {[
-                "Approccio pragmatico orientato all'ordine",
-                "Soluzioni personalizzate, non standard",
-                "Documentazione chiara per ogni consegna",
-                "Supporto diretto e comunicazione semplice"
+                "Codice pulito, ordinato e documentato",
+                "Soluzioni su misura, non template",
+                "Consegna rapida e comunicazione diretta",
+                "Supporto anche dopo la consegna"
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />

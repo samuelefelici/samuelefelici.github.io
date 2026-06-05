@@ -1,10 +1,10 @@
 export function Process() {
   const steps = [
-    { num: "01", title: "Briefing", desc: "Capiamo insieme che dati hai e qual è l'obiettivo." },
-    { num: "02", title: "Audit", desc: "Analizzo i file per capire come strutturare il lavoro." },
-    { num: "03", title: "Prototipo", desc: "Ti mostro una prima bozza della soluzione." },
+    { num: "01", title: "Briefing", desc: "Capiamo insieme cosa ti serve e qual è l'obiettivo." },
+    { num: "02", title: "Preventivo", desc: "Stima chiara di tempi e costi, senza sorprese." },
+    { num: "03", title: "Sviluppo", desc: "Costruisco la soluzione mostrandoti avanzamenti reali." },
     { num: "04", title: "Revisione", desc: "Affiniamo i dettagli in base al tuo feedback." },
-    { num: "05", title: "Consegna", desc: "Passaggio dei file e breve formazione all'uso." }
+    { num: "05", title: "Consegna", desc: "Messa online, codice e breve guida all'uso." }
   ];
 
   return (

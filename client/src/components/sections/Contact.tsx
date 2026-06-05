@@ -3,7 +3,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-import { Mail, Linkedin, MapPin, Send } from "lucide-react";
+import { Mail, Linkedin, Github, MapPin, Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
+
+/**
+ * Web3Forms — invio email gratuito senza backend.
+ * 1. Vai su https://web3forms.com, inserisci la tua email (samuele.felici@hotmail.it)
+ *    e ricevi una "Access Key".
+ * 2. Incolla la chiave qui sotto al posto del placeholder.
+ * Le richieste del form arriveranno direttamente nella tua casella di posta.
+ */
+const WEB3FORMS_ACCESS_KEY = "INCOLLA-QUI-LA-TUA-ACCESS-KEY";
+
+type Status = "idle" | "submitting" | "success" | "error";
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -12,12 +23,40 @@ export function Contact() {
     objective: "",
     message: ""
   });
+  const [status, setStatus] = useState<Status>("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Contatto Freelance: ${formData.name}`);
-    const body = encodeURIComponent(`Nome: ${formData.name}\nEmail: ${formData.email}\nObiettivo: ${formData.objective}\n\nMessaggio:\n${formData.message}`);
-    window.location.href = `mailto:samuele.felici@hotmail.it?subject=${subject}&body=${body}`;
+    setStatus("submitting");
+
+    const payload = {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      subject: `Nuova richiesta dal sito: ${formData.name}`,
+      from_name: "Sito samuelefelici.com",
+      name: formData.name,
+      email: formData.email,
+      obiettivo: formData.objective,
+      message: formData.message,
+      // honeypot anti-spam: deve restare vuoto
+      botcheck: (e.currentTarget.elements.namedItem("botcheck") as HTMLInputElement)?.checked
+    };
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus("success");
+        setFormData({ name: "", email: "", objective: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -25,9 +64,9 @@ export function Contact() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold font-heading mb-4">Iniziamo a fare ordine?</h2>
+            <h2 className="text-3xl font-bold font-heading mb-4">Parliamo del tuo progetto</h2>
             <p className="text-muted-foreground">
-              Scrivimi per una valutazione gratuita del tuo caso. Rispondo solitamente entro 24 ore.
+              Raccontami la tua idea e ti rispondo con una proposta concreta. Solitamente entro 24 ore.
             </p>
           </div>
 
@@ -41,9 +80,13 @@ export function Contact() {
                       <Mail className="w-5 h-5" />
                       samuele.felici@hotmail.it
                     </a>
+                    <a href="https://github.com/samuelefelici" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors" data-testid="link-github">
+                      <Github className="w-5 h-5" />
+                      github.com/samuelefelici
+                    </a>
                     <a href="https://linkedin.com/in/samuelefelici" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors" data-testid="link-linkedin">
                       <Linkedin className="w-5 h-5" />
-                      LinkedIn Profile
+                      LinkedIn
                     </a>
                     <div className="flex items-center gap-3 text-muted-foreground">
                       <MapPin className="w-5 h-5" />
@@ -51,7 +94,7 @@ export function Contact() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="p-4 bg-primary/5 rounded-lg border border-primary/10">
                   <p className="text-sm text-muted-foreground">
                     "Preferisco una soluzione semplice che funziona oggi a una perfetta che non arriva mai."
@@ -60,56 +103,88 @@ export function Contact() {
               </CardContent>
             </Card>
 
-            <form onSubmit={handleSubmit} className="space-y-4" data-testid="form-contact">
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium">Nome</label>
-                <Input 
-                  id="name" 
-                  placeholder="Il tuo nome" 
-                  required 
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  data-testid="input-name"
-                />
+            {status === "success" ? (
+              <div className="flex flex-col items-center justify-center text-center p-8 rounded-lg border border-primary/20 bg-primary/5" data-testid="form-success">
+                <CheckCircle2 className="w-12 h-12 text-primary mb-4" />
+                <h3 className="text-xl font-bold mb-2">Messaggio inviato!</h3>
+                <p className="text-muted-foreground mb-6">
+                  Grazie, ho ricevuto la tua richiesta. Ti rispondo al più presto.
+                </p>
+                <Button variant="outline" onClick={() => setStatus("idle")} data-testid="button-new-message">
+                  Invia un altro messaggio
+                </Button>
               </div>
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium">Email</label>
-                <Input 
-                  id="email" 
-                  type="email" 
-                  placeholder="la-tua@email.it" 
-                  required 
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  data-testid="input-email"
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="objective" className="text-sm font-medium">Che obiettivo hai? (es. pulizia Excel, report vendite)</label>
-                <Input 
-                  id="objective" 
-                  placeholder="Breve descrizione dell'obiettivo" 
-                  required 
-                  value={formData.objective}
-                  onChange={(e) => setFormData({...formData, objective: e.target.value})}
-                  data-testid="input-objective"
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-medium">Messaggio (opzionale)</label>
-                <Textarea 
-                  id="message" 
-                  placeholder="Qualche dettaglio in più sui dati che hai..." 
-                  className="min-h-[100px]" 
-                  value={formData.message}
-                  onChange={(e) => setFormData({...formData, message: e.target.value})}
-                  data-testid="textarea-message"
-                />
-              </div>
-              <Button type="submit" className="w-full gap-2" data-testid="button-submit">
-                Invia Richiesta <Send className="w-4 h-4" />
-              </Button>
-            </form>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4" data-testid="form-contact">
+                {/* honeypot anti-spam (nascosto) */}
+                <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
+
+                <div className="space-y-2">
+                  <label htmlFor="name" className="text-sm font-medium">Nome</label>
+                  <Input
+                    id="name"
+                    placeholder="Il tuo nome"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    data-testid="input-name"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="email" className="text-sm font-medium">Email</label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="la-tua@email.it"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    data-testid="input-email"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="objective" className="text-sm font-medium">Di cosa hai bisogno? (es. sito web, app gestionale, automazione)</label>
+                  <Input
+                    id="objective"
+                    placeholder="Breve descrizione del progetto"
+                    required
+                    value={formData.objective}
+                    onChange={(e) => setFormData({ ...formData, objective: e.target.value })}
+                    data-testid="input-objective"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="message" className="text-sm font-medium">Messaggio (opzionale)</label>
+                  <Textarea
+                    id="message"
+                    placeholder="Qualche dettaglio in più sulla tua idea..."
+                    className="min-h-[100px]"
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    data-testid="textarea-message"
+                  />
+                </div>
+
+                {status === "error" && (
+                  <div className="flex items-center gap-2 text-sm text-destructive" data-testid="form-error">
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    Qualcosa è andato storto. Riprova o scrivimi direttamente via email.
+                  </div>
+                )}
+
+                <Button type="submit" className="w-full gap-2" disabled={status === "submitting"} data-testid="button-submit">
+                  {status === "submitting" ? (
+                    <>
+                      Invio in corso <Loader2 className="w-4 h-4 animate-spin" />
+                    </>
+                  ) : (
+                    <>
+                      Invia Richiesta <Send className="w-4 h-4" />
+                    </>
+                  )}
+                </Button>
+              </form>
+            )}
           </div>
         </div>
       </div>

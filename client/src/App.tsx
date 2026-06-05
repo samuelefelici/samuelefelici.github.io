@@ -1,9 +1,9 @@
 import { Navbar } from "./components/sections/Navbar";
 import { Hero } from "./components/sections/Hero";
 import { Services } from "./components/sections/Services";
+import { Portfolio } from "./components/sections/Portfolio";
 import { WhyMe } from "./components/sections/WhyMe";
 import { Timeline } from "./components/sections/Timeline";
-import { UseCases } from "./components/sections/UseCases";
 import { Process } from "./components/sections/Process";
 import { Contact } from "./components/sections/Contact";
 import { Footer } from "./components/sections/Footer";
@@ -15,9 +15,9 @@ function App() {
       <main>
         <Hero />
         <Services />
+        <Portfolio />
         <WhyMe />
         <Timeline />
-        <UseCases />
         <Process />
         <Contact />
       </main>
