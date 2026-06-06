@@ -26,7 +26,7 @@ export function Hero() {
               <span className="text-primary">software e siti web</span> pronti all'uso.
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl leading-relaxed">
-              Sviluppatore freelance. Creo applicazioni su misura, siti web e automazioni per piccole attività, professionisti e startup. Veloce nella consegna, semplice da gestire. Base ad Ancona, lavoro da remoto in tutta Italia.
+              Sviluppatore freelance con un background nella gestione operativa: non scrivo solo codice, capisco i tuoi processi e dove si bloccano. Creo app su misura, siti web e automazioni che risolvono problemi concreti. Base ad Ancona, lavoro da remoto in tutta Italia.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">

@@ -7,22 +7,19 @@ const services = [
     icon: Globe,
     title: "Siti Web & Landing Page",
     description: "Siti vetrina e landing page veloci, responsive e curati. Dalla grafica alla messa online, pronti a portarti clienti.",
-    details: ["Design responsive mobile-first", "SEO di base e performance", "Dominio, hosting e pubblicazione"],
-    price: "300 – 900€"
+    details: ["Design responsive mobile-first", "SEO di base e performance", "Dominio, hosting e pubblicazione"]
   },
   {
     icon: AppWindow,
     title: "App & Software su misura",
     description: "Web app, gestionali e strumenti costruiti intorno al tuo flusso di lavoro. Niente template: solo ciò che ti serve davvero.",
-    details: ["Web app e gestionali", "Database e logica applicativa", "Manuale d'uso e supporto"],
-    price: "500 – 2.000€"
+    details: ["Web app e gestionali", "Database e logica applicativa", "Manuale d'uso e supporto"]
   },
   {
     icon: Workflow,
     title: "Automazioni & Script",
     description: "Elimino i task ripetitivi: script che fanno il lavoro noioso al posto tuo, in pochi secondi e senza errori.",
-    details: ["Automazione processi ripetitivi", "Integrazioni tra strumenti", "Elaborazione dati e report"],
-    price: "150 – 600€"
+    details: ["Automazione processi ripetitivi", "Integrazioni tra strumenti", "Elaborazione dati e report"]
   }
 ];
 
@@ -57,7 +54,7 @@ export function Services() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ul className="space-y-2 mb-6">
+                  <ul className="space-y-2">
                     {service.details.map((detail, i) => (
                       <li key={i} className="flex items-center text-sm text-muted-foreground">
                         <div className="w-1.5 h-1.5 rounded-full bg-primary/50 mr-2" />
@@ -65,9 +62,6 @@ export function Services() {
                       </li>
                     ))}
                   </ul>
-                  <div className="text-xs font-semibold text-primary bg-primary/5 px-3 py-1.5 rounded-full inline-block">
-                    A partire da {service.price}
-                  </div>
                 </CardContent>
               </Card>
             </motion.div>

@@ -8,21 +8,21 @@ export function WhyMe() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">
             <h2 className="text-3xl font-bold font-heading mb-6">
-              Codice pulito, consegne rapide e <span className="text-primary">zero fronzoli</span>.
+              Non solo codice: <span className="text-primary">capisco i tuoi processi</span>.
             </h2>
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              Sviluppo software perché mi piace risolvere problemi concreti. Ogni progetto parte dall'ascolto del tuo bisogno reale, non da una soluzione preconfezionata.
+              Prima ancora di sviluppare, vengo dalla gestione operativa: anni a coordinare turni, flotte e persone mi hanno insegnato a leggere un'organizzazione e a individuare in fretta dove si nascondono i colli di bottiglia.
             </p>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Lavoro come freelance senza struttura: per te significa costi contenuti, rapporto diretto e progetti tagliati su misura. L'ideale per chi vuole partire in fretta e senza grandi budget.
+              Per te significa software che nasce dal problema reale, non dalla tecnologia. E lavorando come freelance senza struttura: costi contenuti, rapporto diretto e soluzioni su misura, ideali per chi vuole partire in fretta e senza grandi budget.
             </p>
 
             <div className="space-y-4">
               {[
-                "Codice pulito, ordinato e documentato",
-                "Soluzioni su misura, non template",
-                "Consegna rapida e comunicazione diretta",
-                "Supporto anche dopo la consegna"
+                "Esperienza operativa e gestionale reale",
+                "Individuo i colli di bottiglia nei processi",
+                "Software che parte dal problema, non dal codice",
+                "Rapporto diretto e supporto dopo la consegna"
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />

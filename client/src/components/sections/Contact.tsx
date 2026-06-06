@@ -84,7 +84,7 @@ export function Contact() {
                       <Github className="w-5 h-5" />
                       github.com/samuelefelici
                     </a>
-                    <a href="https://linkedin.com/in/samuelefelici" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors" data-testid="link-linkedin">
+                    <a href="https://www.linkedin.com/in/samuele-felici-a58197139/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors" data-testid="link-linkedin">
                       <Linkedin className="w-5 h-5" />
                       LinkedIn
                     </a>
