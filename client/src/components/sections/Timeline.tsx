@@ -22,7 +22,7 @@ const experience = [
 ];
 
 const skills = [
-  "Excel Avanzato", "MySQL / SQL", "Python", "Power BI", "Streamlit", "Dashboard Design", "GitHub Copilot", "Data Cleaning"
+  "Python", "JavaScript / TypeScript", "React", "Node.js", "HTML / CSS", "Tailwind CSS", "SQL / MySQL", "API REST", "Git & GitHub", "Automazioni", "Streamlit", "Power BI"
 ];
 
 export function Timeline() {

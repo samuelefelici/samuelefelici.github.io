@@ -1,28 +1,28 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart3, Database, Workflow } from "lucide-react";
+import { Globe, AppWindow, Workflow } from "lucide-react";
 import { motion } from "framer-motion";
 
 const services = [
   {
-    icon: BarChart3,
-    title: "Audit Dati Iniziale",
-    description: "Un micro-servizio per capire dove sei e dove puoi arrivare. Analizzo i tuoi file attuali per eliminare il superfluo.",
-    details: ["Analisi qualità file esistenti", "Definizione KPI di base", "Piano d'azione operativo"],
-    price: "150 – 250€"
+    icon: Globe,
+    title: "Siti Web & Landing Page",
+    description: "Siti vetrina e landing page veloci, responsive e curati. Dalla grafica alla messa online, pronti a portarti clienti.",
+    details: ["Design responsive mobile-first", "SEO di base e performance", "Dominio, hosting e pubblicazione"],
+    price: "300 – 900€"
   },
   {
-    icon: Database,
-    title: "Sistemi Dati & Database",
-    description: "Dimentica i file sparsi. Organizzo le tue informazioni in database relazionali solidi e pronti all'uso.",
-    details: ["Pulizia e riorganizzazione dati", "Modellazione MySQL/SQL", "Creazione query di estrazione"],
-    price: "300 – 700€"
+    icon: AppWindow,
+    title: "App & Software su misura",
+    description: "Web app, gestionali e strumenti costruiti intorno al tuo flusso di lavoro. Niente template: solo ciò che ti serve davvero.",
+    details: ["Web app e gestionali", "Database e logica applicativa", "Manuale d'uso e supporto"],
+    price: "500 – 2.000€"
   },
   {
     icon: Workflow,
-    title: "Dashboard & Report",
-    description: "Visualizza l'andamento del tuo business in tempo reale con report automatici e dashboard interattive.",
-    details: ["Report Power BI o Streamlit", "Automazioni leggere (Python)", "Consegna documentata"],
-    price: "400 – 800€"
+    title: "Automazioni & Script",
+    description: "Elimino i task ripetitivi: script che fanno il lavoro noioso al posto tuo, in pochi secondi e senza errori.",
+    details: ["Automazione processi ripetitivi", "Integrazioni tra strumenti", "Elaborazione dati e report"],
+    price: "150 – 600€"
   }
 ];
 
@@ -31,9 +31,9 @@ export function Services() {
     <section id="services" className="py-20 bg-secondary/30">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold font-heading mb-4">Servizi e soluzioni pratiche</h2>
+          <h2 className="text-3xl font-bold font-heading mb-4">Cosa posso costruire per te</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Pacchetti chiari pensati per micro-aziende e professionisti che vogliono smettere di lottare con i fogli di calcolo.
+            Soluzioni chiare e su misura per chi vuole partire in fretta, senza grandi budget e senza complicazioni tecniche.
           </p>
         </div>
 
@@ -66,7 +66,7 @@ export function Services() {
                     ))}
                   </ul>
                   <div className="text-xs font-semibold text-primary bg-primary/5 px-3 py-1.5 rounded-full inline-block">
-                    Investimento indicativo: {service.price}
+                    A partire da {service.price}
                   </div>
                 </CardContent>
               </Card>
