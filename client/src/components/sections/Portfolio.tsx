@@ -18,6 +18,7 @@ type ProjectDetail = {
   intro: string;
   sections: { title: string; body: string }[];
   stack: string[];
+  images?: { src: string; alt: string }[];
 };
 
 type Project = {
@@ -75,6 +76,12 @@ const projects: Project[] = [
         "Integrazioni: TomTom, OSM, ISTAT, OpenWeatherMap, ORS",
         "Estensione IoT: validatore NFC + GPS di bordo",
       ],
+      images: [
+        { src: "/assets/portfolio/cerbero-dashboard.png", alt: "Dashboard: stato rete, mappa GTFS colorata per congestione, traffico live e punti di interesse" },
+        { src: "/assets/portfolio/cerbero-network.png", alt: "Network Engine — Planner Studio: editor variante linea con tracciato e sequenza fermate" },
+        { src: "/assets/portfolio/cerbero-scheduling.png", alt: "Scheduling Engine: Gantt dei turni macchina ottimizzati con OR-Tools CP-SAT" },
+        { src: "/assets/portfolio/cerbero-fares.png", alt: "Fares Engine: partizioni territoriali (cluster tariffari) sulla mappa" },
+      ],
     },
   },
   {
@@ -108,6 +115,24 @@ const projects: Project[] = [
     tags: ["Algoritmi", "Python"],
   },
 ];
+
+/** Mostra l'immagine solo se viene caricata: se il file non esiste ancora, si nasconde (niente immagini rotte). */
+function GalleryImage({ src, alt }: { src: string; alt: string }) {
+  const [ok, setOk] = useState(true);
+  if (!ok) return null;
+  return (
+    <figure className="overflow-hidden rounded-lg border border-border">
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        onError={() => setOk(false)}
+        className="w-full h-auto block"
+      />
+      <figcaption className="text-xs text-muted-foreground px-3 py-2 bg-secondary/40">{alt}</figcaption>
+    </figure>
+  );
+}
 
 export function Portfolio() {
   const [selected, setSelected] = useState<Project | null>(null);
@@ -226,6 +251,14 @@ export function Portfolio() {
                   {selected.detail.intro}
                 </DialogDescription>
               </DialogHeader>
+
+              {selected.detail.images && selected.detail.images.length > 0 && (
+                <div className="grid sm:grid-cols-2 gap-3 mt-2">
+                  {selected.detail.images.map((img) => (
+                    <GalleryImage key={img.src} src={img.src} alt={img.alt} />
+                  ))}
+                </div>
+              )}
 
               <div className="space-y-5 mt-2">
                 {selected.detail.sections.map((s) => (
