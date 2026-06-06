@@ -22,7 +22,7 @@ const experience = [
 ];
 
 const skills = [
-  "Python", "JavaScript / TypeScript", "React", "Node.js", "HTML / CSS", "Tailwind CSS", "SQL / MySQL", "API REST", "Git & GitHub", "Automazioni", "Streamlit", "Power BI"
+  "Python", "JavaScript / TypeScript", "React", "Node.js", "PostgreSQL / SQL", "API REST", "Mapbox / GIS", "Google OR-Tools", "GTFS", "Tailwind CSS", "Git & GitHub", "Automazioni"
 ];
 
 export function Timeline() {

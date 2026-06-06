@@ -1,55 +1,117 @@
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Github, Lock, Theater, ShieldCheck, Ship, Globe, ListOrdered } from "lucide-react";
+import { Github, Lock, ArrowRight, Theater, ShieldCheck, Ship, Globe, ListOrdered } from "lucide-react";
 import { motion } from "framer-motion";
 
 const GITHUB_URL = "https://github.com/samuelefelici";
 
-/**
- * Mini case-study. Per i progetti usati da clienti il codice è privato:
- * NON si linka il repo (darebbe 404). Si racconta il problema risolto.
- * Sostituisci le descrizioni con quelle reali quando vuoi.
- */
-const projects = [
-  {
-    icon: Theater,
-    title: "Sipario",
-    description: "Applicazione per la gestione e organizzazione di eventi e spettacoli: pianificazione, logistica e flussi operativi in un unico strumento.",
-    tags: ["Python", "Gestionale"],
-    client: true
-  },
+type ProjectDetail = {
+  intro: string;
+  sections: { title: string; body: string }[];
+  stack: string[];
+};
+
+type Project = {
+  icon: typeof ShieldCheck;
+  title: string;
+  subtitle?: string;
+  description: string;
+  tags: string[];
+  client?: boolean;
+  featured?: boolean;
+  detail?: ProjectDetail;
+};
+
+const projects: Project[] = [
   {
     icon: ShieldCheck,
     title: "Cerbero",
-    description: "Strumento di controllo e sicurezza dei dati: gestione di accessi, permessi e verifiche in modo affidabile e tracciabile.",
-    tags: ["Python", "Security"],
-    client: true
+    subtitle: "TransitIntel",
+    description:
+      "Piattaforma full-stack di intelligence per il Trasporto Pubblico Locale: analisi del territorio, ottimizzazione dei turni, bigliettazione elettronica e progettazione della rete in un unico sistema, su dati GTFS reali (~12.500 corse, provincia di Ancona).",
+    tags: ["React", "TypeScript", "Node + PostgreSQL", "Python · OR-Tools", "Mapbox", "GTFS"],
+    client: true,
+    featured: true,
+    detail: {
+      intro:
+        "Cerbero trasforma un feed GTFS grezzo in decisioni concrete: dove manca servizio, come comporre i turni macchina e guida nel rispetto del CCNL, quanto costa un biglietto fra due fermate e come simulare modifiche alla rete prima di metterle in esercizio. Quattro motori integrati su uno stack TypeScript con un layer di ottimizzazione in Python e un assistente operativo AI.",
+      sections: [
+        {
+          title: "📊 Analytics Engine — capire territorio e domanda",
+          body:
+            "Incrocia fonti eterogenee per misurare domanda e qualità del servizio: traffico (TomTom), demografia ISTAT, punti di interesse (OpenStreetMap), matrice O/D pendolare, meteo e telemetria di bordo (salite/discese, persone a bordo, incassi). Calcola copertura della popolazione e aree sottoservite.",
+        },
+        {
+          title: "🔥 Scheduling Engine — ottimizzare i turni",
+          body:
+            "Pipeline a due livelli su Google OR-Tools CP-SAT: turni macchina (minimizza flotta e percorrenze a vuoto) e turni guida con enumerazione dei duty nel rispetto della normativa (CCNL: max 7h30, pause, guida continua). Solver configurabile, avanzamento in tempo reale, confronto scenari.",
+        },
+        {
+          title: "🎫 Fares Engine — bigliettazione elettronica",
+          body:
+            "Implementazione completa GTFS-Fares v2: reti tariffarie, prodotti, aree, regole di interscambio. Cluster tariffari con matrice O/D precalcolata e un 'oracolo' che restituisce il prezzo atteso fra due fermate — usato come verifica indipendente contro l'addebito reale del validatore NFC.",
+        },
+        {
+          title: "🗺️ Network Engine — progettare e simulare la rete",
+          body:
+            "Planning Studio per costruire scenari su un feed baseline (modifica/sospensione di linee e fermate) e confrontarli. Isocrone pedonali, zone di coincidenza intermodali (treno/nave ↔ bus), classificazione linee e generazione del Programma di Esercizio.",
+        },
+      ],
+      stack: [
+        "React · Vite · Tailwind · Shadcn UI",
+        "Mapbox GL · Recharts",
+        "Node/Express 5 · Drizzle ORM · PostgreSQL",
+        "Python 3 · Google OR-Tools CP-SAT",
+        "GTFS / GTFS-Fares v2",
+        "Integrazioni: TomTom, OSM, ISTAT, OpenWeatherMap, ORS",
+        "Estensione IoT: validatore NFC + GPS di bordo",
+      ],
+    },
+  },
+  {
+    icon: Theater,
+    title: "Sipario",
+    description:
+      "Applicazione per la gestione e organizzazione di eventi e spettacoli: pianificazione, logistica e flussi operativi in un unico strumento. (Descrizione da completare.)",
+    tags: ["Python", "Gestionale"],
+    client: true,
   },
   {
     icon: Ship,
     title: "Caronte",
-    description: "Utility per il trasferimento e la migrazione di dati tra sistemi diversi, in modo rapido, sicuro e controllato.",
-    tags: ["Python", "Tool"],
-    client: true
+    description:
+      "Sistema di validazione di bordo NFC e ingestione dati di telemetria (posizione GPS, salite/discese). (Descrizione da completare.)",
+    tags: ["IoT", "NFC", "API"],
+    client: true,
   },
   {
     icon: Globe,
     title: "Siti Web",
-    description: "Siti vetrina e landing page responsive per attività e professionisti, ottimizzati per velocità, mobile e visibilità.",
+    description:
+      "Siti vetrina e landing page responsive per attività e professionisti, ottimizzati per velocità, mobile e visibilità.",
     tags: ["React", "Web"],
-    client: false
   },
   {
     icon: ListOrdered,
     title: "Algoritmi di ordinamento",
-    description: "Implementazione e confronto di algoritmi di ordinamento, con analisi delle performance. Progetto pubblico su GitHub.",
+    description:
+      "Implementazione e confronto di algoritmi di ordinamento, con analisi delle performance. Progetto pubblico su GitHub.",
     tags: ["Algoritmi", "Python"],
-    client: false
-  }
+  },
 ];
 
 export function Portfolio() {
+  const [selected, setSelected] = useState<Project | null>(null);
+
   return (
     <section id="portfolio" className="py-20">
       <div className="container mx-auto px-4 md:px-6">
@@ -61,45 +123,65 @@ export function Portfolio() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08 }}
-              data-testid={`card-project-${index}`}
-            >
-              <Card className="h-full border border-border shadow-sm hover:shadow-md transition-shadow">
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="w-11 h-11 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
-                      <project.icon className="w-5 h-5" />
+          {projects.map((project, index) => {
+            const clickable = !!project.detail;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08 }}
+                className={project.featured ? "sm:col-span-2" : ""}
+                data-testid={`card-project-${index}`}
+              >
+                <Card
+                  onClick={clickable ? () => setSelected(project) : undefined}
+                  className={`h-full border shadow-sm transition-all ${
+                    project.featured ? "border-primary/40 bg-primary/5" : "border-border"
+                  } ${clickable ? "cursor-pointer hover:shadow-md hover:border-primary/50 group" : ""}`}
+                >
+                  <CardHeader>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="w-11 h-11 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                        <project.icon className="w-5 h-5" />
+                      </div>
+                      {project.client && (
+                        <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <Lock className="w-3 h-3" />
+                          Su commessa
+                        </span>
+                      )}
                     </div>
-                    {project.client && (
-                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Lock className="w-3 h-3" />
-                        Su commessa
+                    <CardTitle className="text-lg flex items-baseline gap-2">
+                      {project.title}
+                      {project.subtitle && (
+                        <span className="text-sm font-normal text-muted-foreground">{project.subtitle}</span>
+                      )}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary" className="text-xs font-medium">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                    {clickable && (
+                      <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                        Scopri di più
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                       </span>
                     )}
-                  </div>
-                  <CardTitle className="text-lg">{project.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="text-xs font-medium">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
 
           {/* GitHub CTA card */}
           <motion.div
@@ -124,6 +206,50 @@ export function Portfolio() {
           </motion.div>
         </div>
       </div>
+
+      {/* Project detail dialog */}
+      <Dialog open={!!selected} onOpenChange={(open) => !open && setSelected(null)}>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+          {selected?.detail && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-2xl flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                    <selected.icon className="w-5 h-5" />
+                  </div>
+                  {selected.title}
+                  {selected.subtitle && (
+                    <span className="text-base font-normal text-muted-foreground">{selected.subtitle}</span>
+                  )}
+                </DialogTitle>
+                <DialogDescription className="text-base text-foreground/80 leading-relaxed pt-2">
+                  {selected.detail.intro}
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="space-y-5 mt-2">
+                {selected.detail.sections.map((s) => (
+                  <div key={s.title}>
+                    <h4 className="font-semibold mb-1">{s.title}</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{s.body}</p>
+                  </div>
+                ))}
+
+                <div className="pt-2 border-t border-border">
+                  <h4 className="font-semibold mb-3">Stack & competenze</h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selected.detail.stack.map((t) => (
+                      <Badge key={t} variant="secondary" className="text-xs font-medium">
+                        {t}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
