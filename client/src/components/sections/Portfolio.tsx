@@ -25,6 +25,7 @@ type ProjectDetail = {
   sections: {
     icon: typeof ShieldCheck;
     iconImg?: string;
+    color?: string;
     title: string;
     tagline?: string;
     body: string;
@@ -64,6 +65,7 @@ const projects: Project[] = [
         {
           icon: BarChart3,
           iconImg: "/assets/cerbero-analytics-logo.png",
+          color: "#3b82f6",
           title: "Analytics Engine",
           tagline: "Capire territorio e domanda",
           body:
@@ -73,6 +75,7 @@ const projects: Project[] = [
         {
           icon: CalendarClock,
           iconImg: "/assets/cerbero-scheduling-logo.png",
+          color: "#f97316",
           title: "Scheduling Engine",
           tagline: "Ottimizzare i turni",
           body:
@@ -82,6 +85,7 @@ const projects: Project[] = [
         {
           icon: Ticket,
           iconImg: "/assets/cerbero-fares-logo.png",
+          color: "#22c55e",
           title: "Fares Engine",
           tagline: "Bigliettazione elettronica",
           body:
@@ -91,6 +95,7 @@ const projects: Project[] = [
         {
           icon: Route,
           iconImg: "/assets/cerbero-network-logo.png",
+          color: "#8b5cf6",
           title: "Network Engine",
           tagline: "Progettare e simulare la rete",
           body:
@@ -131,6 +136,7 @@ const projects: Project[] = [
       sections: [
         {
           icon: MapPin,
+          color: "#3b82f6",
           title: "AVM",
           tagline: "Monitoraggio del mezzo",
           body:
@@ -139,6 +145,7 @@ const projects: Project[] = [
         },
         {
           icon: CreditCard,
+          color: "#f59e0b",
           title: "Validazione NFC",
           tagline: "In sviluppo",
           body:
@@ -147,6 +154,7 @@ const projects: Project[] = [
         },
         {
           icon: Database,
+          color: "#10b981",
           title: "Dati di esercizio",
           body:
             "I dati confluiscono in uno schema PostgreSQL dedicato (caronte), separato in sola scrittura dal gestionale. Da qui derivano le metriche: salite/discese per fermata, persone a bordo per corsa, totale trasportati e fatturato.",
@@ -261,19 +269,30 @@ export function Portfolio() {
                   <CardHeader>
                     <div className="flex items-start justify-between mb-2">
                       {project.logo ? (
-                        <div className="relative w-16 h-16 flex items-center justify-center">
-                          <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl" />
-                          <Glyph logo={project.logo} icon={project.icon} imgClass="relative w-full h-full object-contain" iconClass="relative w-7 h-7 text-primary" />
-                        </div>
+                        <>
+                          <div>
+                            {project.status && (
+                              <span className="text-xs font-medium text-amber-600 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                                {project.status}
+                              </span>
+                            )}
+                          </div>
+                          <div className="relative w-16 h-16 shrink-0 flex items-center justify-center">
+                            <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl" />
+                            <Glyph logo={project.logo} icon={project.icon} imgClass="relative w-full h-full object-contain" iconClass="relative w-7 h-7 text-primary" />
+                          </div>
+                        </>
                       ) : (
-                        <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-                          <project.icon className="w-5 h-5" />
-                        </div>
-                      )}
-                      {project.status && (
-                        <span className="text-xs font-medium text-amber-600 bg-amber-500/10 px-2 py-0.5 rounded-full">
-                          {project.status}
-                        </span>
+                        <>
+                          <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                            <project.icon className="w-5 h-5" />
+                          </div>
+                          {project.status && (
+                            <span className="text-xs font-medium text-amber-600 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                              {project.status}
+                            </span>
+                          )}
+                        </>
                       )}
                     </div>
                     <CardTitle className="text-lg flex items-baseline gap-2">
@@ -379,12 +398,26 @@ export function Portfolio() {
                 {selected.detail.sections.map((s) => (
                   <div key={s.title} className="space-y-3">
                     <div className="flex items-center gap-3">
-                      <div className="relative w-11 h-11 shrink-0 flex items-center justify-center">
-                        <div className="absolute inset-0 rounded-full bg-primary/15 blur-xl" />
-                        <Glyph logo={s.iconImg} icon={s.icon} imgClass="relative w-full h-full object-contain" iconClass="relative w-5 h-5 text-primary" />
+                      <div
+                        className="relative w-14 h-14 shrink-0 flex items-center justify-center"
+                        style={s.color ? { color: s.color } : undefined}
+                      >
+                        <div
+                          className="absolute inset-0 rounded-full blur-xl"
+                          style={s.color ? { backgroundColor: s.color, opacity: 0.3 } : undefined}
+                        />
+                        {!s.color && <div className="absolute inset-0 rounded-full bg-primary/15 blur-xl" />}
+                        <Glyph
+                          logo={s.iconImg}
+                          icon={s.icon}
+                          imgClass="relative w-full h-full object-contain"
+                          iconClass="relative w-6 h-6"
+                        />
                       </div>
                       <div>
-                        <h4 className="text-lg font-semibold leading-tight">{s.title}</h4>
+                        <h4 className="text-lg font-semibold leading-tight" style={s.color ? { color: s.color } : undefined}>
+                          {s.title}
+                        </h4>
                         {s.tagline && <p className="text-sm text-muted-foreground">{s.tagline}</p>}
                       </div>
                     </div>
