@@ -29,6 +29,7 @@ type Project = {
   tags: string[];
   client?: boolean;
   featured?: boolean;
+  status?: string;
   detail?: ProjectDetail;
 };
 
@@ -96,9 +97,43 @@ const projects: Project[] = [
     icon: Ship,
     title: "Caronte",
     description:
-      "Sistema di validazione di bordo NFC e ingestione dati di telemetria (posizione GPS, salite/discese). (Descrizione da completare.)",
-    tags: ["IoT", "NFC", "API"],
+      "Il sistema di bordo che completa Cerbero: AVM con posizione GPS proiettata sul percorso GTFS e validazione NFC (tap-IN / tap-OUT) come oracolo di verifica della bigliettazione elettronica.",
+    tags: ["PWA", "AVM", "NFC", "GPS"],
     client: true,
+    status: "In sviluppo",
+    detail: {
+      intro:
+        "Caronte è il sistema di bordo che completa Cerbero: una PWA di Automatic Vehicle Monitoring (AVM) che proietta la posizione GPS del mezzo sul percorso programmato GTFS — ricavando fermata corrente, tempi di percorrenza e soste — affiancata da un validatore NFC per la salita e la discesa dei passeggeri. La validazione NFC è attualmente in fase di costruzione e non ancora in esercizio.",
+      images: [
+        { src: "/assets/caronte-app.png", alt: "App di bordo Caronte (PWA) su smartphone" },
+        { src: "/assets/caronte-avm.png", alt: "Dispositivo AVM di bordo installato sul bus" },
+      ],
+      sections: [
+        {
+          title: "📍 AVM — monitoraggio del mezzo",
+          body:
+            "PWA che proietta in tempo reale la posizione GPS sul percorso programmato GTFS, ricavando automaticamente fermata corrente, tempi di percorrenza e soste.",
+        },
+        {
+          title: "🎫 Validazione NFC — in sviluppo",
+          body:
+            "Gestione di salita (tap-IN) e discesa (tap-OUT) dei passeggeri. Per ogni viaggio legge dal Fares Engine la tariffa attesa e la confronta con quanto effettivamente addebitato, funzionando da oracolo di verifica della bigliettazione. Funzione non ancora in esercizio.",
+        },
+        {
+          title: "🗄️ Dati di esercizio",
+          body:
+            "I dati confluiscono in uno schema PostgreSQL dedicato (caronte), separato in sola scrittura dal gestionale. Da qui derivano le metriche: salite/discese per fermata, persone a bordo per corsa, totale trasportati e fatturato.",
+        },
+      ],
+      stack: [
+        "PWA (offline-first)",
+        "Web NFC",
+        "Geolocalizzazione GPS",
+        "PostgreSQL (schema dedicato)",
+        "GTFS",
+        "Integrazione con il Fares Engine di Cerbero",
+      ],
+    },
   },
   {
     icon: Globe,
@@ -171,12 +206,19 @@ export function Portfolio() {
                       <div className="w-11 h-11 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
                         <project.icon className="w-5 h-5" />
                       </div>
-                      {project.client && (
-                        <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Lock className="w-3 h-3" />
-                          Su commessa
-                        </span>
-                      )}
+                      <div className="flex items-center gap-2">
+                        {project.status && (
+                          <span className="text-xs font-medium text-amber-600 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                            {project.status}
+                          </span>
+                        )}
+                        {project.client && (
+                          <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                            <Lock className="w-3 h-3" />
+                            Su commessa
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <CardTitle className="text-lg flex items-baseline gap-2">
                       {project.title}
@@ -245,6 +287,11 @@ export function Portfolio() {
                   {selected.title}
                   {selected.subtitle && (
                     <span className="text-base font-normal text-muted-foreground">{selected.subtitle}</span>
+                  )}
+                  {selected.status && (
+                    <span className="text-xs font-medium text-amber-600 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                      {selected.status}
+                    </span>
                   )}
                 </DialogTitle>
                 <DialogDescription className="text-base text-foreground/80 leading-relaxed pt-2">
