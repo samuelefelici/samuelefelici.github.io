@@ -18,13 +18,14 @@ const GITHUB_URL = "https://github.com/samuelefelici";
 
 type ProjectDetail = {
   intro: string;
-  sections: { icon: typeof ShieldCheck; title: string; body: string }[];
+  sections: { icon: typeof ShieldCheck; iconImg?: string; title: string; body: string }[];
   stack: string[];
   images?: { src: string; alt: string }[];
 };
 
 type Project = {
   icon: typeof ShieldCheck;
+  logo?: string;
   title: string;
   subtitle?: string;
   description: string;
@@ -38,6 +39,7 @@ type Project = {
 const projects: Project[] = [
   {
     icon: ShieldCheck,
+    logo: "/assets/cerbero-logo.png",
     title: "Cerbero",
     subtitle: "TransitIntel",
     description:
@@ -51,24 +53,28 @@ const projects: Project[] = [
       sections: [
         {
           icon: BarChart3,
+          iconImg: "/assets/cerbero-analytics-logo.png",
           title: "Analytics Engine — capire territorio e domanda",
           body:
             "Incrocia fonti eterogenee per misurare domanda e qualità del servizio: traffico (TomTom), demografia ISTAT, punti di interesse (OpenStreetMap), matrice O/D pendolare, meteo e telemetria di bordo (salite/discese, persone a bordo, incassi). Calcola copertura della popolazione e aree sottoservite.",
         },
         {
           icon: CalendarClock,
+          iconImg: "/assets/cerbero-scheduling-logo.png",
           title: "Scheduling Engine — ottimizzare i turni",
           body:
             "Pipeline a due livelli su Google OR-Tools CP-SAT: turni macchina (minimizza flotta e percorrenze a vuoto) e turni guida con enumerazione dei duty nel rispetto della normativa (CCNL: max 7h30, pause, guida continua). Solver configurabile, avanzamento in tempo reale, confronto scenari.",
         },
         {
           icon: Ticket,
+          iconImg: "/assets/cerbero-fares-logo.png",
           title: "Fares Engine — bigliettazione elettronica",
           body:
             "Implementazione completa GTFS-Fares v2: reti tariffarie, prodotti, aree, regole di interscambio. Cluster tariffari con matrice O/D precalcolata e un 'oracolo' che restituisce il prezzo atteso fra due fermate — usato come verifica indipendente contro l'addebito reale del validatore NFC.",
         },
         {
           icon: Route,
+          iconImg: "/assets/cerbero-network-logo.png",
           title: "Network Engine — progettare e simulare la rete",
           body:
             "Planning Studio per costruire scenari su un feed baseline (modifica/sospensione di linee e fermate) e confrontarli. Isocrone pedonali, zone di coincidenza intermodali (treno/nave ↔ bus), classificazione linee e generazione del Programma di Esercizio.",
@@ -180,6 +186,25 @@ function GalleryImage({ src, alt }: { src: string; alt: string }) {
   );
 }
 
+/** Mostra il logo (immagine) se presente e caricabile, altrimenti l'icona vettoriale di fallback. */
+function Glyph({
+  logo,
+  icon: Icon,
+  imgClass,
+  iconClass,
+}: {
+  logo?: string;
+  icon: typeof ShieldCheck;
+  imgClass: string;
+  iconClass: string;
+}) {
+  const [ok, setOk] = useState(!!logo);
+  if (logo && ok) {
+    return <img src={logo} alt="" loading="lazy" onError={() => setOk(false)} className={imgClass} />;
+  }
+  return <Icon className={iconClass} />;
+}
+
 /** Etichetta di sezione in stile "label" tecnico. */
 function SectionLabel({ children }: { children: string }) {
   return (
@@ -223,8 +248,8 @@ export function Portfolio() {
                 >
                   <CardHeader>
                     <div className="flex items-center justify-between mb-2">
-                      <div className="w-11 h-11 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
-                        <project.icon className="w-5 h-5" />
+                      <div className={`w-11 h-11 rounded-lg flex items-center justify-center overflow-hidden ${project.logo ? "bg-secondary p-1.5" : "bg-primary/10 text-primary"}`}>
+                        <Glyph logo={project.logo} icon={project.icon} imgClass="w-full h-full object-contain" iconClass="w-5 h-5" />
                       </div>
                       <div className="flex items-center gap-2">
                         {project.status && (
@@ -303,8 +328,8 @@ export function Portfolio() {
               <div className="relative overflow-hidden px-6 pt-8 pb-6 bg-gradient-to-br from-primary/15 via-primary/5 to-transparent border-b border-border">
                 <div className="absolute -top-12 -right-12 w-44 h-44 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
                 <div className="relative flex items-start gap-4">
-                  <div className="w-14 h-14 shrink-0 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center shadow-lg shadow-primary/20">
-                    <selected.icon className="w-7 h-7" />
+                  <div className={`w-14 h-14 shrink-0 rounded-2xl flex items-center justify-center overflow-hidden shadow-lg shadow-primary/20 ${selected.logo ? "bg-background border border-border p-2" : "bg-primary text-primary-foreground"}`}>
+                    <Glyph logo={selected.logo} icon={selected.icon} imgClass="w-full h-full object-contain" iconClass="w-7 h-7" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
@@ -359,8 +384,8 @@ export function Portfolio() {
                         key={s.title}
                         className="rounded-xl border border-border bg-card/50 p-4 hover:border-primary/40 hover:bg-card transition-colors"
                       >
-                        <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
-                          <s.icon className="w-4 h-4" />
+                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden mb-3 ${s.iconImg ? "bg-secondary p-1" : "bg-primary/10 text-primary"}`}>
+                          <Glyph logo={s.iconImg} icon={s.icon} imgClass="w-full h-full object-contain" iconClass="w-4 h-4" />
                         </div>
                         <h4 className="font-semibold text-sm mb-1">{s.title}</h4>
                         <p className="text-sm text-muted-foreground leading-relaxed">{s.body}</p>
