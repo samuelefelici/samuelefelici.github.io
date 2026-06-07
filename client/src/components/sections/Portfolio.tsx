@@ -9,14 +9,17 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Github, Lock, ArrowRight, Theater, ShieldCheck, Ship, Globe, ListOrdered } from "lucide-react";
+import {
+  Github, Lock, ArrowRight, Theater, ShieldCheck, Ship, Globe, ListOrdered,
+  BarChart3, CalendarClock, Ticket, Route, MapPin, CreditCard, Database,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 const GITHUB_URL = "https://github.com/samuelefelici";
 
 type ProjectDetail = {
   intro: string;
-  sections: { title: string; body: string }[];
+  sections: { icon: typeof ShieldCheck; title: string; body: string }[];
   stack: string[];
   images?: { src: string; alt: string }[];
 };
@@ -48,22 +51,26 @@ const projects: Project[] = [
         "Cerbero trasforma un feed GTFS grezzo in decisioni concrete: dove manca servizio, come comporre i turni macchina e guida nel rispetto del CCNL, quanto costa un biglietto fra due fermate e come simulare modifiche alla rete prima di metterle in esercizio. Quattro motori integrati su uno stack TypeScript con un layer di ottimizzazione in Python e un assistente operativo AI.",
       sections: [
         {
-          title: "📊 Analytics Engine — capire territorio e domanda",
+          icon: BarChart3,
+          title: "Analytics Engine — capire territorio e domanda",
           body:
             "Incrocia fonti eterogenee per misurare domanda e qualità del servizio: traffico (TomTom), demografia ISTAT, punti di interesse (OpenStreetMap), matrice O/D pendolare, meteo e telemetria di bordo (salite/discese, persone a bordo, incassi). Calcola copertura della popolazione e aree sottoservite.",
         },
         {
-          title: "🔥 Scheduling Engine — ottimizzare i turni",
+          icon: CalendarClock,
+          title: "Scheduling Engine — ottimizzare i turni",
           body:
             "Pipeline a due livelli su Google OR-Tools CP-SAT: turni macchina (minimizza flotta e percorrenze a vuoto) e turni guida con enumerazione dei duty nel rispetto della normativa (CCNL: max 7h30, pause, guida continua). Solver configurabile, avanzamento in tempo reale, confronto scenari.",
         },
         {
-          title: "🎫 Fares Engine — bigliettazione elettronica",
+          icon: Ticket,
+          title: "Fares Engine — bigliettazione elettronica",
           body:
             "Implementazione completa GTFS-Fares v2: reti tariffarie, prodotti, aree, regole di interscambio. Cluster tariffari con matrice O/D precalcolata e un 'oracolo' che restituisce il prezzo atteso fra due fermate — usato come verifica indipendente contro l'addebito reale del validatore NFC.",
         },
         {
-          title: "🗺️ Network Engine — progettare e simulare la rete",
+          icon: Route,
+          title: "Network Engine — progettare e simulare la rete",
           body:
             "Planning Studio per costruire scenari su un feed baseline (modifica/sospensione di linee e fermate) e confrontarli. Isocrone pedonali, zone di coincidenza intermodali (treno/nave ↔ bus), classificazione linee e generazione del Programma di Esercizio.",
         },
@@ -110,17 +117,20 @@ const projects: Project[] = [
       ],
       sections: [
         {
-          title: "📍 AVM — monitoraggio del mezzo",
+          icon: MapPin,
+          title: "AVM — monitoraggio del mezzo",
           body:
             "PWA che proietta in tempo reale la posizione GPS sul percorso programmato GTFS, ricavando automaticamente fermata corrente, tempi di percorrenza e soste.",
         },
         {
-          title: "🎫 Validazione NFC — in sviluppo",
+          icon: CreditCard,
+          title: "Validazione NFC — in sviluppo",
           body:
             "Gestione di salita (tap-IN) e discesa (tap-OUT) dei passeggeri. Per ogni viaggio legge dal Fares Engine la tariffa attesa e la confronta con quanto effettivamente addebitato, funzionando da oracolo di verifica della bigliettazione. Funzione non ancora in esercizio.",
         },
         {
-          title: "🗄️ Dati di esercizio",
+          icon: Database,
+          title: "Dati di esercizio",
           body:
             "I dati confluiscono in uno schema PostgreSQL dedicato (caronte), separato in sola scrittura dal gestionale. Da qui derivano le metriche: salite/discese per fermata, persone a bordo per corsa, totale trasportati e fatturato.",
         },
@@ -309,9 +319,14 @@ export function Portfolio() {
 
               <div className="space-y-5 mt-2">
                 {selected.detail.sections.map((s) => (
-                  <div key={s.title}>
-                    <h4 className="font-semibold mb-1">{s.title}</h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{s.body}</p>
+                  <div key={s.title} className="flex gap-3">
+                    <div className="w-9 h-9 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                      <s.icon className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold mb-1">{s.title}</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{s.body}</p>
+                    </div>
                   </div>
                 ))}
 
