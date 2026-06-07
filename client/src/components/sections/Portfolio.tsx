@@ -63,7 +63,7 @@ const projects: Project[] = [
       sections: [
         {
           icon: BarChart3,
-          iconImg: "/assets/cerbero-analytics-logo.png",
+          iconImg: "/assets/cerbero-analytic-logo.png",
           color: "#3b82f6",
           title: "Analytics Engine",
           tagline: "Capire territorio e domanda",
@@ -266,23 +266,24 @@ export function Portfolio() {
                   } ${clickable ? "cursor-pointer hover:shadow-md hover:border-primary/50 group" : ""}`}
                 >
                   <CardHeader>
-                    <div className="flex items-start justify-between mb-2">
-                      {project.logo ? (
-                        <>
-                          <div>
-                            {project.status && (
-                              <span className="text-xs font-medium text-amber-600 bg-amber-500/10 px-2 py-0.5 rounded-full">
-                                {project.status}
-                              </span>
-                            )}
-                          </div>
-                          <div className="relative w-24 h-24 shrink-0 flex items-center justify-center">
-                            <div className="absolute inset-0 rounded-full bg-primary/25 blur-2xl" />
-                            <Glyph logo={project.logo} icon={project.icon} imgClass="relative w-full h-full object-contain" iconClass="relative w-12 h-12 text-primary" />
-                          </div>
-                        </>
-                      ) : (
-                        <>
+                    {project.logo ? (
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="space-y-2">
+                          {project.status && (
+                            <span className="inline-block text-xs font-medium text-amber-600 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                              {project.status}
+                            </span>
+                          )}
+                          <CardTitle className="text-2xl font-bold">{project.title}</CardTitle>
+                        </div>
+                        <div className="relative w-20 h-20 shrink-0 flex items-center justify-center">
+                          <div className="absolute inset-0 rounded-full bg-primary/25 blur-2xl" />
+                          <Glyph logo={project.logo} icon={project.icon} imgClass="relative w-full h-full object-contain" iconClass="relative w-10 h-10 text-primary" />
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex items-start justify-between mb-2">
                           <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
                             <project.icon className="w-5 h-5" />
                           </div>
@@ -291,15 +292,10 @@ export function Portfolio() {
                               {project.status}
                             </span>
                           )}
-                        </>
-                      )}
-                    </div>
-                    <CardTitle className="text-lg flex items-baseline gap-2">
-                      {project.title}
-                      {project.subtitle && (
-                        <span className="text-sm font-normal text-muted-foreground">{project.subtitle}</span>
-                      )}
-                    </CardTitle>
+                        </div>
+                        <CardTitle className="text-lg">{project.title}</CardTitle>
+                      </>
+                    )}
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
