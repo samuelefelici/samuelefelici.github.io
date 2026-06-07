@@ -16,6 +16,10 @@ import { motion } from "framer-motion";
 
 const GITHUB_URL = "https://github.com/samuelefelici";
 
+/** Versione asset: bump per forzare browser/CDN a riscaricare le immagini bypassando la cache (404 vecchi inclusi). */
+const ASSET_V = "2";
+const v = (src: string) => `${src}?v=${ASSET_V}`;
+
 type ProjectDetail = {
   intro: string;
   sections: { icon: typeof ShieldCheck; iconImg?: string; title: string; body: string }[];
@@ -174,7 +178,7 @@ function GalleryImage({ src, alt }: { src: string; alt: string }) {
     <figure className="group overflow-hidden rounded-xl border border-border bg-secondary/20">
       <div className="overflow-hidden">
         <img
-          src={src}
+          src={v(src)}
           alt={alt}
           loading="lazy"
           onError={() => setOk(false)}
@@ -200,7 +204,7 @@ function Glyph({
 }) {
   const [ok, setOk] = useState(!!logo);
   if (logo && ok) {
-    return <img src={logo} alt="" loading="lazy" onError={() => setOk(false)} className={imgClass} />;
+    return <img src={v(logo)} alt="" loading="lazy" onError={() => setOk(false)} className={imgClass} />;
   }
   return <Icon className={iconClass} />;
 }
