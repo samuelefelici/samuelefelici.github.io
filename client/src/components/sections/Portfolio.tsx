@@ -52,7 +52,6 @@ const projects: Project[] = [
     icon: ShieldCheck,
     logo: "/assets/cerbero-logo.png",
     title: "Cerbero",
-    subtitle: "TransitIntel",
     description:
       "Piattaforma full-stack di intelligence per il Trasporto Pubblico Locale: analisi del territorio, ottimizzazione dei turni, bigliettazione elettronica e progettazione della rete in un unico sistema, su dati GTFS reali (~12.500 corse, provincia di Ancona).",
     tags: ["React", "TypeScript", "Node + PostgreSQL", "Python · OR-Tools", "Mapbox", "GTFS"],
@@ -277,9 +276,9 @@ export function Portfolio() {
                               </span>
                             )}
                           </div>
-                          <div className="relative w-16 h-16 shrink-0 flex items-center justify-center">
-                            <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl" />
-                            <Glyph logo={project.logo} icon={project.icon} imgClass="relative w-full h-full object-contain" iconClass="relative w-7 h-7 text-primary" />
+                          <div className="relative w-24 h-24 shrink-0 flex items-center justify-center">
+                            <div className="absolute inset-0 rounded-full bg-primary/25 blur-2xl" />
+                            <Glyph logo={project.logo} icon={project.icon} imgClass="relative w-full h-full object-contain" iconClass="relative w-12 h-12 text-primary" />
                           </div>
                         </>
                       ) : (
@@ -358,9 +357,16 @@ export function Portfolio() {
               <div className="relative overflow-hidden px-6 pt-8 pb-6 bg-gradient-to-br from-primary/15 via-primary/5 to-transparent border-b border-border">
                 <div className="absolute -top-12 -right-12 w-44 h-44 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
                 <div className="relative flex items-start gap-4">
-                  <div className={`w-14 h-14 shrink-0 rounded-2xl flex items-center justify-center overflow-hidden shadow-lg shadow-primary/20 ${selected.logo ? "bg-background border border-border p-2" : "bg-primary text-primary-foreground"}`}>
-                    <Glyph logo={selected.logo} icon={selected.icon} imgClass="w-full h-full object-contain" iconClass="w-7 h-7" />
-                  </div>
+                  {selected.logo ? (
+                    <div className="relative w-20 h-20 shrink-0 flex items-center justify-center">
+                      <div className="absolute inset-0 rounded-full bg-primary/25 blur-2xl" />
+                      <Glyph logo={selected.logo} icon={selected.icon} imgClass="relative w-full h-full object-contain" iconClass="relative w-10 h-10 text-primary" />
+                    </div>
+                  ) : (
+                    <div className="w-14 h-14 shrink-0 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center shadow-lg shadow-primary/20">
+                      <selected.icon className="w-7 h-7" />
+                    </div>
+                  )}
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
                       <DialogTitle className="text-2xl font-bold leading-tight">{selected.title}</DialogTitle>
@@ -399,19 +405,19 @@ export function Portfolio() {
                   <div key={s.title} className="space-y-3">
                     <div className="flex items-center gap-3">
                       <div
-                        className="relative w-14 h-14 shrink-0 flex items-center justify-center"
+                        className="relative w-20 h-20 shrink-0 flex items-center justify-center"
                         style={s.color ? { color: s.color } : undefined}
                       >
                         <div
-                          className="absolute inset-0 rounded-full blur-xl"
+                          className="absolute inset-0 rounded-full blur-2xl"
                           style={s.color ? { backgroundColor: s.color, opacity: 0.3 } : undefined}
                         />
-                        {!s.color && <div className="absolute inset-0 rounded-full bg-primary/15 blur-xl" />}
+                        {!s.color && <div className="absolute inset-0 rounded-full bg-primary/15 blur-2xl" />}
                         <Glyph
                           logo={s.iconImg}
                           icon={s.icon}
                           imgClass="relative w-full h-full object-contain"
-                          iconClass="relative w-6 h-6"
+                          iconClass="relative w-9 h-9"
                         />
                       </div>
                       <div>
