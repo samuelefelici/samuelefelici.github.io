@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
@@ -166,16 +165,27 @@ function GalleryImage({ src, alt }: { src: string; alt: string }) {
   const [ok, setOk] = useState(true);
   if (!ok) return null;
   return (
-    <figure className="overflow-hidden rounded-lg border border-border">
-      <img
-        src={src}
-        alt={alt}
-        loading="lazy"
-        onError={() => setOk(false)}
-        className="w-full h-auto block"
-      />
-      <figcaption className="text-xs text-muted-foreground px-3 py-2 bg-secondary/40">{alt}</figcaption>
+    <figure className="group overflow-hidden rounded-xl border border-border bg-secondary/20">
+      <div className="overflow-hidden">
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          onError={() => setOk(false)}
+          className="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+      </div>
+      <figcaption className="text-xs text-muted-foreground px-3 py-2">{alt}</figcaption>
     </figure>
+  );
+}
+
+/** Etichetta di sezione in stile "label" tecnico. */
+function SectionLabel({ children }: { children: string }) {
+  return (
+    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+      {children}
+    </p>
   );
 }
 
@@ -286,57 +296,90 @@ export function Portfolio() {
 
       {/* Project detail dialog */}
       <Dialog open={!!selected} onOpenChange={(open) => !open && setSelected(null)}>
-        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+        <DialogContent className="max-w-3xl max-h-[88vh] overflow-y-auto p-0 gap-0">
           {selected?.detail && (
             <>
-              <DialogHeader>
-                <DialogTitle className="text-2xl flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
-                    <selected.icon className="w-5 h-5" />
+              {/* Header con banda gradiente */}
+              <div className="relative overflow-hidden px-6 pt-8 pb-6 bg-gradient-to-br from-primary/15 via-primary/5 to-transparent border-b border-border">
+                <div className="absolute -top-12 -right-12 w-44 h-44 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+                <div className="relative flex items-start gap-4">
+                  <div className="w-14 h-14 shrink-0 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center shadow-lg shadow-primary/20">
+                    <selected.icon className="w-7 h-7" />
                   </div>
-                  {selected.title}
-                  {selected.subtitle && (
-                    <span className="text-base font-normal text-muted-foreground">{selected.subtitle}</span>
-                  )}
-                  {selected.status && (
-                    <span className="text-xs font-medium text-amber-600 bg-amber-500/10 px-2 py-0.5 rounded-full">
-                      {selected.status}
-                    </span>
-                  )}
-                </DialogTitle>
-                <DialogDescription className="text-base text-foreground/80 leading-relaxed pt-2">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <DialogTitle className="text-2xl font-bold leading-tight">{selected.title}</DialogTitle>
+                      {selected.subtitle && (
+                        <span className="text-sm font-mono text-primary/90 bg-primary/10 px-2 py-0.5 rounded">
+                          {selected.subtitle}
+                        </span>
+                      )}
+                      {selected.status && (
+                        <span className="text-xs font-medium text-amber-600 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                          {selected.status}
+                        </span>
+                      )}
+                      {selected.client && (
+                        <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <Lock className="w-3 h-3" />
+                          Su commessa
+                        </span>
+                      )}
+                    </div>
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {selected.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary" className="text-xs font-medium">{tag}</Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <DialogDescription className="relative mt-4 text-[0.95rem] text-foreground/80 leading-relaxed">
                   {selected.detail.intro}
                 </DialogDescription>
-              </DialogHeader>
+              </div>
 
-              {selected.detail.images && selected.detail.images.length > 0 && (
-                <div className="grid sm:grid-cols-2 gap-3 mt-2">
-                  {selected.detail.images.map((img) => (
-                    <GalleryImage key={img.src} src={img.src} alt={img.alt} />
-                  ))}
-                </div>
-              )}
-
-              <div className="space-y-5 mt-2">
-                {selected.detail.sections.map((s) => (
-                  <div key={s.title} className="flex gap-3">
-                    <div className="w-9 h-9 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
-                      <s.icon className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">{s.title}</h4>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{s.body}</p>
+              {/* Corpo */}
+              <div className="px-6 py-6 space-y-7">
+                {selected.detail.images && selected.detail.images.length > 0 && (
+                  <div>
+                    <SectionLabel>Anteprime</SectionLabel>
+                    <div className="grid sm:grid-cols-2 gap-3">
+                      {selected.detail.images.map((img) => (
+                        <GalleryImage key={img.src} src={img.src} alt={img.alt} />
+                      ))}
                     </div>
                   </div>
-                ))}
+                )}
 
-                <div className="pt-2 border-t border-border">
-                  <h4 className="font-semibold mb-3">Stack & competenze</h4>
+                <div>
+                  <SectionLabel>Architettura</SectionLabel>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    {selected.detail.sections.map((s) => (
+                      <div
+                        key={s.title}
+                        className="rounded-xl border border-border bg-card/50 p-4 hover:border-primary/40 hover:bg-card transition-colors"
+                      >
+                        <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
+                          <s.icon className="w-4 h-4" />
+                        </div>
+                        <h4 className="font-semibold text-sm mb-1">{s.title}</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{s.body}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <SectionLabel>Stack &amp; competenze</SectionLabel>
                   <div className="flex flex-wrap gap-1.5">
                     {selected.detail.stack.map((t) => (
-                      <Badge key={t} variant="secondary" className="text-xs font-medium">
+                      <span
+                        key={t}
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-foreground/80 border border-border bg-secondary/50 rounded-md px-2.5 py-1"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary/60" />
                         {t}
-                      </Badge>
+                      </span>
                     ))}
                   </div>
                 </div>
