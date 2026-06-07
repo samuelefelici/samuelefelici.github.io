@@ -22,9 +22,15 @@ const v = (src: string) => `${src}?v=${ASSET_V}`;
 
 type ProjectDetail = {
   intro: string;
-  sections: { icon: typeof ShieldCheck; iconImg?: string; title: string; body: string }[];
+  sections: {
+    icon: typeof ShieldCheck;
+    iconImg?: string;
+    title: string;
+    tagline?: string;
+    body: string;
+    image?: { src: string; alt: string };
+  }[];
   stack: string[];
-  images?: { src: string; alt: string }[];
 };
 
 type Project = {
@@ -58,30 +64,38 @@ const projects: Project[] = [
         {
           icon: BarChart3,
           iconImg: "/assets/cerbero-analytics-logo.png",
-          title: "Analytics Engine — capire territorio e domanda",
+          title: "Analytics Engine",
+          tagline: "Capire territorio e domanda",
           body:
             "Incrocia fonti eterogenee per misurare domanda e qualità del servizio: traffico (TomTom), demografia ISTAT, punti di interesse (OpenStreetMap), matrice O/D pendolare, meteo e telemetria di bordo (salite/discese, persone a bordo, incassi). Calcola copertura della popolazione e aree sottoservite.",
+          image: { src: "/assets/cerbero-dashboard.png", alt: "Dashboard: stato rete, mappa GTFS colorata per congestione, traffico live e punti di interesse" },
         },
         {
           icon: CalendarClock,
           iconImg: "/assets/cerbero-scheduling-logo.png",
-          title: "Scheduling Engine — ottimizzare i turni",
+          title: "Scheduling Engine",
+          tagline: "Ottimizzare i turni",
           body:
             "Pipeline a due livelli su Google OR-Tools CP-SAT: turni macchina (minimizza flotta e percorrenze a vuoto) e turni guida con enumerazione dei duty nel rispetto della normativa (CCNL: max 7h30, pause, guida continua). Solver configurabile, avanzamento in tempo reale, confronto scenari.",
+          image: { src: "/assets/cerbero-scheduling.png", alt: "Scheduling Engine: Gantt dei turni macchina ottimizzati con OR-Tools CP-SAT" },
         },
         {
           icon: Ticket,
           iconImg: "/assets/cerbero-fares-logo.png",
-          title: "Fares Engine — bigliettazione elettronica",
+          title: "Fares Engine",
+          tagline: "Bigliettazione elettronica",
           body:
             "Implementazione completa GTFS-Fares v2: reti tariffarie, prodotti, aree, regole di interscambio. Cluster tariffari con matrice O/D precalcolata e un 'oracolo' che restituisce il prezzo atteso fra due fermate — usato come verifica indipendente contro l'addebito reale del validatore NFC.",
+          image: { src: "/assets/cerbero-fares.png", alt: "Fares Engine: partizioni territoriali (cluster tariffari) sulla mappa" },
         },
         {
           icon: Route,
           iconImg: "/assets/cerbero-network-logo.png",
-          title: "Network Engine — progettare e simulare la rete",
+          title: "Network Engine",
+          tagline: "Progettare e simulare la rete",
           body:
             "Planning Studio per costruire scenari su un feed baseline (modifica/sospensione di linee e fermate) e confrontarli. Isocrone pedonali, zone di coincidenza intermodali (treno/nave ↔ bus), classificazione linee e generazione del Programma di Esercizio.",
+          image: { src: "/assets/cerbero-network.png", alt: "Network Engine — Planner Studio: editor variante linea con tracciato e sequenza fermate" },
         },
       ],
       stack: [
@@ -92,12 +106,6 @@ const projects: Project[] = [
         "GTFS / GTFS-Fares v2",
         "Integrazioni: TomTom, OSM, ISTAT, OpenWeatherMap, ORS",
         "Estensione IoT: validatore NFC + GPS di bordo",
-      ],
-      images: [
-        { src: "/assets/cerbero-dashboard.png", alt: "Dashboard: stato rete, mappa GTFS colorata per congestione, traffico live e punti di interesse" },
-        { src: "/assets/cerbero-network.png", alt: "Network Engine — Planner Studio: editor variante linea con tracciato e sequenza fermate" },
-        { src: "/assets/cerbero-scheduling.png", alt: "Scheduling Engine: Gantt dei turni macchina ottimizzati con OR-Tools CP-SAT" },
-        { src: "/assets/cerbero-fares.png", alt: "Fares Engine: partizioni territoriali (cluster tariffari) sulla mappa" },
       ],
     },
   },
@@ -120,22 +128,22 @@ const projects: Project[] = [
     detail: {
       intro:
         "Caronte è il sistema di bordo che completa Cerbero: una PWA di Automatic Vehicle Monitoring (AVM) che proietta la posizione GPS del mezzo sul percorso programmato GTFS — ricavando fermata corrente, tempi di percorrenza e soste — affiancata da un validatore NFC per la salita e la discesa dei passeggeri. La validazione NFC è attualmente in fase di costruzione e non ancora in esercizio.",
-      images: [
-        { src: "/assets/caronte-app.png", alt: "App di bordo Caronte (PWA) su smartphone" },
-        { src: "/assets/caronte-avm.png", alt: "Dispositivo AVM di bordo installato sul bus" },
-      ],
       sections: [
         {
           icon: MapPin,
-          title: "AVM — monitoraggio del mezzo",
+          title: "AVM",
+          tagline: "Monitoraggio del mezzo",
           body:
             "PWA che proietta in tempo reale la posizione GPS sul percorso programmato GTFS, ricavando automaticamente fermata corrente, tempi di percorrenza e soste.",
+          image: { src: "/assets/caronte-avm.png", alt: "Dispositivo AVM di bordo installato sul bus" },
         },
         {
           icon: CreditCard,
-          title: "Validazione NFC — in sviluppo",
+          title: "Validazione NFC",
+          tagline: "In sviluppo",
           body:
             "Gestione di salita (tap-IN) e discesa (tap-OUT) dei passeggeri. Per ogni viaggio legge dal Fares Engine la tariffa attesa e la confronta con quanto effettivamente addebitato, funzionando da oracolo di verifica della bigliettazione. Funzione non ancora in esercizio.",
+          image: { src: "/assets/caronte-app.png", alt: "App di bordo Caronte (PWA) su smartphone" },
         },
         {
           icon: Database,
@@ -251,23 +259,22 @@ export function Portfolio() {
                   } ${clickable ? "cursor-pointer hover:shadow-md hover:border-primary/50 group" : ""}`}
                 >
                   <CardHeader>
-                    <div className="flex items-center justify-between mb-2">
-                      <div className={`w-11 h-11 rounded-lg flex items-center justify-center overflow-hidden ${project.logo ? "bg-secondary p-1.5" : "bg-primary/10 text-primary"}`}>
-                        <Glyph logo={project.logo} icon={project.icon} imgClass="w-full h-full object-contain" iconClass="w-5 h-5" />
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {project.status && (
-                          <span className="text-xs font-medium text-amber-600 bg-amber-500/10 px-2 py-0.5 rounded-full">
-                            {project.status}
-                          </span>
-                        )}
-                        {project.client && (
-                          <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <Lock className="w-3 h-3" />
-                            Su commessa
-                          </span>
-                        )}
-                      </div>
+                    <div className="flex items-start justify-between mb-2">
+                      {project.logo ? (
+                        <div className="relative w-16 h-16 flex items-center justify-center">
+                          <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl" />
+                          <Glyph logo={project.logo} icon={project.icon} imgClass="relative w-full h-full object-contain" iconClass="relative w-7 h-7 text-primary" />
+                        </div>
+                      ) : (
+                        <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                          <project.icon className="w-5 h-5" />
+                        </div>
+                      )}
+                      {project.status && (
+                        <span className="text-xs font-medium text-amber-600 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                          {project.status}
+                        </span>
+                      )}
                     </div>
                     <CardTitle className="text-lg flex items-baseline gap-2">
                       {project.title}
@@ -368,37 +375,25 @@ export function Portfolio() {
               </div>
 
               {/* Corpo */}
-              <div className="px-6 py-6 space-y-7">
-                {selected.detail.images && selected.detail.images.length > 0 && (
-                  <div>
-                    <SectionLabel>Anteprime</SectionLabel>
-                    <div className="grid sm:grid-cols-2 gap-3">
-                      {selected.detail.images.map((img) => (
-                        <GalleryImage key={img.src} src={img.src} alt={img.alt} />
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div>
-                  <SectionLabel>Architettura</SectionLabel>
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    {selected.detail.sections.map((s) => (
-                      <div
-                        key={s.title}
-                        className="rounded-xl border border-border bg-card/50 p-4 hover:border-primary/40 hover:bg-card transition-colors"
-                      >
-                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden mb-3 ${s.iconImg ? "bg-secondary p-1" : "bg-primary/10 text-primary"}`}>
-                          <Glyph logo={s.iconImg} icon={s.icon} imgClass="w-full h-full object-contain" iconClass="w-4 h-4" />
-                        </div>
-                        <h4 className="font-semibold text-sm mb-1">{s.title}</h4>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{s.body}</p>
+              <div className="px-6 py-6 space-y-9">
+                {selected.detail.sections.map((s) => (
+                  <div key={s.title} className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <div className="relative w-11 h-11 shrink-0 flex items-center justify-center">
+                        <div className="absolute inset-0 rounded-full bg-primary/15 blur-xl" />
+                        <Glyph logo={s.iconImg} icon={s.icon} imgClass="relative w-full h-full object-contain" iconClass="relative w-5 h-5 text-primary" />
                       </div>
-                    ))}
+                      <div>
+                        <h4 className="text-lg font-semibold leading-tight">{s.title}</h4>
+                        {s.tagline && <p className="text-sm text-muted-foreground">{s.tagline}</p>}
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{s.body}</p>
+                    {s.image && <GalleryImage src={s.image.src} alt={s.image.alt} />}
                   </div>
-                </div>
+                ))}
 
-                <div>
+                <div className="pt-2 border-t border-border">
                   <SectionLabel>Stack &amp; competenze</SectionLabel>
                   <div className="flex flex-wrap gap-1.5">
                     {selected.detail.stack.map((t) => (
