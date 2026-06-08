@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { Reveal } from "@/components/Reveal";
 import { Counter } from "@/components/Counter";
 
@@ -12,6 +12,7 @@ const motori = [
     tagline: "Capire territorio e domanda",
     body: "Incrocio traffico, demografia ISTAT, punti di interesse e telemetria di bordo per misurare domanda, copertura e aree sottoservite.",
     image: "/assets/cerbero-dashboard.jpg",
+    logo: "/assets/cerbero-analytic-logo.png",
   },
   {
     color: "#f97316",
@@ -19,6 +20,7 @@ const motori = [
     tagline: "Ottimizzare i turni",
     body: "Turni macchina e guida ottimizzati con Google OR-Tools CP-SAT, nel rispetto della normativa e del CCNL.",
     image: "/assets/cerbero-scheduling.jpg",
+    logo: "/assets/cerbero-scheduling-logo.png",
   },
   {
     color: "#22c55e",
@@ -26,6 +28,7 @@ const motori = [
     tagline: "Bigliettazione elettronica",
     body: "GTFS-Fares v2 completo, cluster tariffari e un oracolo che verifica il prezzo atteso contro l'addebito reale del validatore.",
     image: "/assets/cerbero-fares.jpg",
+    logo: "/assets/cerbero-fares-logo.png",
   },
   {
     color: "#8b5cf6",
@@ -33,6 +36,7 @@ const motori = [
     tagline: "Progettare e simulare la rete",
     body: "Scenari su feed GTFS, isocrone pedonali, zone di coincidenza intermodali e generazione del Programma di Esercizio.",
     image: "/assets/cerbero-network.jpg",
+    logo: "/assets/cerbero-network-logo.png",
   },
 ];
 
@@ -59,19 +63,32 @@ function MotorText({
   }, [inView, index, onActive]);
 
   return (
-    <div ref={ref} className="min-h-[60vh] flex flex-col justify-center py-10 lg:py-20">
+    <div ref={ref} className="relative min-h-[70vh] flex flex-col justify-center py-10 lg:py-20">
+      {/* aura colorata del motore */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 rounded-[3rem] blur-3xl opacity-[0.18]"
+        style={{ background: `radial-gradient(circle at 30% 50%, ${m.color}, transparent 65%)` }}
+      />
       <motion.div
         initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       >
-        <span
-          className="inline-block text-xs font-semibold uppercase tracking-wider mb-3 px-2.5 py-1 rounded-full"
-          style={{ color: m.color, backgroundColor: `${m.color}1a` }}
-        >
-          0{index + 1} — {m.tagline}
-        </span>
+        <div className="flex items-center gap-4 mb-4">
+          {/* logo colorato del motore con alone */}
+          <div className="relative w-16 h-16 shrink-0 flex items-center justify-center">
+            <div className="absolute inset-0 rounded-full blur-xl" style={{ backgroundColor: m.color, opacity: 0.35 }} />
+            <img src={m.logo + V} alt="" loading="lazy" className="relative w-full h-full object-contain" />
+          </div>
+          <span
+            className="text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full"
+            style={{ color: m.color, backgroundColor: `${m.color}1a` }}
+          >
+            0{index + 1} — {m.tagline}
+          </span>
+        </div>
         <h3 className="text-2xl md:text-3xl font-bold mb-3" style={{ color: m.color }}>
           {m.title}
         </h3>
@@ -88,24 +105,9 @@ function MotorText({
 
 export function CerberoShowcase() {
   const [active, setActive] = useState(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  // leggera profondità parallax sullo sfondo
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-  const glowY = useTransform(scrollYProgress, [0, 1], [-40, 40]);
 
   return (
-    <section id="cerbero" ref={sectionRef} className="relative py-20 md:py-28 overflow-hidden border-t border-border">
-      {/* bagliore parallax che cambia col motore attivo */}
-      <motion.div
-        aria-hidden
-        style={{ y: glowY, backgroundColor: motori[active].color }}
-        className="absolute top-1/4 -right-32 w-[30rem] h-[30rem] rounded-full blur-3xl opacity-10 transition-colors duration-700 pointer-events-none"
-      />
-
+    <section id="cerbero" className="relative py-20 md:py-28 overflow-x-clip border-t border-border">
       <div className="container mx-auto px-4 md:px-6">
         <Reveal className="text-center mb-12">
           <span className="text-sm font-semibold uppercase tracking-wider text-primary">Caso studio</span>
@@ -117,7 +119,7 @@ export function CerberoShowcase() {
         </Reveal>
 
         {/* contatori animati */}
-        <Reveal className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 max-w-3xl mx-auto">
+        <Reveal className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 max-w-3xl mx-auto">
           {stats.map((s) => (
             <div key={s.label} className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-foreground">
@@ -130,27 +132,35 @@ export function CerberoShowcase() {
 
         {/* scrollytelling */}
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* colonna sticky con crossfade (desktop) */}
+          {/* colonna sticky con crossfade (desktop) — centrata verticalmente */}
           <div className="hidden lg:block">
-            <div className="sticky top-24">
-              <div className="relative rounded-xl border border-border bg-card shadow-2xl overflow-hidden aspect-[16/10]">
-                {/* barra browser */}
-                <div className="flex items-center gap-1.5 px-3 py-2.5 border-b border-border bg-secondary/40 relative z-10">
-                  <span className="w-3 h-3 rounded-full bg-red-400/70" />
-                  <span className="w-3 h-3 rounded-full bg-yellow-400/70" />
-                  <span className="w-3 h-3 rounded-full bg-green-400/70" />
+            <div className="sticky top-0 h-screen flex items-center">
+              <div className="relative w-full">
+                {/* aura del colore attivo intorno all'immagine */}
+                <motion.div
+                  aria-hidden
+                  className="absolute -inset-10 -z-10 rounded-[2.5rem] blur-3xl"
+                  animate={{ backgroundColor: motori[active].color, opacity: 0.18 }}
+                  transition={{ duration: 0.6 }}
+                />
+                <div className="relative rounded-xl border border-border bg-card shadow-2xl overflow-hidden aspect-[16/10]">
+                  <div className="flex items-center gap-1.5 px-3 py-2.5 border-b border-border bg-secondary/40 relative z-10">
+                    <span className="w-3 h-3 rounded-full bg-red-400/70" />
+                    <span className="w-3 h-3 rounded-full bg-yellow-400/70" />
+                    <span className="w-3 h-3 rounded-full bg-green-400/70" />
+                  </div>
+                  {motori.map((m, i) => (
+                    <motion.img
+                      key={m.title}
+                      src={m.image + V}
+                      alt={m.title}
+                      loading="lazy"
+                      className="absolute inset-0 top-[42px] w-full h-[calc(100%-42px)] object-cover object-top"
+                      animate={{ opacity: active === i ? 1 : 0, scale: active === i ? 1 : 1.05 }}
+                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    />
+                  ))}
                 </div>
-                {motori.map((m, i) => (
-                  <motion.img
-                    key={m.title}
-                    src={m.image + V}
-                    alt={m.title}
-                    loading="lazy"
-                    className="absolute inset-0 top-[42px] w-full h-[calc(100%-42px)] object-cover object-top"
-                    animate={{ opacity: active === i ? 1 : 0, scale: active === i ? 1 : 1.05 }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  />
-                ))}
               </div>
             </div>
           </div>
