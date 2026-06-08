@@ -63,7 +63,7 @@ function MotorText({
   }, [inView, index, onActive]);
 
   return (
-    <div ref={ref} className="min-h-[70vh] flex flex-col justify-center py-10 lg:py-20">
+    <div ref={ref} className="min-h-screen flex flex-col justify-center py-10">
       <motion.div
         initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -100,6 +100,14 @@ export function CerberoShowcase() {
 
   return (
     <section id="cerbero" className="relative py-20 md:py-28 overflow-x-clip border-t border-border">
+      {/* tinta dell'intero sfondo, cambia col motore attivo */}
+      <motion.div
+        aria-hidden
+        className="absolute inset-0 -z-10"
+        animate={{ backgroundColor: motori[active].color }}
+        transition={{ duration: 0.8 }}
+        style={{ opacity: 0.08 }}
+      />
       <div className="container mx-auto px-4 md:px-6">
         <Reveal className="text-center mb-12">
           <span className="text-sm font-semibold uppercase tracking-wider text-primary">Caso studio</span>
@@ -132,8 +140,16 @@ export function CerberoShowcase() {
                 <motion.div
                   aria-hidden
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[160%] h-[130%] -z-10 rounded-full blur-3xl"
-                  animate={{ backgroundColor: motori[active].color, opacity: 0.16 }}
-                  transition={{ duration: 0.6 }}
+                  animate={{
+                    backgroundColor: motori[active].color,
+                    opacity: [0.14, 0.22, 0.14],
+                    scale: [1, 1.06, 1],
+                  }}
+                  transition={{
+                    backgroundColor: { duration: 0.6 },
+                    opacity: { duration: 7, repeat: Infinity, ease: "easeInOut" },
+                    scale: { duration: 7, repeat: Infinity, ease: "easeInOut" },
+                  }}
                 />
                 <div className="relative rounded-xl border border-border bg-card shadow-2xl overflow-hidden aspect-[16/10]">
                   <div className="flex items-center gap-1.5 px-3 py-2.5 border-b border-border bg-secondary/40 relative z-10">
