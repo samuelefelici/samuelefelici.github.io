@@ -63,32 +63,24 @@ function MotorText({
   }, [inView, index, onActive]);
 
   return (
-    <div ref={ref} className="relative min-h-[70vh] flex flex-col justify-center py-10 lg:py-20">
-      {/* aura colorata del motore */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 rounded-[3rem] blur-3xl opacity-[0.18]"
-        style={{ background: `radial-gradient(circle at 30% 50%, ${m.color}, transparent 65%)` }}
-      />
+    <div ref={ref} className="min-h-[70vh] flex flex-col justify-center py-10 lg:py-20">
       <motion.div
         initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="flex items-center gap-4 mb-4">
-          {/* logo colorato del motore con alone */}
-          <div className="relative w-16 h-16 shrink-0 flex items-center justify-center">
-            <div className="absolute inset-0 rounded-full blur-xl" style={{ backgroundColor: m.color, opacity: 0.35 }} />
-            <img src={m.logo + V} alt="" loading="lazy" className="relative w-full h-full object-contain" />
-          </div>
-          <span
-            className="text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full"
-            style={{ color: m.color, backgroundColor: `${m.color}1a` }}
-          >
-            0{index + 1} — {m.tagline}
-          </span>
+        {/* logo grande del motore — elemento centrale */}
+        <div className="relative w-28 h-28 md:w-36 md:h-36 mb-6 flex items-center justify-center">
+          <div className="absolute inset-0 rounded-full blur-2xl" style={{ backgroundColor: m.color, opacity: 0.4 }} />
+          <img src={m.logo + V} alt="" loading="lazy" className="relative w-full h-full object-contain drop-shadow-xl" />
         </div>
+        <span
+          className="inline-block w-fit text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3"
+          style={{ color: m.color, backgroundColor: `${m.color}1a` }}
+        >
+          0{index + 1} — {m.tagline}
+        </span>
         <h3 className="text-2xl md:text-3xl font-bold mb-3" style={{ color: m.color }}>
           {m.title}
         </h3>
@@ -136,11 +128,11 @@ export function CerberoShowcase() {
           <div className="hidden lg:block">
             <div className="sticky top-0 h-screen flex items-center">
               <div className="relative w-full">
-                {/* aura del colore attivo intorno all'immagine */}
+                {/* aura unica che attraversa entrambe le colonne e segue il viewport */}
                 <motion.div
                   aria-hidden
-                  className="absolute -inset-10 -z-10 rounded-[2.5rem] blur-3xl"
-                  animate={{ backgroundColor: motori[active].color, opacity: 0.18 }}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[160%] h-[130%] -z-10 rounded-full blur-3xl"
+                  animate={{ backgroundColor: motori[active].color, opacity: 0.16 }}
                   transition={{ duration: 0.6 }}
                 />
                 <div className="relative rounded-xl border border-border bg-card shadow-2xl overflow-hidden aspect-[16/10]">
