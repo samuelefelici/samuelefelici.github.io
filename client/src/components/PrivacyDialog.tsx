@@ -65,6 +65,17 @@ export function PrivacyDialog({ trigger }: { trigger: ReactNode }) {
           </div>
 
           <div>
+            <h4 className="font-semibold text-foreground mb-1">Cookie e statistiche</h4>
+            <p>
+              Il sito usa cookie tecnici necessari al funzionamento. Solo previo tuo consenso (tramite
+              l'apposito banner) vengono attivati strumenti di statistica e marketing di terze parti
+              (es. Google Analytics, Google Ads, Meta Pixel) che possono installare cookie per misurare
+              le visite e l'efficacia delle campagne. Puoi modificare la scelta in qualsiasi momento dal
+              link "Cookie" nel footer.
+            </p>
+          </div>
+
+          <div>
             <h4 className="font-semibold text-foreground mb-1">I tuoi diritti</h4>
             <p>
               Puoi in qualsiasi momento richiedere accesso, rettifica, cancellazione, limitazione o

@@ -1,0 +1,67 @@
+/**
+ * Configurazione tracciamento.
+ * Lascia vuoto ciò che non usi: se sono tutti vuoti, NON viene caricato nulla
+ * e il banner cookie non compare. Incolla gli ID quando attivi gli strumenti.
+ */
+export const TRACKING = {
+  ga4: "",        // Google Analytics 4 — es. "G-XXXXXXXXXX"
+  googleAds: "",  // Google Ads — es. "AW-XXXXXXXXXX"
+  metaPixel: "",  // Meta (Facebook) Pixel — es. "1234567890123456"
+};
+
+export function hasAnyTracking(): boolean {
+  return Boolean(TRACKING.ga4 || TRACKING.googleAds || TRACKING.metaPixel);
+}
+
+let loaded = false;
+
+/** Carica gli script di tracciamento (da chiamare SOLO dopo il consenso). */
+export function loadTracking(): void {
+  if (loaded || typeof window === "undefined") return;
+  loaded = true;
+
+  // --- Google (Analytics 4 + Ads) tramite gtag.js ---
+  const googleIds = [TRACKING.ga4, TRACKING.googleAds].filter(Boolean);
+  if (googleIds.length) {
+    const s = document.createElement("script");
+    s.async = true;
+    s.src = `https://www.googletagmanager.com/gtag/js?id=${googleIds[0]}`;
+    document.head.appendChild(s);
+
+    const w = window as unknown as { dataLayer: unknown[]; gtag: (...a: unknown[]) => void };
+    w.dataLayer = w.dataLayer || [];
+    w.gtag = function gtag() {
+      // eslint-disable-next-line prefer-rest-params
+      w.dataLayer.push(arguments);
+    };
+    w.gtag("js", new Date());
+    googleIds.forEach((id) => w.gtag("config", id, { anonymize_ip: true }));
+  }
+
+  // --- Meta (Facebook) Pixel ---
+  if (TRACKING.metaPixel) {
+    const w = window as unknown as Record<string, unknown> & { fbq?: unknown; _fbq?: unknown };
+    if (!w.fbq) {
+      const n: unknown = function () {
+        const fn = n as { callMethod?: (...a: unknown[]) => void; queue: unknown[] };
+        // eslint-disable-next-line prefer-rest-params
+        fn.callMethod ? fn.callMethod.apply(fn, arguments as unknown as unknown[]) : fn.queue.push(arguments);
+      };
+      const fn = n as { push: unknown; loaded: boolean; version: string; queue: unknown[] };
+      fn.push = n;
+      fn.loaded = true;
+      fn.version = "2.0";
+      fn.queue = [];
+      w.fbq = n;
+      if (!w._fbq) w._fbq = n;
+
+      const t = document.createElement("script");
+      t.async = true;
+      t.src = "https://connect.facebook.net/en_US/fbevents.js";
+      document.head.appendChild(t);
+    }
+    const fbq = w.fbq as (...a: unknown[]) => void;
+    fbq("init", TRACKING.metaPixel);
+    fbq("track", "PageView");
+  }
+}

@@ -22,6 +22,14 @@ export function Footer() {
               </button>
             }
           />
+          <button
+            type="button"
+            className="text-sm text-muted-foreground hover:text-foreground"
+            onClick={() => window.dispatchEvent(new Event("open-cookie-consent"))}
+            data-testid="link-cookie"
+          >
+            Cookie
+          </button>
           <div className="flex items-center gap-1">
           <Button variant="ghost" size="icon" asChild aria-label="GitHub">
             <a href="https://github.com/samuelefelici" target="_blank" rel="noopener noreferrer" data-testid="link-footer-github">

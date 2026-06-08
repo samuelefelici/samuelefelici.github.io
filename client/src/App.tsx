@@ -10,6 +10,7 @@ import { Timeline } from "./components/sections/Timeline";
 import { Process } from "./components/sections/Process";
 import { Contact } from "./components/sections/Contact";
 import { Footer } from "./components/sections/Footer";
+import { ConsentBanner } from "./components/ConsentBanner";
 
 function App() {
   useEffect(() => {
@@ -62,6 +63,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
+      <ConsentBanner />
     </div>
   );
 }
