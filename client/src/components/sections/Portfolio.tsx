@@ -13,6 +13,7 @@ import {
   BarChart3, CalendarClock, Ticket, Route, MapPin, CreditCard, Database,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { Reveal } from "@/components/Reveal";
 
 const GITHUB_URL = "https://github.com/samuelefelici";
 
@@ -239,12 +240,12 @@ export function Portfolio() {
   return (
     <section id="portfolio" className="py-20">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-12">
+        <Reveal className="text-center mb-12">
           <h2 className="text-3xl font-bold font-heading mb-4">Progetti realizzati</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Una selezione di app e strumenti che ho costruito. Diversi sono in uso presso clienti, quindi il codice è privato: qui trovi il problema che risolvono.
           </p>
-        </div>
+        </Reveal>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => {
@@ -346,7 +347,7 @@ export function Portfolio() {
 
       {/* Project detail dialog */}
       <Dialog open={!!selected} onOpenChange={(open) => !open && setSelected(null)}>
-        <DialogContent className="max-w-3xl max-h-[88vh] overflow-y-auto p-0 gap-0">
+        <DialogContent data-lenis-prevent className="max-w-3xl max-h-[88vh] overflow-y-auto p-0 gap-0">
           {selected?.detail && (
             <>
               {/* Header con banda gradiente */}

@@ -15,7 +15,7 @@ export function PrivacyDialog({ trigger }: { trigger: ReactNode }) {
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+      <DialogContent data-lenis-prevent className="max-w-2xl max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Informativa sulla privacy</DialogTitle>
         </DialogHeader>

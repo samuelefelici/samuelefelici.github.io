@@ -1,3 +1,5 @@
+import { Reveal } from "@/components/Reveal";
+
 export function Process() {
   const steps = [
     { num: "01", title: "Briefing", desc: "Capiamo insieme cosa ti serve e qual è l'obiettivo." },
@@ -10,7 +12,9 @@ export function Process() {
   return (
     <section id="process" className="py-20">
       <div className="container mx-auto px-4 md:px-6">
-        <h2 className="text-3xl font-bold font-heading mb-16 text-center">Il mio processo di lavoro</h2>
+        <Reveal>
+          <h2 className="text-3xl font-bold font-heading mb-16 text-center">Il mio processo di lavoro</h2>
+        </Reveal>
         
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           {steps.map((step, index) => (

@@ -30,13 +30,13 @@ export function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="gap-2" asChild data-testid="button-contact">
+              <Button size="lg" className="gap-2 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/20" asChild data-testid="button-contact">
                 <a href="#contact">
                   Richiedi un preventivo
                   <ArrowRight className="w-4 h-4" />
                 </a>
               </Button>
-              <Button size="lg" variant="outline" className="gap-2" asChild data-testid="button-projects">
+              <Button size="lg" variant="outline" className="gap-2 transition-all hover:-translate-y-0.5" asChild data-testid="button-projects">
                 <a href="#portfolio">
                   <Code2 className="w-4 h-4" />
                   Guarda i progetti

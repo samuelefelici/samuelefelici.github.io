@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Layers, Server, Cpu, Wrench } from "lucide-react";
 import { motion } from "framer-motion";
+import { Reveal } from "@/components/Reveal";
 
 const groups = [
   {
@@ -29,13 +30,13 @@ export function Timeline() {
   return (
     <section id="competenze" className="py-20 bg-background border-t border-border">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-12">
+        <Reveal className="text-center mb-12">
           <h2 className="text-3xl font-bold font-heading mb-4">Competenze & Tecnologie</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Dalla gestione operativa allo sviluppo: unisco competenze tecniche solide alla conoscenza
             diretta dei processi reali. Ecco gli strumenti con cui costruisco le soluzioni.
           </p>
-        </div>
+        </Reveal>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {groups.map((group, index) => (

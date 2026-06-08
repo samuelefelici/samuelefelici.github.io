@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
 import { PrivacyDialog } from "@/components/PrivacyDialog";
+import { Reveal } from "@/components/Reveal";
 import { Mail, Linkedin, Github, MapPin, Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 
 /**
@@ -68,12 +69,12 @@ export function Contact() {
     <section id="contact" className="py-20 bg-secondary/30">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
+          <Reveal className="text-center mb-12">
             <h2 className="text-3xl font-bold font-heading mb-4">Parliamo del tuo progetto</h2>
             <p className="text-muted-foreground">
               Raccontami la tua idea e ti rispondo con una proposta concreta. Solitamente entro 24 ore.
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid md:grid-cols-2 gap-8">
             <Card>

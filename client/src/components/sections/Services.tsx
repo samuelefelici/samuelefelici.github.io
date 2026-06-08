@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Globe, AppWindow, Workflow } from "lucide-react";
 import { motion } from "framer-motion";
+import { Reveal } from "@/components/Reveal";
 
 const services = [
   {
@@ -27,12 +28,12 @@ export function Services() {
   return (
     <section id="services" className="py-20 bg-secondary/30">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-16">
+        <Reveal className="text-center mb-16">
           <h2 className="text-3xl font-bold font-heading mb-4">Cosa posso costruire per te</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Soluzioni chiare e su misura per chi vuole partire in fretta, senza grandi budget e senza complicazioni tecniche.
           </p>
-        </div>
+        </Reveal>
 
         <div className="grid md:grid-cols-3 gap-8">
           {services.map((service, index) => (
