@@ -1,5 +1,6 @@
 import { ArrowUp, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PrivacyDialog } from "@/components/PrivacyDialog";
 
 export function Footer() {
   const scrollToTop = () => {
@@ -13,7 +14,15 @@ export function Footer() {
           © {new Date().getFullYear()} Samuele Felici. Ancona | Sviluppo software & siti web.
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
+          <PrivacyDialog
+            trigger={
+              <button type="button" className="text-sm text-muted-foreground hover:text-foreground" data-testid="link-privacy">
+                Privacy
+              </button>
+            }
+          />
+          <div className="flex items-center gap-1">
           <Button variant="ghost" size="icon" asChild aria-label="GitHub">
             <a href="https://github.com/samuelefelici" target="_blank" rel="noopener noreferrer" data-testid="link-footer-github">
               <Github className="w-4 h-4" />
@@ -32,6 +41,7 @@ export function Footer() {
           <Button variant="ghost" size="icon" onClick={scrollToTop} aria-label="Torna su" data-testid="button-back-to-top">
             <ArrowUp className="w-4 h-4" />
           </Button>
+          </div>
         </div>
       </div>
     </footer>

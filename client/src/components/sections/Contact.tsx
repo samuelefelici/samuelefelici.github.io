@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
+import { PrivacyDialog } from "@/components/PrivacyDialog";
 import { Mail, Linkedin, Github, MapPin, Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 
 /**
@@ -24,9 +26,11 @@ export function Contact() {
     message: ""
   });
   const [status, setStatus] = useState<Status>("idle");
+  const [consent, setConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!consent) return;
     setStatus("submitting");
 
     const payload = {
@@ -51,6 +55,7 @@ export function Contact() {
       if (data.success) {
         setStatus("success");
         setFormData({ name: "", email: "", objective: "", message: "" });
+        setConsent(false);
       } else {
         setStatus("error");
       }
@@ -165,6 +170,25 @@ export function Contact() {
                   />
                 </div>
 
+                <div className="flex items-start gap-2">
+                  <Checkbox
+                    id="consent"
+                    checked={consent}
+                    onCheckedChange={(c) => setConsent(c === true)}
+                    className="mt-0.5"
+                    data-testid="checkbox-consent"
+                  />
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    <label htmlFor="consent" className="cursor-pointer">Ho letto e accetto l'</label>
+                    <PrivacyDialog
+                      trigger={
+                        <button type="button" className="underline hover:text-primary">informativa privacy</button>
+                      }
+                    />
+                    <label htmlFor="consent" className="cursor-pointer">. I dati servono solo a rispondere alla tua richiesta.</label>
+                  </p>
+                </div>
+
                 {status === "error" && (
                   <div className="flex items-center gap-2 text-sm text-destructive" data-testid="form-error">
                     <AlertCircle className="w-4 h-4 shrink-0" />
@@ -172,7 +196,7 @@ export function Contact() {
                   </div>
                 )}
 
-                <Button type="submit" className="w-full gap-2" disabled={status === "submitting"} data-testid="button-submit">
+                <Button type="submit" className="w-full gap-2" disabled={status === "submitting" || !consent} data-testid="button-submit">
                   {status === "submitting" ? (
                     <>
                       Invio in corso <Loader2 className="w-4 h-4 animate-spin" />
