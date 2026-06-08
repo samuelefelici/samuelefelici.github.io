@@ -43,7 +43,13 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background font-sans text-foreground">
+    <div className="min-h-screen font-sans text-foreground">
+      {/* bagliori soft di sfondo (coi colori del brand) */}
+      <div aria-hidden className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div className="absolute top-[8%] left-[4%] w-[32rem] h-[32rem] rounded-full bg-primary/[0.07] blur-3xl" />
+        <div className="absolute top-[45%] right-[2%] w-[28rem] h-[28rem] rounded-full bg-[#8b5cf6]/[0.06] blur-3xl" />
+        <div className="absolute bottom-[6%] left-[28%] w-[26rem] h-[26rem] rounded-full bg-[#22c55e]/[0.05] blur-3xl" />
+      </div>
       <Navbar />
       <main>
         <Hero />

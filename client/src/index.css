@@ -120,6 +120,8 @@
   }
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    background-image: radial-gradient(circle, hsl(var(--foreground) / 0.05) 1px, transparent 1.5px);
+    background-size: 26px 26px;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading tracking-tight;
