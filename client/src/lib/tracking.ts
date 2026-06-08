@@ -6,7 +6,7 @@
 export const TRACKING = {
   ga4: "G-5YHCDZF5SE",        // Google Analytics 4 — es. "G-XXXXXXXXXX"
   googleAds: "",  // Google Ads — es. "AW-XXXXXXXXXX"
-  metaPixel: "",  // Meta (Facebook) Pixel — es. "1234567890123456"
+  metaPixel: "1005756371856293",  // Meta (Facebook) Pixel
 };
 
 export function hasAnyTracking(): boolean {
