@@ -4,7 +4,7 @@
  * e il banner cookie non compare. Incolla gli ID quando attivi gli strumenti.
  */
 export const TRACKING = {
-  ga4: "",        // Google Analytics 4 — es. "G-XXXXXXXXXX"
+  ga4: "G-5YHCDZF5SE",        // Google Analytics 4 — es. "G-XXXXXXXXXX"
   googleAds: "",  // Google Ads — es. "AW-XXXXXXXXXX"
   metaPixel: "",  // Meta (Facebook) Pixel — es. "1234567890123456"
 };
