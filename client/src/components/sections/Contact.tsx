@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
 import { PrivacyDialog } from "@/components/PrivacyDialog";
 import { Reveal } from "@/components/Reveal";
+import { trackLead } from "@/lib/tracking";
 import { Mail, Linkedin, Github, MapPin, Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 
 /**
@@ -57,6 +58,7 @@ export function Contact() {
         setStatus("success");
         setFormData({ name: "", email: "", objective: "", message: "" });
         setConsent(false);
+        trackLead();
       } else {
         setStatus("error");
       }

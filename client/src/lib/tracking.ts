@@ -13,6 +13,17 @@ export function hasAnyTracking(): boolean {
   return Boolean(TRACKING.ga4 || TRACKING.googleAds || TRACKING.metaPixel);
 }
 
+/** Da chiamare quando il form viene inviato con successo: segnala un "Lead" a Meta e Google. */
+export function trackLead(): void {
+  if (typeof window === "undefined") return;
+  const w = window as unknown as {
+    fbq?: (...a: unknown[]) => void;
+    gtag?: (...a: unknown[]) => void;
+  };
+  if (typeof w.fbq === "function") w.fbq("track", "Lead");
+  if (typeof w.gtag === "function") w.gtag("event", "generate_lead");
+}
+
 let loaded = false;
 
 /** Carica gli script di tracciamento (da chiamare SOLO dopo il consenso). */
