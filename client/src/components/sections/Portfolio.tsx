@@ -17,7 +17,7 @@ import { motion } from "framer-motion";
 const GITHUB_URL = "https://github.com/samuelefelici";
 
 /** Versione asset: bump per forzare browser/CDN a riscaricare le immagini bypassando la cache (404 vecchi inclusi). */
-const ASSET_V = "2";
+const ASSET_V = "3";
 const v = (src: string) => `${src}?v=${ASSET_V}`;
 
 type ProjectDetail = {
@@ -69,7 +69,7 @@ const projects: Project[] = [
           tagline: "Capire territorio e domanda",
           body:
             "Incrocia fonti eterogenee per misurare domanda e qualità del servizio: traffico (TomTom), demografia ISTAT, punti di interesse (OpenStreetMap), matrice O/D pendolare, meteo e telemetria di bordo (salite/discese, persone a bordo, incassi). Calcola copertura della popolazione e aree sottoservite.",
-          image: { src: "/assets/cerbero-dashboard.png", alt: "Dashboard: stato rete, mappa GTFS colorata per congestione, traffico live e punti di interesse" },
+          image: { src: "/assets/cerbero-dashboard.jpg", alt: "Dashboard: stato rete, mappa GTFS colorata per congestione, traffico live e punti di interesse" },
         },
         {
           icon: CalendarClock,
@@ -79,7 +79,7 @@ const projects: Project[] = [
           tagline: "Ottimizzare i turni",
           body:
             "Pipeline a due livelli su Google OR-Tools CP-SAT: turni macchina (minimizza flotta e percorrenze a vuoto) e turni guida con enumerazione dei duty nel rispetto della normativa (CCNL: max 7h30, pause, guida continua). Solver configurabile, avanzamento in tempo reale, confronto scenari.",
-          image: { src: "/assets/cerbero-scheduling.png", alt: "Scheduling Engine: Gantt dei turni macchina ottimizzati con OR-Tools CP-SAT" },
+          image: { src: "/assets/cerbero-scheduling.jpg", alt: "Scheduling Engine: Gantt dei turni macchina ottimizzati con OR-Tools CP-SAT" },
         },
         {
           icon: Ticket,
@@ -89,7 +89,7 @@ const projects: Project[] = [
           tagline: "Bigliettazione elettronica",
           body:
             "Implementazione completa GTFS-Fares v2: reti tariffarie, prodotti, aree, regole di interscambio. Cluster tariffari con matrice O/D precalcolata e un 'oracolo' che restituisce il prezzo atteso fra due fermate — usato come verifica indipendente contro l'addebito reale del validatore NFC.",
-          image: { src: "/assets/cerbero-fares.png", alt: "Fares Engine: partizioni territoriali (cluster tariffari) sulla mappa" },
+          image: { src: "/assets/cerbero-fares.jpg", alt: "Fares Engine: partizioni territoriali (cluster tariffari) sulla mappa" },
         },
         {
           icon: Route,
@@ -99,7 +99,7 @@ const projects: Project[] = [
           tagline: "Progettare e simulare la rete",
           body:
             "Planning Studio per costruire scenari su un feed baseline (modifica/sospensione di linee e fermate) e confrontarli. Isocrone pedonali, zone di coincidenza intermodali (treno/nave ↔ bus), classificazione linee e generazione del Programma di Esercizio.",
-          image: { src: "/assets/cerbero-network.png", alt: "Network Engine — Planner Studio: editor variante linea con tracciato e sequenza fermate" },
+          image: { src: "/assets/cerbero-network.jpg", alt: "Network Engine — Planner Studio: editor variante linea con tracciato e sequenza fermate" },
         },
       ],
       stack: [
@@ -140,7 +140,7 @@ const projects: Project[] = [
           tagline: "Monitoraggio del mezzo",
           body:
             "PWA che proietta in tempo reale la posizione GPS sul percorso programmato GTFS, ricavando automaticamente fermata corrente, tempi di percorrenza e soste.",
-          image: { src: "/assets/caronte-avm.png", alt: "Dispositivo AVM di bordo installato sul bus" },
+          image: { src: "/assets/caronte-avm.jpg", alt: "Dispositivo AVM di bordo installato sul bus" },
         },
         {
           icon: CreditCard,
@@ -149,7 +149,7 @@ const projects: Project[] = [
           tagline: "In sviluppo",
           body:
             "Gestione di salita (tap-IN) e discesa (tap-OUT) dei passeggeri. Per ogni viaggio legge dal Fares Engine la tariffa attesa e la confronta con quanto effettivamente addebitato, funzionando da oracolo di verifica della bigliettazione. Funzione non ancora in esercizio.",
-          image: { src: "/assets/caronte-app.png", alt: "App di bordo Caronte (PWA) su smartphone" },
+          image: { src: "/assets/caronte-app.jpg", alt: "App di bordo Caronte (PWA) su smartphone" },
         },
         {
           icon: Database,
