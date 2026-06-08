@@ -1,5 +1,5 @@
 import { CheckCircle2 } from "lucide-react";
-import profilePic from "@assets/fotoprofilo_1771501967887.png";
+import profilePic from "@assets/foto.jpg";
 
 export function WhyMe() {
   return (
