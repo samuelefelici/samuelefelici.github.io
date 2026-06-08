@@ -63,7 +63,7 @@ function MotorText({
   }, [inView, index, onActive]);
 
   return (
-    <div ref={ref} className="min-h-screen flex flex-col justify-center py-10">
+    <div ref={ref} className="lg:min-h-screen flex flex-col justify-center py-8 lg:py-10">
       <motion.div
         initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
