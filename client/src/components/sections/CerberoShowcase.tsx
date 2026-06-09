@@ -63,7 +63,7 @@ function MotorText({
   }, [inView, index, onActive]);
 
   return (
-    <div ref={ref} className="lg:min-h-screen flex flex-col justify-center py-8 lg:py-10">
+    <div ref={ref} className="lg:min-h-screen flex flex-col justify-center py-10 lg:py-12">
       <motion.div
         initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -71,20 +71,20 @@ function MotorText({
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       >
         {/* logo grande del motore — elemento centrale */}
-        <div className="relative w-28 h-28 md:w-36 md:h-36 mb-6 flex items-center justify-center">
+        <div className="relative w-56 h-56 md:w-72 md:h-72 mb-8 flex items-center justify-center">
           <div className="absolute inset-0 rounded-full blur-2xl" style={{ backgroundColor: m.color, opacity: 0.4 }} />
           <img src={m.logo + V} alt="" loading="lazy" className="relative w-full h-full object-contain drop-shadow-xl" />
         </div>
         <span
-          className="inline-block w-fit text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3"
+          className="inline-block w-fit text-sm font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4"
           style={{ color: m.color, backgroundColor: `${m.color}1a` }}
         >
           0{index + 1} — {m.tagline}
         </span>
-        <h3 className="text-2xl md:text-3xl font-bold mb-3" style={{ color: m.color }}>
+        <h3 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: m.color }}>
           {m.title}
         </h3>
-        <p className="text-muted-foreground leading-relaxed max-w-md">{m.body}</p>
+        <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl">{m.body}</p>
 
         {/* immagine inline solo su mobile */}
         <div className="lg:hidden mt-6 rounded-xl border border-border overflow-hidden shadow-lg">
@@ -109,10 +109,10 @@ export function CerberoShowcase() {
         style={{ opacity: 0.08 }}
       />
       <div className="container mx-auto px-4 md:px-6">
-        <Reveal className="text-center mb-12">
+        <Reveal className="text-center mb-14">
           <span className="text-sm font-semibold uppercase tracking-wider text-primary">Caso studio</span>
-          <h2 className="text-3xl md:text-4xl font-bold font-heading mt-2 mb-4">Dentro Cerbero</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold font-heading mt-3 mb-5">Dentro Cerbero</h2>
+          <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Una piattaforma full-stack di intelligence per il Trasporto Pubblico Locale, su dati reali.
             Quattro motori, un solo sistema.
           </p>

@@ -19,7 +19,7 @@ export function Process() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           {steps.map((step, index) => (
             <div key={index} className="relative text-center group">
-              <div className="text-6xl font-bold text-muted/40 mb-4 group-hover:text-primary/20 transition-colors font-mono">
+              <div className="text-6xl font-black text-primary/65 dark:text-primary/75 mb-4 group-hover:text-primary transition-colors font-mono drop-shadow-[0_2px_10px_hsl(var(--primary)/0.28)]">
                 {step.num}
               </div>
               <h3 className="text-lg font-bold mb-2">{step.title}</h3>

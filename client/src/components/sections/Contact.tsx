@@ -68,18 +68,19 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-secondary/30">
+    <section id="contact" className="py-20">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-4xl mx-auto">
           <Reveal className="text-center mb-12">
-            <h2 className="text-3xl font-bold font-heading mb-4">Parliamo del tuo progetto</h2>
-            <p className="text-muted-foreground">
-              Raccontami la tua idea e ti rispondo con una proposta concreta. Solitamente entro 24 ore.
+            <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Contatto</p>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">Parliamo del tuo progetto</h2>
+            <p className="text-muted-foreground text-lg">
+              Ti rispondo con una proposta concreta e comprensibile, senza tecnicismi inutili.
             </p>
           </Reveal>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <Card>
+            <Card className="border-border/80 bg-background/90">
               <CardContent className="p-8 space-y-8">
                 <div>
                   <h3 className="text-lg font-bold mb-4">Contatti</h3>
@@ -103,10 +104,9 @@ export function Contact() {
                   </div>
                 </div>
 
-                <div className="p-4 bg-primary/5 rounded-lg border border-primary/10">
-                  <p className="text-sm text-muted-foreground">
-                    "Preferisco una soluzione semplice che funziona oggi a una perfetta che non arriva mai."
-                  </p>
+                <div className="p-4 bg-primary/5 rounded-lg border border-primary/10 space-y-2">
+                  <p className="text-sm text-muted-foreground font-medium">Risposta media: entro 24 ore lavorative</p>
+                  <p className="text-sm text-muted-foreground">Analizziamo insieme priorita, tempi e budget prima di iniziare.</p>
                 </div>
               </CardContent>
             </Card>

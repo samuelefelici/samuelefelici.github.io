@@ -2,20 +2,30 @@ import { CheckCircle2 } from "lucide-react";
 import profilePic from "@assets/foto.jpg";
 
 export function WhyMe() {
+  const paragraphs = [
+    "Gestisci ancora la tua azienda tra fogli Excel, messaggi WhatsApp e carta? C'e un modo migliore.",
+    "Sono Samuele Felici. Sviluppo applicazioni su misura per piccole imprese che vogliono smettere di perdere tempo in operazioni manuali.",
+    "Non sono il classico sviluppatore che parla solo di tecnologia. Vengo da anni di gestione operativa - coordinamento del personale, pianificazione, organizzazione dei processi. So com'e mandare avanti un'azienda da dentro, non da dietro uno schermo.",
+    "Quando un imprenditore mi racconta che perde due ore al giorno a copiare dati da un foglio all'altro, o che non riesce a capire come sta andando il mese senza chiamare il commercialista, non ho bisogno che me lo spieghi due volte.",
+    "Studio Ingegneria Informatica al Politecnico di Milano e costruisco strumenti semplici: un'app che consulti dal telefono, un gestionale che fa in automatico quello che oggi fai a mano, un pannello dove vedi i numeri che contano senza aspettare nessuno.",
+    "Lavori direttamente con me, dall'inizio alla consegna - e anche dopo.",
+  ];
+
   return (
     <section id="about" className="py-20">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">
             <h2 className="text-3xl font-bold font-heading mb-6">
-              Non solo codice: <span className="text-primary">capisco i tuoi processi</span>.
+              Dalla tua operativita quotidiana a <span className="text-primary">strumenti digitali semplici</span>.
             </h2>
-            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              Prima ancora di sviluppare, vengo dalla gestione operativa: anni a coordinare turni, flotte e persone mi hanno insegnato a leggere un'organizzazione e a individuare in fretta dove si nascondono i colli di bottiglia.
-            </p>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Per te significa software che nasce dal problema reale, non dalla tecnologia. E lavorando come freelance senza struttura: costi contenuti, rapporto diretto e soluzioni su misura, ideali per chi vuole partire in fretta e senza grandi budget.
-            </p>
+            <div className="space-y-5 mb-8">
+              {paragraphs.map((text, i) => (
+                <p key={i} className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                  {text}
+                </p>
+              ))}
+            </div>
 
             <div className="space-y-4">
               {[
