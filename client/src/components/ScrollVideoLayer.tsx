@@ -93,14 +93,15 @@ export function ScrollVideoLayer() {
           playsInline
           preload={i === 0 ? "auto" : "metadata"}
           poster={`/assets/videos/${scene.src}.jpg`}
-          className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700 dark:brightness-[.3] dark:saturate-150"
+          className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700 dark:brightness-[.25] dark:contrast-125 dark:saturate-150"
         >
           <source src={`/assets/videos/${scene.src}.webm`} type="video/webm" />
           <source src={`/assets/videos/${scene.src}.mp4`} type="video/mp4" />
         </video>
       ))}
-      {/* velo per tenere leggibile il contenuto sopra il video */}
-      <div className="absolute inset-0 bg-background/40 dark:bg-background/35" />
+      {/* niente velo pieno: il video resta vivo e si fonde con la pagina;
+          solo i bordi alto/basso sfumano nel colore di sfondo */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-transparent to-background/70" />
     </div>
   );
 }
