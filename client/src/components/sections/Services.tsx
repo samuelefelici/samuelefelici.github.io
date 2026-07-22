@@ -36,7 +36,7 @@ export function Services() {
     <section id="services" className="py-20 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
         <Reveal className="mb-14">
-          <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-background/80 backdrop-blur-xl p-7 md:p-10">
+          <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-background/25 backdrop-blur-md p-7 md:p-10">
             <div className="absolute -top-24 -right-20 w-72 h-72 rounded-full bg-primary/20 blur-3xl" aria-hidden />
             <div className="absolute -bottom-24 -left-12 w-60 h-60 rounded-full bg-cyan-400/20 blur-3xl" aria-hidden />
 
@@ -53,7 +53,7 @@ export function Services() {
 
               <div className="grid grid-cols-2 gap-3">
                 {stackBadges.map((badge) => (
-                  <div key={badge.label} className="rounded-2xl border border-border/70 bg-background/90 px-4 py-3 shadow-sm">
+                  <div key={badge.label} className="rounded-2xl border border-border/70 bg-background/30 backdrop-blur-md px-4 py-3 shadow-sm">
                     <badge.icon className="w-5 h-5 text-primary mb-2" />
                     <p className="text-sm font-semibold">{badge.label}</p>
                   </div>
@@ -62,9 +62,9 @@ export function Services() {
             </div>
 
             <div className="relative mt-7 flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-              <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/90 px-3 py-1.5"><Rocket className="w-3.5 h-3.5 text-primary" /> Go-live rapido</span>
-              <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/90 px-3 py-1.5"><Wand2 className="w-3.5 h-3.5 text-primary" /> Design su misura</span>
-              <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/90 px-3 py-1.5"><ShieldCheck className="w-3.5 h-3.5 text-primary" /> Base solida e scalabile</span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/30 backdrop-blur-md px-3 py-1.5"><Rocket className="w-3.5 h-3.5 text-primary" /> Go-live rapido</span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/30 backdrop-blur-md px-3 py-1.5"><Wand2 className="w-3.5 h-3.5 text-primary" /> Design su misura</span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/30 backdrop-blur-md px-3 py-1.5"><ShieldCheck className="w-3.5 h-3.5 text-primary" /> Base solida e scalabile</span>
             </div>
           </div>
         </Reveal>
@@ -78,7 +78,7 @@ export function Services() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="h-full border border-border/80 bg-background/90 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group overflow-hidden" data-testid={`card-service-${index}`}>
+              <Card className="h-full border border-border/80 bg-background/25 backdrop-blur-md shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group overflow-hidden" data-testid={`card-service-${index}`}>
                 <CardHeader>
                   <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary/40 via-cyan-400/60 to-amber-300/50 opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="flex items-center justify-between mb-4">

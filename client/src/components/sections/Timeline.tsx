@@ -28,7 +28,7 @@ const groups = [
 
 export function Timeline() {
   return (
-    <section id="competenze" className="py-20 bg-background border-t border-border">
+    <section id="competenze" className="py-20 border-t border-border">
       <div className="container mx-auto px-4 md:px-6">
         <Reveal className="text-center mb-12">
           <h2 className="text-3xl font-bold font-heading mb-4">Competenze & Tecnologie</h2>
@@ -46,7 +46,7 @@ export function Timeline() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.08 }}
-              className="rounded-xl border border-border bg-card/50 p-5"
+              className="rounded-xl border border-border bg-card/25 backdrop-blur-md p-5"
             >
               <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
                 <group.icon className="w-5 h-5" />

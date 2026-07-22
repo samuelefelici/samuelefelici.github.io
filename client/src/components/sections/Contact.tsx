@@ -80,7 +80,7 @@ export function Contact() {
           </Reveal>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <Card className="border-border/80 bg-background/90">
+            <Card className="border-border/80 bg-background/25 backdrop-blur-md">
               <CardContent className="p-8 space-y-8">
                 <div>
                   <h3 className="text-lg font-bold mb-4">Contatti</h3>
@@ -112,7 +112,7 @@ export function Contact() {
             </Card>
 
             {status === "success" ? (
-              <div className="flex flex-col items-center justify-center text-center p-8 rounded-lg border border-primary/20 bg-primary/5" data-testid="form-success">
+              <div className="flex flex-col items-center justify-center text-center p-8 rounded-lg border border-primary/20 bg-background/25 backdrop-blur-md" data-testid="form-success">
                 <CheckCircle2 className="w-12 h-12 text-primary mb-4" />
                 <h3 className="text-xl font-bold mb-2">Messaggio inviato!</h3>
                 <p className="text-muted-foreground mb-6">
@@ -123,7 +123,7 @@ export function Contact() {
                 </Button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4" data-testid="form-contact">
+              <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-border/60 bg-background/25 backdrop-blur-md p-6" data-testid="form-contact">
                 {/* honeypot anti-spam (nascosto) */}
                 <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
 

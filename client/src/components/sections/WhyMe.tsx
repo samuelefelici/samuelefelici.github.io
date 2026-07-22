@@ -15,7 +15,7 @@ export function WhyMe() {
     <section id="about" className="py-20">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="order-2 md:order-1">
+          <div className="order-2 md:order-1 rounded-3xl border border-border/60 bg-background/25 backdrop-blur-md p-6 md:p-8">
             <h2 className="text-3xl font-bold font-heading mb-6">
               Dalla tua operativita quotidiana a <span className="text-primary">strumenti digitali semplici</span>.
             </h2>
