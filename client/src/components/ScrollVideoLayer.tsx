@@ -36,13 +36,15 @@ export function ScrollVideoLayer() {
 
     const tick = () => {
       raf = requestAnimationFrame(tick);
-      const centerY = window.innerHeight * 0.5;
+      const vh = window.innerHeight;
+      const centerY = vh * 0.5;
 
       // sezione attiva = l'ultima il cui bordo superiore ha superato il
-      // centro del viewport. Il progresso va da 0 (momento in cui la sezione
-      // diventa attiva) a 1 (handoff alla successiva), distribuito su tutto
-      // lo scroll della sezione. La prima sezione è già attiva a inizio
-      // pagina col bordo in cima al viewport, quindi usa il proprio range.
+      // centro del viewport (così la transizione al video successivo parte
+      // mentre la scena nuova sta subentrando). Il progresso usa la stessa
+      // formula delle scene pinned di <Scene />: 0 quando la scena si
+      // aggancia in cima al viewport, 1 quando si sgancia — video e
+      // coreografia delle card restano perfettamente sincronizzati.
       let active = 0;
       let progress = 0;
       for (let i = 0; i < SCENES.length; i++) {
@@ -51,11 +53,7 @@ export function ScrollVideoLayer() {
         const r = el.getBoundingClientRect();
         if (r.top <= centerY) {
           active = i;
-          progress =
-            i === 0
-              ? -r.top / Math.max(1, r.height - centerY)
-              : (centerY - r.top) / Math.max(1, r.height);
-          progress = Math.min(1, Math.max(0, progress));
+          progress = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - vh)));
         }
       }
 

@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
 import { PrivacyDialog } from "@/components/PrivacyDialog";
-import { Reveal } from "@/components/Reveal";
+import { Scene } from "@/components/Scene";
 import { trackLead } from "@/lib/tracking";
 import { Mail, Linkedin, Github, MapPin, Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 
@@ -68,19 +68,19 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20">
-      <div className="container mx-auto px-4 md:px-6">
+    <Scene id="contact" heightVh={200} className="flex items-center pt-16">
+      <div className="container mx-auto px-4 md:px-6 w-full">
         <div className="max-w-4xl mx-auto">
-          <Reveal className="text-center mb-12">
+          <div data-from="0.05" data-to="2" className="text-center mb-12">
             <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Contatto</p>
             <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">Parliamo del tuo progetto</h2>
             <p className="text-muted-foreground text-lg">
               Ti rispondo con una proposta concreta e comprensibile, senza tecnicismi inutili.
             </p>
-          </Reveal>
+          </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <Card className="border-border/80 bg-background/25 backdrop-blur-md">
+            <Card data-from="0.12" data-to="2" className="border-border/80 bg-background/25 backdrop-blur-md">
               <CardContent className="p-8 space-y-8">
                 <div>
                   <h3 className="text-lg font-bold mb-4">Contatti</h3>
@@ -112,7 +112,7 @@ export function Contact() {
             </Card>
 
             {status === "success" ? (
-              <div className="flex flex-col items-center justify-center text-center p-8 rounded-lg border border-primary/20 bg-background/25 backdrop-blur-md" data-testid="form-success">
+              <div data-from="0.2" data-to="2" className="flex flex-col items-center justify-center text-center p-8 rounded-lg border border-primary/20 bg-background/25 backdrop-blur-md" data-testid="form-success">
                 <CheckCircle2 className="w-12 h-12 text-primary mb-4" />
                 <h3 className="text-xl font-bold mb-2">Messaggio inviato!</h3>
                 <p className="text-muted-foreground mb-6">
@@ -123,7 +123,7 @@ export function Contact() {
                 </Button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-border/60 bg-background/25 backdrop-blur-md p-6" data-testid="form-contact">
+              <form data-from="0.2" data-to="2" onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-border/60 bg-background/25 backdrop-blur-md p-6" data-testid="form-contact">
                 {/* honeypot anti-spam (nascosto) */}
                 <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
 
@@ -215,6 +215,6 @@ export function Contact() {
           </div>
         </div>
       </div>
-    </section>
+    </Scene>
   );
 }

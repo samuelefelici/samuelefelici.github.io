@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
-import { Reveal } from "@/components/Reveal";
+import { Scene } from "@/components/Scene";
 import { Counter } from "@/components/Counter";
 
 const V = "?v=3";
@@ -47,140 +45,81 @@ const stats = [
   { to: 4, label: "motori in produzione" },
 ];
 
-function MotorText({
-  m,
-  index,
-  onActive,
-}: {
-  m: (typeof motori)[number];
-  index: number;
-  onActive: (i: number) => void;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { margin: "-45% 0px -45% 0px" });
-  useEffect(() => {
-    if (inView) onActive(index);
-  }, [inView, index, onActive]);
-
-  return (
-    <div ref={ref} className="lg:min-h-screen flex flex-col justify-center py-10 lg:py-12">
-      <motion.div
-        initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
-        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      >
-        {/* logo grande del motore — elemento centrale */}
-        <div className="relative w-56 h-56 md:w-72 md:h-72 mb-8 flex items-center justify-center">
-          <div className="absolute inset-0 rounded-full blur-2xl" style={{ backgroundColor: m.color, opacity: 0.4 }} />
-          <img src={m.logo + V} alt="" loading="lazy" className="relative w-full h-full object-contain drop-shadow-xl" />
-        </div>
-        <span
-          className="inline-block w-fit text-sm font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4"
-          style={{ color: m.color, backgroundColor: `${m.color}1a` }}
-        >
-          0{index + 1} — {m.tagline}
-        </span>
-        <h3 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: m.color }}>
-          {m.title}
-        </h3>
-        <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl">{m.body}</p>
-
-        {/* immagine inline solo su mobile */}
-        <div className="lg:hidden mt-6 rounded-xl border border-border overflow-hidden shadow-lg">
-          <img src={m.image + V} alt={m.title} loading="lazy" className="w-full h-auto block" />
-        </div>
-      </motion.div>
-    </div>
-  );
-}
+// ogni motore occupa un quinto della scena, dopo l'intro — nel video le
+// quattro diramazioni colorate si accendono nello stesso ordine
+const MOTOR_RANGES = [
+  [0.2, 0.4],
+  [0.4, 0.6],
+  [0.6, 0.8],
+  [0.8, 0.97],
+] as const;
 
 export function CerberoShowcase() {
-  const [active, setActive] = useState(0);
-
   return (
-    <section id="cerbero" className="relative py-20 md:py-28 overflow-x-clip border-t border-border">
-      {/* tinta dell'intero sfondo, cambia col motore attivo */}
-      <motion.div
-        aria-hidden
-        className="absolute inset-0 -z-10"
-        animate={{ backgroundColor: motori[active].color }}
-        transition={{ duration: 0.8 }}
-        style={{ opacity: 0.08 }}
-      />
-      <div className="container mx-auto px-4 md:px-6">
-        <Reveal className="text-center mb-14">
+    <Scene id="cerbero" heightVh={450}>
+      {/* fase 1: intro con i contatori */}
+      <div data-from="0.02" data-to="0.17" className="absolute inset-0 flex items-center pt-16">
+        <div className="container mx-auto px-4 md:px-6 text-center">
           <span className="text-sm font-semibold uppercase tracking-wider text-primary">Caso studio</span>
-          <h2 className="text-4xl md:text-5xl font-bold font-heading mt-3 mb-5">Dentro Cerbero</h2>
-          <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <h2 className="text-4xl md:text-6xl font-bold font-heading mt-3 mb-5">Dentro Cerbero</h2>
+          <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-10">
             Una piattaforma full-stack di intelligence per il Trasporto Pubblico Locale, su dati reali.
             Quattro motori, un solo sistema.
           </p>
-        </Reveal>
-
-        {/* contatori animati */}
-        <Reveal className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 max-w-3xl mx-auto">
-          {stats.map((s) => (
-            <div key={s.label} className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-foreground">
-                <Counter to={s.to} prefix={s.prefix ?? ""} />
-              </div>
-              <div className="text-xs md:text-sm text-muted-foreground mt-1">{s.label}</div>
-            </div>
-          ))}
-        </Reveal>
-
-        {/* scrollytelling */}
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* colonna sticky con crossfade (desktop) — centrata verticalmente */}
-          <div className="hidden lg:block">
-            <div className="sticky top-0 h-screen flex items-center">
-              <div className="relative w-full">
-                {/* aura unica che attraversa entrambe le colonne e segue il viewport */}
-                <motion.div
-                  aria-hidden
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[160%] h-[130%] -z-10 rounded-full blur-3xl"
-                  animate={{
-                    backgroundColor: motori[active].color,
-                    opacity: [0.14, 0.22, 0.14],
-                    scale: [1, 1.06, 1],
-                  }}
-                  transition={{
-                    backgroundColor: { duration: 0.6 },
-                    opacity: { duration: 7, repeat: Infinity, ease: "easeInOut" },
-                    scale: { duration: 7, repeat: Infinity, ease: "easeInOut" },
-                  }}
-                />
-                <div className="relative rounded-xl border border-border bg-card shadow-2xl overflow-hidden aspect-[16/10]">
-                  <div className="flex items-center gap-1.5 px-3 py-2.5 border-b border-border bg-secondary/40 relative z-10">
-                    <span className="w-3 h-3 rounded-full bg-red-400/70" />
-                    <span className="w-3 h-3 rounded-full bg-yellow-400/70" />
-                    <span className="w-3 h-3 rounded-full bg-green-400/70" />
-                  </div>
-                  {motori.map((m, i) => (
-                    <motion.img
-                      key={m.title}
-                      src={m.image + V}
-                      alt={m.title}
-                      loading="lazy"
-                      className="absolute inset-0 top-[42px] w-full h-[calc(100%-42px)] object-cover object-top"
-                      animate={{ opacity: active === i ? 1 : 0, scale: active === i ? 1 : 1.05 }}
-                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    />
-                  ))}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+            {stats.map((s) => (
+              <div key={s.label} className="text-center rounded-2xl border border-border/60 bg-background/25 backdrop-blur-md p-4">
+                <div className="text-3xl md:text-4xl font-bold text-foreground">
+                  <Counter to={s.to} prefix={s.prefix ?? ""} />
                 </div>
+                <div className="text-xs md:text-sm text-muted-foreground mt-1">{s.label}</div>
               </div>
-            </div>
-          </div>
-
-          {/* colonna testi */}
-          <div>
-            {motori.map((m, i) => (
-              <MotorText key={m.title} m={m} index={i} onActive={setActive} />
             ))}
           </div>
         </div>
       </div>
-    </section>
+
+      {/* fase 2: i quattro motori, uno per volta, in sincrono con le
+          diramazioni colorate del video */}
+      {motori.map((m, i) => (
+        <div
+          key={m.title}
+          data-from={MOTOR_RANGES[i][0]}
+          data-to={MOTOR_RANGES[i][1]}
+          className="absolute inset-0 flex items-center pt-16"
+        >
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="grid lg:grid-cols-2 gap-10 items-center">
+              <div className="rounded-3xl border border-border/60 bg-background/25 backdrop-blur-md p-6 md:p-8">
+                <div className="flex items-center gap-4 mb-5">
+                  <img src={m.logo + V} alt="" loading="lazy" className="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-xl" />
+                  <span
+                    className="inline-block w-fit text-sm font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full"
+                    style={{ color: m.color, backgroundColor: `${m.color}1a` }}
+                  >
+                    0{i + 1} — {m.tagline}
+                  </span>
+                </div>
+                <h3 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: m.color }}>
+                  {m.title}
+                </h3>
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{m.body}</p>
+              </div>
+
+              <div className="hidden lg:block">
+                <div className="rounded-xl border border-border bg-card shadow-2xl overflow-hidden">
+                  <div className="flex items-center gap-1.5 px-3 py-2.5 border-b border-border bg-secondary/40">
+                    <span className="w-3 h-3 rounded-full bg-red-400/70" />
+                    <span className="w-3 h-3 rounded-full bg-yellow-400/70" />
+                    <span className="w-3 h-3 rounded-full bg-green-400/70" />
+                  </div>
+                  <img src={m.image + V} alt={m.title} loading="lazy" className="w-full h-auto block" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </Scene>
   );
 }
