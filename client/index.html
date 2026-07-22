@@ -69,13 +69,14 @@
   </head>
   <body>
     <script>
-      // Imposta il tema prima del render (dark di default) per evitare il flash
+      // Imposta il tema prima del render (chiaro di default, coerente con i
+      // video di sfondo bianchi) per evitare il flash
       (function () {
         try {
-          var t = localStorage.getItem("theme") || "dark";
+          var t = localStorage.getItem("theme") || "light";
           if (t === "dark") document.documentElement.classList.add("dark");
         } catch (e) {
-          document.documentElement.classList.add("dark");
+          /* tema chiaro di default */
         }
       })();
     </script>

@@ -38,9 +38,9 @@ export function Hero() {
             </div>
 
             <div className="mt-8 grid sm:grid-cols-3 gap-3 text-sm">
-              <div className="rounded-xl bg-background/50 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Analisi obiettivi gratuita</div>
-              <div className="rounded-xl bg-background/50 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Lavoro remoto in tutta Italia</div>
-              <div className="rounded-xl bg-background/50 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Roadmap chiara fin dal giorno 1</div>
+              <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Analisi obiettivi gratuita</div>
+              <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Lavoro remoto in tutta Italia</div>
+              <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Roadmap chiara fin dal giorno 1</div>
             </div>
           </motion.div>
 
@@ -50,17 +50,17 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="relative"
           >
-            <div className="rounded-3xl border border-border/80 bg-background/55 backdrop-blur-xl p-6 md:p-7 shadow-xl">
+            <div className="rounded-3xl border border-border/80 bg-background/25 backdrop-blur-md p-6 md:p-7 shadow-xl">
               <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-5">Come lavoro</p>
               <div className="space-y-4">
-                <div className="flex items-start gap-3 rounded-xl border border-border/80 bg-secondary/25 backdrop-blur-sm p-4">
+                <div className="flex items-start gap-3 rounded-xl border border-border/80 bg-secondary/15 backdrop-blur-sm p-4">
                   <CircleCheckBig className="w-5 h-5 text-primary mt-0.5" />
                   <div>
                     <p className="font-semibold">Focus sul risultato</p>
                     <p className="text-sm text-muted-foreground">Ogni soluzione nasce da un obiettivo di business, non da una moda tecnica.</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 rounded-xl border border-border/80 bg-secondary/25 backdrop-blur-sm p-4">
+                <div className="flex items-start gap-3 rounded-xl border border-border/80 bg-secondary/15 backdrop-blur-sm p-4">
                   <Clock3 className="w-5 h-5 text-primary mt-0.5" />
                   <div>
                     <p className="font-semibold">Tempi e budget sotto controllo</p>

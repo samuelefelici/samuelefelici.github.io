@@ -46,7 +46,7 @@ export function Timeline() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.08 }}
-              className="rounded-xl border border-border bg-card/40 backdrop-blur-md p-5"
+              className="rounded-xl border border-border bg-card/25 backdrop-blur-md p-5"
             >
               <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
                 <group.icon className="w-5 h-5" />

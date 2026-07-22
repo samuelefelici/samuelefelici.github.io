@@ -99,9 +99,6 @@ export function ScrollVideoLayer() {
           <source src={`/assets/videos/${scene.src}.mp4`} type="video/mp4" />
         </video>
       ))}
-      {/* niente velo pieno: il video resta vivo e si fonde con la pagina;
-          solo i bordi alto/basso sfumano nel colore di sfondo */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-transparent to-background/70" />
     </div>
   );
 }
