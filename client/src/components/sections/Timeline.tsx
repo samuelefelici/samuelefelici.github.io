@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Layers, Server, Cpu, Wrench } from "lucide-react";
 import { motion } from "framer-motion";
 import { Reveal } from "@/components/Reveal";
+import { SectionVideo } from "@/components/SectionVideo";
 
 const groups = [
   {
@@ -62,6 +63,8 @@ export function Timeline() {
             </motion.div>
           ))}
         </div>
+
+        <SectionVideo name="05-timeline" className="mt-12 max-w-4xl mx-auto" />
       </div>
     </section>
   );

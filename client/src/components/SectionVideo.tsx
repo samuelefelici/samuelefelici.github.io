@@ -16,13 +16,13 @@ import { motion } from "framer-motion";
  */
 export function SectionVideo({
   name,
-  poster = false,
+  poster = true,
   className,
   delay = 0,
 }: {
   /** Nome base del file, es. "03-cerbero" */
   name: string;
-  /** true se esiste anche il poster JPG con lo stesso nome base */
+  /** false per disattivare il poster JPG con lo stesso nome base */
   poster?: boolean;
   className?: string;
   delay?: number;
@@ -53,7 +53,7 @@ export function SectionVideo({
 
   return (
     <motion.div
-      className={className}
+      className={`overflow-hidden rounded-2xl border border-border/80 bg-white shadow-lg ${className ?? ""}`}
       initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-80px" }}
@@ -66,7 +66,7 @@ export function SectionVideo({
         playsInline
         preload="metadata"
         poster={poster ? `/assets/videos/${name}.jpg` : undefined}
-        className="w-full h-auto rounded-2xl"
+        className="w-full h-auto block"
         aria-hidden
       >
         <source src={`/assets/videos/${name}.webm`} type="video/webm" />

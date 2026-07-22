@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Reveal } from "@/components/Reveal";
 import { Counter } from "@/components/Counter";
+import { SectionVideo } from "@/components/SectionVideo";
 
 const V = "?v=3";
 
@@ -129,6 +130,8 @@ export function CerberoShowcase() {
             </div>
           ))}
         </Reveal>
+
+        <SectionVideo name="03-cerbero" className="max-w-3xl mx-auto mb-14" />
 
         {/* scrollytelling */}
         <div className="grid lg:grid-cols-2 gap-12">

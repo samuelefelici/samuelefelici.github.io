@@ -1,5 +1,9 @@
 # Brief per l'integrazione dei video di sezione
 
+> **NOTA: integrazione completata.** Ogni sezione include già il proprio
+> `<SectionVideo />`; questo documento resta come riferimento dei vincoli
+> per modifiche future.
+
 Contesto per l'agente (Antigravity o altro): questo repo è un sito one-page
 React + Vite + Tailwind + framer-motion, con smooth scroll gestito da Lenis in
 `client/src/App.tsx`.
