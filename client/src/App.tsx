@@ -10,6 +10,7 @@ import { Process } from "./components/sections/Process";
 import { Contact } from "./components/sections/Contact";
 import { Footer } from "./components/sections/Footer";
 import { ConsentBanner } from "./components/ConsentBanner";
+import { ScrollVideoLayer } from "./components/ScrollVideoLayer";
 
 function App() {
   useEffect(() => {
@@ -51,6 +52,7 @@ function App() {
         <div className="site-bg__blob site-bg__blob--b" />
         <div className="site-bg__blob site-bg__blob--c" />
       </div>
+      <ScrollVideoLayer />
       <div className="relative z-10">
         <Navbar />
         <main>

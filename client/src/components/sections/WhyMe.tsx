@@ -1,6 +1,5 @@
 import { CheckCircle2 } from "lucide-react";
 import profilePic from "@assets/foto.jpg";
-import { SectionVideo } from "@/components/SectionVideo";
 
 export function WhyMe() {
   const paragraphs = [
@@ -57,8 +56,6 @@ export function WhyMe() {
             <div className="absolute -top-6 -left-6 w-24 h-24 bg-primary/5 rounded-full -z-10" />
           </div>
         </div>
-
-        <SectionVideo name="04-perche-io" className="mt-14 max-w-3xl mx-auto" />
       </div>
     </section>
   );

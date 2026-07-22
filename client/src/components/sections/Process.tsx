@@ -1,5 +1,4 @@
 import { Reveal } from "@/components/Reveal";
-import { SectionVideo } from "@/components/SectionVideo";
 
 export function Process() {
   const steps = [
@@ -28,8 +27,6 @@ export function Process() {
             </div>
           ))}
         </div>
-
-        <SectionVideo name="06-processo" className="mt-16 max-w-4xl mx-auto" />
       </div>
     </section>
   );

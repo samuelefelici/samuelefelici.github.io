@@ -2,7 +2,6 @@ import { Badge } from "@/components/ui/badge";
 import { Layers, Server, Cpu, Wrench } from "lucide-react";
 import { motion } from "framer-motion";
 import { Reveal } from "@/components/Reveal";
-import { SectionVideo } from "@/components/SectionVideo";
 
 const groups = [
   {
@@ -29,7 +28,7 @@ const groups = [
 
 export function Timeline() {
   return (
-    <section id="competenze" className="py-20 bg-background border-t border-border">
+    <section id="competenze" className="py-20 border-t border-border">
       <div className="container mx-auto px-4 md:px-6">
         <Reveal className="text-center mb-12">
           <h2 className="text-3xl font-bold font-heading mb-4">Competenze & Tecnologie</h2>
@@ -63,8 +62,6 @@ export function Timeline() {
             </motion.div>
           ))}
         </div>
-
-        <SectionVideo name="05-timeline" className="mt-12 max-w-4xl mx-auto" />
       </div>
     </section>
   );

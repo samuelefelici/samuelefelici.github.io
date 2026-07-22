@@ -2,7 +2,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Globe, AppWindow, Workflow, Bot, LineChart, ShieldCheck, Rocket, Layers3, Wand2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Reveal } from "@/components/Reveal";
-import { SectionVideo } from "@/components/SectionVideo";
 
 const services = [
   {
@@ -107,8 +106,6 @@ export function Services() {
             </motion.div>
           ))}
         </div>
-
-        <SectionVideo name="02-servizi" className="mt-12 max-w-4xl mx-auto" />
       </div>
     </section>
   );

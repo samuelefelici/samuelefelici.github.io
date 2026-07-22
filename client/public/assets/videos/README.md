@@ -1,23 +1,40 @@
-# Video delle sezioni (Google Flow)
+# Video di sfondo scroll-driven (Google Flow)
 
-Carica qui i 7 video, con questi nomi esatti (l'ordine segue le sezioni in `client/src/App.tsx`):
+Questi video sono lo **sfondo animato del sito**: `ScrollVideoLayer`
+(`client/src/components/ScrollVideoLayer.tsx`) li mostra a tutto schermo
+dietro al contenuto e ne aggancia il tempo di riproduzione allo scroll
+(scrubbing). Ogni sezione ha il suo video; superata la sezione si passa al
+successivo in dissolvenza.
 
-| File             | Sezione del sito        |
-| ---------------- | ----------------------- |
-| `01-hero.mp4`    | Hero                    |
-| `02-servizi.mp4` | Services                |
-| `03-cerbero.mp4` | CerberoShowcase         |
-| `04-perche-io.mp4` | WhyMe                 |
-| `05-timeline.mp4`| Timeline                |
-| `06-processo.mp4`| Process                 |
-| `07-contatti.mp4`| Contact                 |
+| Nome base | Sezione (id) |
+| --- | --- |
+| `01-hero` | `#hero` |
+| `02-servizi` | `#services` |
+| `03-cerbero` | `#cerbero` |
+| `04-perche-io` | `#about` |
+| `05-timeline` | `#competenze` |
+| `06-processo` | `#process` |
+| `07-contatti` | `#contact` |
 
-Formati opzionali con lo stesso nome base (se presenti vengono usati automaticamente):
+Per ogni scena servono tre file: `.webm` (VP9, servito ai browser moderni),
+`.mp4` (H.264, fallback Safari) e `.jpg` (poster).
 
-- `NN-nome.webm` — versione più leggera, servita al posto dell'mp4 dove supportata
-- `NN-nome.jpg` — poster mostrato prima dell'avvio del video
+## Encoding: keyframe fitti obbligatori
 
-I video vengono riprodotti dal componente `client/src/components/SectionVideo.tsx`
-(loop muto, avvio solo quando la sezione entra nel viewport). Se un file manca,
-il componente semplicemente non mostra nulla: si può integrare il codice prima
-di caricare i video.
+Lo scrubbing fa seek continui: senza keyframe ravvicinati il browser deve
+decodificare troppi frame a ogni salto e l'animazione scatta. Quando
+sostituisci un video, ricodificalo così (partendo dal file esportato da
+Flow):
+
+```bash
+# webm — keyframe ogni 8 frame
+ffmpeg -i sorgente.mp4 -an -c:v libvpx-vp9 -crf 34 -b:v 0 -g 8 \
+  -deadline good -cpu-used 4 -row-mt 1 NN-nome.webm
+
+# mp4 fallback — keyframe ogni 12 frame
+ffmpeg -i sorgente.mp4 -an -c:v libx264 -crf 24 -preset fast -g 12 \
+  -movflags +faststart -pix_fmt yuv420p NN-nome.mp4
+
+# poster
+ffmpeg -i NN-nome.mp4 -frames:v 1 -q:v 3 NN-nome.jpg
+```

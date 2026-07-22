@@ -6,7 +6,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
 import { PrivacyDialog } from "@/components/PrivacyDialog";
 import { Reveal } from "@/components/Reveal";
-import { SectionVideo } from "@/components/SectionVideo";
 import { trackLead } from "@/lib/tracking";
 import { Mail, Linkedin, Github, MapPin, Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 
@@ -79,8 +78,6 @@ export function Contact() {
               Ti rispondo con una proposta concreta e comprensibile, senza tecnicismi inutili.
             </p>
           </Reveal>
-
-          <SectionVideo name="07-contatti" className="mb-12 max-w-2xl mx-auto" />
 
           <div className="grid md:grid-cols-2 gap-8">
             <Card className="border-border/80 bg-background/90">

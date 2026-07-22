@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Code2, CircleCheckBig, Clock3 } from "lucide-react";
 import { motion } from "framer-motion";
-import { SectionVideo } from "@/components/SectionVideo";
 
 export function Hero() {
   return (
@@ -76,8 +75,6 @@ export function Hero() {
             </div>
           </motion.div>
         </div>
-
-        <SectionVideo name="01-hero" className="mt-14 max-w-5xl mx-auto" delay={0.1} />
       </div>
     </section>
   );
