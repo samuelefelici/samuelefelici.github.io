@@ -8,11 +8,12 @@ import { useEffect, useRef } from "react";
  * ffmpeg — vedi client/public/assets/videos/README.md). Ogni scena occupa
  * un segmento temporale del master; al cambio scena il tempo attraversa la
  * finestra di dissolvenza e la transizione avviene dentro il video stesso.
- * Un solo elemento <video>, un solo decoder: niente crossfade a runtime,
- * niente cambi di layer, niente scatti.
  *
- * Il video non va mai in play(): si muove solo currentTime, con
- * interpolazione in requestAnimationFrame per lo scrub fluido.
+ * Il tempo di riproduzione è mosso via currentTime, con interpolazione in
+ * requestAnimationFrame per lo scrub fluido.
+ *
+ * Modalità diagnostica: aprire il sito con `?debug` nell'URL mostra un
+ * pannello con lo stato del video (caricamento, errori, buffer, seek).
  */
 const SCENES = ["hero", "services", "cerbero", "about", "competenze", "process", "contact"];
 
@@ -30,26 +31,60 @@ const SEGMENTS: [number, number][] = [
 
 export function ScrollVideoLayer() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const debugRef = useRef<HTMLDivElement | null>(null);
+  const debugEnabled =
+    typeof window !== "undefined" && window.location.search.includes("debug");
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
+    const notes: string[] = [];
+
     // "calcio" di avvio: un play muto seguito da pausa forza il browser a
     // iniziare davvero a scaricare e decodificare (necessario su iOS/Safari,
     // che altrimenti può lasciare il video fermo al poster)
-    video.play().then(() => video.pause()).catch(() => {
-      /* autoplay negato: lo scrub via currentTime funziona comunque */
+    video
+      .play()
+      .then(() => {
+        video.pause();
+        notes.push("kick: play ok");
+      })
+      .catch((e) => {
+        notes.push(`kick: play negato (${e?.name ?? "?"})`);
+      });
+
+    video.addEventListener("error", () => {
+      notes.push(`video error code=${video.error?.code ?? "?"}`);
     });
+    const sources = video.querySelectorAll("source");
+    sources.forEach((s) =>
+      s.addEventListener("error", () => {
+        notes.push(`source fallita: ${(s.src || "").split("/").pop()}`);
+      })
+    );
+
+    // se dopo 4s non è arrivato nemmeno un byte di dati, forza il fallback
+    // mp4 impostandolo come src diretto (bypassa la selezione delle source)
+    const fallbackTimer = window.setTimeout(() => {
+      if (video.readyState === 0) {
+        notes.push("readyState ancora 0 dopo 4s → forzo mp4 diretto");
+        video.src = "/assets/videos/master.mp4";
+        video.load();
+        video.play().then(() => video.pause()).catch(() => {});
+      }
+    }, 4000);
 
     // NB: lo scrubbing resta attivo anche con prefers-reduced-motion — non è
     // un'animazione autonoma, si muove solo insieme allo scroll dell'utente
 
     let smoothed = 0;
     let raf = 0;
+    let ticks = 0;
 
     const tick = () => {
       raf = requestAnimationFrame(tick);
+      ticks++;
       const vh = window.innerHeight;
       const centerY = vh * 0.5;
 
@@ -84,31 +119,65 @@ export function ScrollVideoLayer() {
       if (delta > 0.02 && (!video.seeking || delta > 0.5)) {
         video.currentTime = smoothed;
       }
+
+      // pannello diagnostico (?debug nell'URL), aggiornato ~4 volte al secondo
+      if (debugEnabled && debugRef.current && ticks % 15 === 0) {
+        const buf: string[] = [];
+        for (let i = 0; i < video.buffered.length; i++) {
+          buf.push(`${video.buffered.start(i).toFixed(1)}-${video.buffered.end(i).toFixed(1)}`);
+        }
+        debugRef.current.textContent = [
+          `src: ${(video.currentSrc || "(nessuna)").split("/").pop()}`,
+          `readyState: ${video.readyState}  networkState: ${video.networkState}`,
+          `error: ${video.error ? `code ${video.error.code}` : "no"}`,
+          `buffered: ${buf.join(", ") || "(vuoto)"}`,
+          `currentTime: ${video.currentTime.toFixed(2)}  target: ${target.toFixed(2)}`,
+          `seeking: ${video.seeking}  paused: ${video.paused}`,
+          `scena: ${SCENES[active]}  progresso: ${(progress * 100).toFixed(0)}%`,
+          `ticks rAF: ${ticks}`,
+          `reduced-motion: ${window.matchMedia("(prefers-reduced-motion: reduce)").matches}`,
+          ...notes.slice(-4),
+          navigator.userAgent.slice(0, 80),
+        ].join("\n");
+      }
     };
 
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, []);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(fallbackTimer);
+    };
+  }, [debugEnabled]);
 
   return (
-    <div
-      aria-hidden
-      className="fixed inset-0 z-[1] pointer-events-none overflow-hidden bg-cover bg-center"
-      // fallback: primo frame come sfondo, così mentre il video bufferizza
-      // (o se non parte) non si vede mai il vuoto
-      style={{ backgroundImage: "url(/assets/videos/master.jpg)" }}
-    >
-      <video
-        ref={videoRef}
-        muted
-        playsInline
-        preload="auto"
-        poster="/assets/videos/master.jpg"
-        className="absolute inset-0 w-full h-full object-cover will-change-transform dark:brightness-[.25] dark:contrast-125 dark:saturate-150"
+    <>
+      <div
+        aria-hidden
+        className="fixed inset-0 z-[1] pointer-events-none overflow-hidden bg-cover bg-center"
+        // fallback: primo frame come sfondo, così mentre il video bufferizza
+        // (o se non parte) non si vede mai il vuoto
+        style={{ backgroundImage: "url(/assets/videos/master.jpg)" }}
       >
-        <source src="/assets/videos/master.webm" type="video/webm" />
-        <source src="/assets/videos/master.mp4" type="video/mp4" />
-      </video>
-    </div>
+        <video
+          ref={videoRef}
+          muted
+          playsInline
+          preload="auto"
+          poster="/assets/videos/master.jpg"
+          className="absolute inset-0 w-full h-full object-cover will-change-transform dark:brightness-[.25] dark:contrast-125 dark:saturate-150"
+        >
+          <source src="/assets/videos/master.webm" type="video/webm" />
+          <source src="/assets/videos/master.mp4" type="video/mp4" />
+        </video>
+      </div>
+      {debugEnabled && (
+        <div
+          ref={debugRef}
+          className="fixed top-20 left-2 z-[100] pointer-events-none whitespace-pre rounded-lg bg-black/85 p-3 font-mono text-[11px] leading-relaxed text-green-400"
+        >
+          debug attivo…
+        </div>
+      )}
+    </>
   );
 }
