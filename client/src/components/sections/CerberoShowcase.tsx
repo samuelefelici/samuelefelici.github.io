@@ -45,20 +45,20 @@ const stats = [
   { to: 4, label: "motori in produzione" },
 ];
 
-// ogni motore occupa un quinto della scena, dopo l'intro — nel video le
-// quattro diramazioni colorate si accendono nello stesso ordine
+// le 4 scie colorate del video compaiono presto (blu→arancio→verde→viola) e
+// poi ondeggiano: le 4 card scorrono lungo la finestra leggibile (~0,78)
 const MOTOR_RANGES = [
-  [0.2, 0.4],
-  [0.4, 0.6],
-  [0.6, 0.8],
-  [0.8, 0.97],
+  [0.17, 0.34],
+  [0.34, 0.5],
+  [0.5, 0.64],
+  [0.64, 0.78],
 ] as const;
 
 export function CerberoShowcase() {
   return (
     <Scene id="cerbero" heightVh={450}>
       {/* fase 1: intro con i contatori */}
-      <div data-from="0.02" data-to="0.17" className="absolute inset-0 flex items-center pt-16">
+      <div data-from="0.02" data-to="0.14" className="absolute inset-0 flex items-center pt-16">
         <div className="container mx-auto px-4 md:px-6 text-center">
           <span className="text-sm font-semibold uppercase tracking-wider text-primary">Caso studio</span>
           <h2 className="text-4xl md:text-6xl font-bold font-heading mt-3 mb-5">Dentro Cerbero</h2>

@@ -47,8 +47,12 @@ export function Scene({
     const tick = () => {
       raf = requestAnimationFrame(tick);
       const r = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - vh)));
+      // Progresso sull'INTERO ingombro della scena (-r.top/altezza), lo stesso
+      // "orologio" con cui ScrollVideoLayer muove il video: così la frazione
+      // di una card (data-from/to) corrisponde esattamente al momento del
+      // video. La scena è a schermo pieno (pinnata) fino a ~(altezza-vh)/
+      // altezza; le card vanno quindi temporizzate entro quella finestra.
+      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height)));
 
       for (const item of items) {
         const from = parseFloat(item.dataset.from ?? "0");
