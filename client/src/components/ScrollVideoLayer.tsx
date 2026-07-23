@@ -76,21 +76,25 @@ export function ScrollVideoLayer() {
       const vh = window.innerHeight;
       const scrollY = window.scrollY;
 
-      // Mappa CONTINUA scroll → tempo video. Ogni scena, mentre è "pinnata"
-      // (r.top da 0 a -(altezza-vh)), copre il suo tratto "solo" del master;
-      // il tratto di scroll tra una scena e la successiva copre la finestra
-      // di dissolvenza tra i due segmenti. Costruiamo i punti di rottura
-      // (scrollAssoluto → tempoVideo) e interpoliamo linearmente: la funzione
-      // è un'unica rampa monotona senza salti, così la transizione viene
-      // scrubata dalla rotella come ogni altro frame — mai animata da sola.
+      // Mappa CONTINUA scroll → tempo video a VELOCITÀ UNIFORME per scena.
+      // Ogni scena i occupa tutto il suo ingombro di scroll [absTop_i,
+      // absTop_{i+1}] e vi scorre linearmente il video da inizioSegmento_i a
+      // inizioSegmento_{i+1}: così la dissolvenza (nella coda del segmento)
+      // scorre alla STESSA andatura del resto della scena, senza la zona
+      // lenta che si sentiva scrollando piano in transizione. L'ultima scena
+      // mappa il suo tratto pinnato fino alla fine del video.
       const pts: [number, number][] = [];
+      const last = SCENES.length - 1;
       for (let i = 0; i < SCENES.length; i++) {
         const el = document.getElementById(SCENES[i]);
         if (!el) continue;
         const r = el.getBoundingClientRect();
         const absTop = r.top + scrollY; // top assoluto nel documento
-        pts.push([absTop, SEGMENTS[i][0]]); // inizio pin → inizio segmento
-        pts.push([absTop + r.height - vh, SEGMENTS[i][1]]); // fine pin → fine segmento
+        pts.push([absTop, SEGMENTS[i][0]]); // inizio scena → inizio suo segmento
+        if (i === last) {
+          // ultima scena: dal suo inizio alla fine del video sul tratto pinnato
+          pts.push([absTop + r.height - vh, SEGMENTS[i][1]]);
+        }
       }
 
       let target = 0;
@@ -105,7 +109,7 @@ export function ScrollVideoLayer() {
             if (scrollY >= s0 && scrollY <= s1) {
               const f = (scrollY - s0) / Math.max(1, s1 - s0);
               target = t0 + f * (t1 - t0);
-              active = i >> 1; // solo per il pannello debug
+              active = i;
               break;
             }
           }
