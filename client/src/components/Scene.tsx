@@ -34,6 +34,9 @@ export function Scene({
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const items = Array.from(el.querySelectorAll<HTMLElement>("[data-from]"));
+    // promuovi subito gli item a layer compositor: evita la creazione di
+    // layer a metà transizione, uno dei punti in cui l'animazione scatta
+    for (const item of items) item.style.willChange = "opacity, transform";
     const FADE = 0.07; // frazione di progresso usata per fade-in/out
     const SHIFT = 44; // px di slide verticale in entrata/uscita
     let raf = 0;
