@@ -24,7 +24,7 @@ const services = [
 ];
 
 // le tre card entrano una dopo l'altra, come i tre moduli che si accendono nel video
-const CARD_FROM = [0.38, 0.5, 0.62];
+const CARD_FROM = [0.28, 0.4, 0.52];
 
 export function Services() {
   const stackBadges = [
@@ -37,7 +37,7 @@ export function Services() {
   return (
     <Scene id="services" heightVh={300}>
       {/* fase 1: banner di presentazione */}
-      <div data-from="0.02" data-to="0.32" className="absolute inset-0 flex items-center pt-16">
+      <div data-from="0.02" data-to="0.22" className="absolute inset-0 flex items-center pt-16">
         <div className="container mx-auto px-4 md:px-6">
           <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-background/25 backdrop-blur-md p-7 md:p-10">
             <div className="relative grid lg:grid-cols-[1.25fr_0.75fr] gap-8 items-end">
@@ -75,7 +75,7 @@ export function Services() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <div key={index} data-from={CARD_FROM[index]} data-to="0.94">
+              <div key={index} data-from={CARD_FROM[index]} data-to="0.66">
                 <Card className="h-full border border-border/80 bg-background/25 backdrop-blur-md shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group overflow-hidden" data-testid={`card-service-${index}`}>
                   <CardHeader>
                     <div className="flex items-center justify-between mb-4">
