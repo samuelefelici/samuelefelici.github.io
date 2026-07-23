@@ -59,16 +59,29 @@ export function ScrollVideoLayer() {
 
       videosRef.current.forEach((video, i) => {
         if (!video) return;
+        const near = Math.abs(i - active) <= 1;
         video.style.opacity = i === active ? "1" : "0";
+        // i video lontani vengono tolti del tutto dal compositing: durante
+        // la dissolvenza restano in gioco solo il video uscente e l'entrante
+        video.style.visibility = near ? "visible" : "hidden";
 
         // scarica per intero solo il video attivo e i suoi vicini
-        const wanted = Math.abs(i - active) <= 1 ? "auto" : "metadata";
+        const wanted = near ? "auto" : "metadata";
         if (video.preload !== wanted) video.preload = wanted;
 
         if (i === active && video.duration) {
           const target = progress * (video.duration - 0.05);
-          smoothed[i] += (target - smoothed[i]) * 0.14;
-          if (Math.abs(video.currentTime - smoothed[i]) > 0.02) {
+          // salto netto invece di una raffica di seek intermedi quando la
+          // distanza è grande (rientro in una scena, cambio direzione)
+          if (Math.abs(target - smoothed[i]) > 1.5) {
+            smoothed[i] = target;
+          } else {
+            smoothed[i] += (target - smoothed[i]) * 0.14;
+          }
+          const delta = Math.abs(video.currentTime - smoothed[i]);
+          // non accodare un nuovo seek mentre il precedente è ancora in
+          // corso (a meno che il ritardo accumulato non sia ormai visibile)
+          if (delta > 0.02 && (!video.seeking || delta > 0.5)) {
             video.currentTime = smoothed[i];
           }
         }
@@ -91,7 +104,7 @@ export function ScrollVideoLayer() {
           playsInline
           preload={i === 0 ? "auto" : "metadata"}
           poster={`/assets/videos/${scene.src}.jpg`}
-          className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700 dark:brightness-[.25] dark:contrast-125 dark:saturate-150"
+          className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 will-change-[opacity] dark:brightness-[.25] dark:contrast-125 dark:saturate-150"
         >
           <source src={`/assets/videos/${scene.src}.webm`} type="video/webm" />
           <source src={`/assets/videos/${scene.src}.mp4`} type="video/mp4" />
