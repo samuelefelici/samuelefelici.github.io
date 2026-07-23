@@ -5,12 +5,17 @@ import { useEffect, useRef } from "react";
  *
  * UN SOLO video per tutto il sito: i 7 filmati delle scene sono concatenati
  * in un unico master (con dissolvenze di 0,5s già "cotte" dentro il file da
- * ffmpeg — vedi client/public/assets/videos/README.md). Ogni scena occupa
- * un segmento temporale del master; al cambio scena il tempo attraversa la
- * finestra di dissolvenza e la transizione avviene dentro il video stesso.
+ * ffmpeg — vedi client/public/assets/videos/README.md).
  *
- * Il tempo di riproduzione è mosso via currentTime, con interpolazione in
- * requestAnimationFrame per lo scrub fluido.
+ * Lo scroll dell'intera pagina è mappato sul tempo del video con una funzione
+ * CONTINUA (rampa lineare a tratti): mentre una scena è pinnata si scrubba il
+ * suo tratto "solo", e il tratto di scroll tra due scene scrubba la finestra
+ * di dissolvenza. Non c'è alcuna discontinuità ai confini, quindi la
+ * transizione scorre con la rotella esattamente come ogni altro frame — non
+ * viene mai "animata da sola" (era questo il vecchio scatto in transizione).
+ *
+ * Il tempo di riproduzione è mosso via currentTime, con leggera
+ * interpolazione in requestAnimationFrame per lo scrub fluido.
  *
  * Modalità diagnostica: aprire il sito con `?debug` nell'URL mostra un
  * pannello con lo stato del video (caricamento, errori, buffer, seek).
@@ -69,36 +74,52 @@ export function ScrollVideoLayer() {
       raf = requestAnimationFrame(tick);
       ticks++;
       const vh = window.innerHeight;
-      const centerY = vh * 0.5;
+      const scrollY = window.scrollY;
 
-      // scena attiva = l'ultima il cui bordo superiore ha superato il centro
-      // del viewport; progresso con la stessa formula delle scene pinned di
-      // <Scene />, così video e coreografia restano sincronizzati
-      let active = 0;
-      let progress = 0;
+      // Mappa CONTINUA scroll → tempo video. Ogni scena, mentre è "pinnata"
+      // (r.top da 0 a -(altezza-vh)), copre il suo tratto "solo" del master;
+      // il tratto di scroll tra una scena e la successiva copre la finestra
+      // di dissolvenza tra i due segmenti. Costruiamo i punti di rottura
+      // (scrollAssoluto → tempoVideo) e interpoliamo linearmente: la funzione
+      // è un'unica rampa monotona senza salti, così la transizione viene
+      // scrubata dalla rotella come ogni altro frame — mai animata da sola.
+      const pts: [number, number][] = [];
       for (let i = 0; i < SCENES.length; i++) {
         const el = document.getElementById(SCENES[i]);
         if (!el) continue;
         const r = el.getBoundingClientRect();
-        if (r.top <= centerY) {
-          active = i;
-          progress = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - vh)));
+        const absTop = r.top + scrollY; // top assoluto nel documento
+        pts.push([absTop, SEGMENTS[i][0]]); // inizio pin → inizio segmento
+        pts.push([absTop + r.height - vh, SEGMENTS[i][1]]); // fine pin → fine segmento
+      }
+
+      let target = 0;
+      let active = 0;
+      if (pts.length) {
+        if (scrollY <= pts[0][0]) target = pts[0][1];
+        else if (scrollY >= pts[pts.length - 1][0]) target = pts[pts.length - 1][1];
+        else {
+          for (let i = 0; i < pts.length - 1; i++) {
+            const [s0, t0] = pts[i];
+            const [s1, t1] = pts[i + 1];
+            if (scrollY >= s0 && scrollY <= s1) {
+              const f = (scrollY - s0) / Math.max(1, s1 - s0);
+              target = t0 + f * (t1 - t0);
+              active = i >> 1; // solo per il pannello debug
+              break;
+            }
+          }
         }
       }
 
-      const [start, end] = SEGMENTS[active];
-      const target = start + progress * (end - start);
-
-      // salto netto solo per distanze enormi (link ancora, salti di pagina);
-      // il passaggio tra scene adiacenti (~0,5s) resta interpolato, così la
-      // dissolvenza cotta nel video viene attraversata dolcemente.
-      // Fattore 0.3: lo scroll è già ammorbidito da Lenis — un inseguimento
-      // più stretto evita il doppio smoothing che faceva sentire il video
-      // in ritardo e "slegato" dalla rotella
+      // la mappa è continua: nessun salto ai confini di scena. Salto netto
+      // solo per distanze enormi (link àncora, salti di pagina). Fattore 0.35:
+      // lo scroll è già ammorbidito da Lenis, un inseguimento stretto tiene
+      // il video incollato alla rotella
       if (Math.abs(target - smoothed) > 4) {
         smoothed = target;
       } else {
-        smoothed += (target - smoothed) * 0.3;
+        smoothed += (target - smoothed) * 0.35;
       }
       const delta = Math.abs(video.currentTime - smoothed);
       // non accodare un nuovo seek mentre il precedente è ancora in corso
@@ -119,7 +140,7 @@ export function ScrollVideoLayer() {
           `buffered: ${buf.join(", ") || "(vuoto)"}`,
           `currentTime: ${video.currentTime.toFixed(2)}  target: ${target.toFixed(2)}`,
           `seeking: ${video.seeking}  paused: ${video.paused}`,
-          `scena: ${SCENES[active]}  progresso: ${(progress * 100).toFixed(0)}%`,
+          `scena: ${SCENES[active] ?? "?"}`,
           `ticks rAF: ${ticks}`,
           `reduced-motion: ${window.matchMedia("(prefers-reduced-motion: reduce)").matches}`,
           ...notes.slice(-4),

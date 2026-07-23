@@ -1,11 +1,15 @@
 # Video di sfondo scroll-driven (Google Flow)
 
-Lo sfondo del sito è **un unico video master** (`master.mp4` primario,
-`master.webm` di sola riserva, poster `master.jpg`): i 7 filmati delle scene,
-in 720p, concatenati con dissolvenze di 0,5 s già renderizzate nel file.
-`ScrollVideoLayer` mappa ogni scena su un segmento temporale del master e ne
-muove `currentTime` con lo scroll; le transizioni tra scene avvengono
-*dentro* il video, senza costi a runtime.
+Lo sfondo del sito è **un unico video master** (`master.mp4` 1080p primario,
+`master.webm` 720p di sola riserva, poster `master.jpg`): i 7 filmati delle
+scene concatenati con dissolvenze di 0,5 s già renderizzate nel file.
+`ScrollVideoLayer` mappa lo scroll dell'intera pagina sul tempo del video con
+una funzione **continua**: le transizioni scorrono con la rotella come ogni
+altro frame, senza salti né costi a runtime.
+
+> **Keyframe fitti obbligatori** (`-g 12`): lo scrubbing fa seek continui,
+> con keyframe radi ogni seek è a scatti. Un export da editor video ne ha
+> pochissimi (~1 ogni 5 s) e va sempre ricodificato — vedi sotto.
 
 > **L'mp4 H.264 va tenuto come PRIMA `<source>`, con la stringa codec
 > esplicita**: è decodificato in hardware ovunque, Safari compreso. Il webm
