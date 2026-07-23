@@ -32,9 +32,18 @@ export function ScrollVideoLayer() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const video = videoRef.current;
     if (!video) return;
+
+    // "calcio" di avvio: un play muto seguito da pausa forza il browser a
+    // iniziare davvero a scaricare e decodificare (necessario su iOS/Safari,
+    // che altrimenti può lasciare il video fermo al poster)
+    video.play().then(() => video.pause()).catch(() => {
+      /* autoplay negato: lo scrub via currentTime funziona comunque */
+    });
+
+    // NB: lo scrubbing resta attivo anche con prefers-reduced-motion — non è
+    // un'animazione autonoma, si muove solo insieme allo scroll dell'utente
 
     let smoothed = 0;
     let raf = 0;
