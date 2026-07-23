@@ -31,14 +31,17 @@ export function Scene({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // con prefers-reduced-motion la coreografia resta attiva (senza di essa
+    // le fasi sovrapposte delle scene sarebbero tutte visibili insieme), ma
+    // gli elementi non slittano: solo dissolvenza
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const items = Array.from(el.querySelectorAll<HTMLElement>("[data-from]"));
     // promuovi subito gli item a layer compositor: evita la creazione di
     // layer a metà transizione, uno dei punti in cui l'animazione scatta
     for (const item of items) item.style.willChange = "opacity, transform";
     const FADE = 0.07; // frazione di progresso usata per fade-in/out
-    const SHIFT = 44; // px di slide verticale in entrata/uscita
+    const SHIFT = reduced ? 0 : 44; // px di slide verticale in entrata/uscita
     let raf = 0;
 
     const tick = () => {
