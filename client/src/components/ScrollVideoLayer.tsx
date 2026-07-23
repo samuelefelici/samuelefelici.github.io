@@ -82,7 +82,13 @@ export function ScrollVideoLayer() {
   }, []);
 
   return (
-    <div aria-hidden className="fixed inset-0 z-[1] pointer-events-none overflow-hidden">
+    <div
+      aria-hidden
+      className="fixed inset-0 z-[1] pointer-events-none overflow-hidden bg-cover bg-center"
+      // fallback: primo frame come sfondo, così mentre il video bufferizza
+      // (o se non parte) non si vede mai il vuoto
+      style={{ backgroundImage: "url(/assets/videos/master.jpg)" }}
+    >
       <video
         ref={videoRef}
         muted
