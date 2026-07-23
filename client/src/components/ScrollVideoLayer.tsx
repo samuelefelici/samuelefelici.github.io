@@ -3,35 +3,40 @@ import { useEffect, useRef } from "react";
 /**
  * Sfondo video guidato dallo scroll ("scrubbing"), stile Apple.
  *
- * Un layer fisso a tutto schermo dietro al contenuto: ogni sezione del sito
- * ha il suo video, e il tempo di riproduzione è agganciato al progresso di
- * scroll dentro la sezione — scorri avanti e il video avanza, scorri
- * indietro e torna indietro. Superata una sezione si passa al video
- * successivo in dissolvenza. I video non vengono mai messi in play():
- * si muove solo currentTime, quindi niente problemi di autoplay.
+ * UN SOLO video per tutto il sito: i 7 filmati delle scene sono concatenati
+ * in un unico master (con dissolvenze di 0,5s già "cotte" dentro il file da
+ * ffmpeg — vedi client/public/assets/videos/README.md). Ogni scena occupa
+ * un segmento temporale del master; al cambio scena il tempo attraversa la
+ * finestra di dissolvenza e la transizione avviene dentro il video stesso.
+ * Un solo elemento <video>, un solo decoder: niente crossfade a runtime,
+ * niente cambi di layer, niente scatti.
  *
- * Fluidità: il target time viene inseguito con un'interpolazione in
- * requestAnimationFrame invece di essere impostato a ogni evento di scroll,
- * e i file video sono codificati con keyframe fitti per rendere i seek
- * rapidi (vedi client/public/assets/videos/README.md).
+ * Il video non va mai in play(): si muove solo currentTime, con
+ * interpolazione in requestAnimationFrame per lo scrub fluido.
  */
-const SCENES = [
-  { id: "hero", src: "01-hero" },
-  { id: "services", src: "02-servizi" },
-  { id: "cerbero", src: "03-cerbero" },
-  { id: "about", src: "04-perche-io" },
-  { id: "competenze", src: "05-timeline" },
-  { id: "process", src: "06-processo" },
-  { id: "contact", src: "07-contatti" },
+const SCENES = ["hero", "services", "cerbero", "about", "competenze", "process", "contact"];
+
+// [inizio, fine] in secondi del tratto "solo" di ogni scena nel master;
+// tra una fine e l'inizio successivo c'è la finestra di dissolvenza da 0,5s
+const SEGMENTS: [number, number][] = [
+  [0, 9.5],
+  [10, 19],
+  [19.5, 28.5],
+  [29, 38],
+  [38.5, 47.5],
+  [48, 57],
+  [57.5, 66.9],
 ];
 
 export function ScrollVideoLayer() {
-  const videosRef = useRef<(HTMLVideoElement | null)[]>([]);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const video = videoRef.current;
+    if (!video) return;
 
-    const smoothed = SCENES.map(() => 0);
+    let smoothed = 0;
     let raf = 0;
 
     const tick = () => {
@@ -39,16 +44,13 @@ export function ScrollVideoLayer() {
       const vh = window.innerHeight;
       const centerY = vh * 0.5;
 
-      // sezione attiva = l'ultima il cui bordo superiore ha superato il
-      // centro del viewport (così la transizione al video successivo parte
-      // mentre la scena nuova sta subentrando). Il progresso usa la stessa
-      // formula delle scene pinned di <Scene />: 0 quando la scena si
-      // aggancia in cima al viewport, 1 quando si sgancia — video e
-      // coreografia delle card restano perfettamente sincronizzati.
+      // scena attiva = l'ultima il cui bordo superiore ha superato il centro
+      // del viewport; progresso con la stessa formula delle scene pinned di
+      // <Scene />, così video e coreografia restano sincronizzati
       let active = 0;
       let progress = 0;
       for (let i = 0; i < SCENES.length; i++) {
-        const el = document.getElementById(SCENES[i].id);
+        const el = document.getElementById(SCENES[i]);
         if (!el) continue;
         const r = el.getBoundingClientRect();
         if (r.top <= centerY) {
@@ -57,35 +59,22 @@ export function ScrollVideoLayer() {
         }
       }
 
-      videosRef.current.forEach((video, i) => {
-        if (!video) return;
-        const near = Math.abs(i - active) <= 1;
-        video.style.opacity = i === active ? "1" : "0";
-        // i video lontani vengono tolti del tutto dal compositing: durante
-        // la dissolvenza restano in gioco solo il video uscente e l'entrante
-        video.style.visibility = near ? "visible" : "hidden";
+      const [start, end] = SEGMENTS[active];
+      const target = start + progress * (end - start);
 
-        // scarica per intero solo il video attivo e i suoi vicini
-        const wanted = near ? "auto" : "metadata";
-        if (video.preload !== wanted) video.preload = wanted;
-
-        if (i === active && video.duration) {
-          const target = progress * (video.duration - 0.05);
-          // salto netto invece di una raffica di seek intermedi quando la
-          // distanza è grande (rientro in una scena, cambio direzione)
-          if (Math.abs(target - smoothed[i]) > 1.5) {
-            smoothed[i] = target;
-          } else {
-            smoothed[i] += (target - smoothed[i]) * 0.14;
-          }
-          const delta = Math.abs(video.currentTime - smoothed[i]);
-          // non accodare un nuovo seek mentre il precedente è ancora in
-          // corso (a meno che il ritardo accumulato non sia ormai visibile)
-          if (delta > 0.02 && (!video.seeking || delta > 0.5)) {
-            video.currentTime = smoothed[i];
-          }
-        }
-      });
+      // salto netto solo per distanze enormi (link ancora, salti di pagina);
+      // il passaggio tra scene adiacenti (~0,5s) resta interpolato, così la
+      // dissolvenza cotta nel video viene attraversata dolcemente
+      if (Math.abs(target - smoothed) > 4) {
+        smoothed = target;
+      } else {
+        smoothed += (target - smoothed) * 0.14;
+      }
+      const delta = Math.abs(video.currentTime - smoothed);
+      // non accodare un nuovo seek mentre il precedente è ancora in corso
+      if (delta > 0.02 && (!video.seeking || delta > 0.5)) {
+        video.currentTime = smoothed;
+      }
     };
 
     raf = requestAnimationFrame(tick);
@@ -94,22 +83,17 @@ export function ScrollVideoLayer() {
 
   return (
     <div aria-hidden className="fixed inset-0 z-[1] pointer-events-none overflow-hidden">
-      {SCENES.map((scene, i) => (
-        <video
-          key={scene.src}
-          ref={(el) => {
-            videosRef.current[i] = el;
-          }}
-          muted
-          playsInline
-          preload={i === 0 ? "auto" : "metadata"}
-          poster={`/assets/videos/${scene.src}.jpg`}
-          className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 will-change-[opacity] dark:brightness-[.25] dark:contrast-125 dark:saturate-150"
-        >
-          <source src={`/assets/videos/${scene.src}.webm`} type="video/webm" />
-          <source src={`/assets/videos/${scene.src}.mp4`} type="video/mp4" />
-        </video>
-      ))}
+      <video
+        ref={videoRef}
+        muted
+        playsInline
+        preload="auto"
+        poster="/assets/videos/master.jpg"
+        className="absolute inset-0 w-full h-full object-cover will-change-transform dark:brightness-[.25] dark:contrast-125 dark:saturate-150"
+      >
+        <source src="/assets/videos/master.webm" type="video/webm" />
+        <source src="/assets/videos/master.mp4" type="video/mp4" />
+      </video>
     </div>
   );
 }
