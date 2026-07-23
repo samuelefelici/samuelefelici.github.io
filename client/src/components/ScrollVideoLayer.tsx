@@ -57,23 +57,6 @@ export function ScrollVideoLayer() {
     video.addEventListener("error", () => {
       notes.push(`video error code=${video.error?.code ?? "?"}`);
     });
-    const sources = video.querySelectorAll("source");
-    sources.forEach((s) =>
-      s.addEventListener("error", () => {
-        notes.push(`source fallita: ${(s.src || "").split("/").pop()}`);
-      })
-    );
-
-    // se dopo 4s non è arrivato nemmeno un byte di dati, forza il fallback
-    // mp4 impostandolo come src diretto (bypassa la selezione delle source)
-    const fallbackTimer = window.setTimeout(() => {
-      if (video.readyState === 0) {
-        notes.push("readyState ancora 0 dopo 4s → forzo mp4 diretto");
-        video.src = "/assets/videos/master.mp4";
-        video.load();
-        video.play().then(() => video.pause()).catch(() => {});
-      }
-    }, 4000);
 
     // NB: lo scrubbing resta attivo anche con prefers-reduced-motion — non è
     // un'animazione autonoma, si muove solo insieme allo scroll dell'utente
@@ -108,11 +91,14 @@ export function ScrollVideoLayer() {
 
       // salto netto solo per distanze enormi (link ancora, salti di pagina);
       // il passaggio tra scene adiacenti (~0,5s) resta interpolato, così la
-      // dissolvenza cotta nel video viene attraversata dolcemente
+      // dissolvenza cotta nel video viene attraversata dolcemente.
+      // Fattore 0.3: lo scroll è già ammorbidito da Lenis — un inseguimento
+      // più stretto evita il doppio smoothing che faceva sentire il video
+      // in ritardo e "slegato" dalla rotella
       if (Math.abs(target - smoothed) > 4) {
         smoothed = target;
       } else {
-        smoothed += (target - smoothed) * 0.14;
+        smoothed += (target - smoothed) * 0.3;
       }
       const delta = Math.abs(video.currentTime - smoothed);
       // non accodare un nuovo seek mentre il precedente è ancora in corso
@@ -143,10 +129,7 @@ export function ScrollVideoLayer() {
     };
 
     raf = requestAnimationFrame(tick);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.clearTimeout(fallbackTimer);
-    };
+    return () => cancelAnimationFrame(raf);
   }, [debugEnabled]);
 
   return (
@@ -158,6 +141,11 @@ export function ScrollVideoLayer() {
         // (o se non parte) non si vede mai il vuoto
         style={{ backgroundImage: "url(/assets/videos/master.jpg)" }}
       >
+        {/* mp4 H.264 PER PRIMO, con la stringa codec esplicita: tutti i
+            browser reali (Safari compreso) lo scelgono e lo decodificano in
+            hardware. Il webm resta solo come riserva per ambienti senza
+            H.264. Mai il contrario: Safari dichiara di supportare il webm
+            ma il suo decoder VP9 non produce frame (readyState fermo a 1) */}
         <video
           ref={videoRef}
           muted
@@ -166,8 +154,8 @@ export function ScrollVideoLayer() {
           poster="/assets/videos/master.jpg"
           className="absolute inset-0 w-full h-full object-cover will-change-transform dark:brightness-[.25] dark:contrast-125 dark:saturate-150"
         >
-          <source src="/assets/videos/master.webm" type="video/webm" />
-          <source src="/assets/videos/master.mp4" type="video/mp4" />
+          <source src="/assets/videos/master.mp4" type='video/mp4; codecs="avc1.64001f"' />
+          <source src="/assets/videos/master.webm" type='video/webm; codecs="vp9"' />
         </video>
       </div>
       {debugEnabled && (

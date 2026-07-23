@@ -1,11 +1,17 @@
 # Video di sfondo scroll-driven (Google Flow)
 
-Lo sfondo del sito è **un unico video master** (`master.webm` / `master.mp4` +
-poster `master.jpg`): i 7 filmati delle scene, in 720p, concatenati con
-dissolvenze di 0,5 s già renderizzate nel file. `ScrollVideoLayer` mappa ogni
-scena su un segmento temporale del master e ne muove `currentTime` con lo
-scroll; le transizioni tra scene avvengono *dentro* il video, senza costi a
-runtime.
+Lo sfondo del sito è **un unico video master** (`master.mp4` primario,
+`master.webm` di sola riserva, poster `master.jpg`): i 7 filmati delle scene,
+in 720p, concatenati con dissolvenze di 0,5 s già renderizzate nel file.
+`ScrollVideoLayer` mappa ogni scena su un segmento temporale del master e ne
+muove `currentTime` con lo scroll; le transizioni tra scene avvengono
+*dentro* il video, senza costi a runtime.
+
+> **L'mp4 H.264 va tenuto come PRIMA `<source>`, con la stringa codec
+> esplicita**: è decodificato in hardware ovunque, Safari compreso. Il webm
+> VP9 è solo la riserva per ambienti senza H.264. Mai invertire l'ordine:
+> Safari dichiara di supportare il webm ma il suo decoder VP9 non produce
+> frame (readyState fermo a 1, video bloccato al poster).
 
 ## Mappa dei segmenti (secondi nel master)
 
@@ -46,9 +52,7 @@ ffmpeg -i 01-hero.mp4 -i 02-servizi.mp4 -i 03-cerbero.mp4 -i 04-perche-io.mp4 \
 [x5][v6]xfade=transition=fade:duration=0.5:offset=57[out]" \
   -map "[out]" -an -c:v libx264 -crf 16 -preset fast -g 12 master-src.mp4
 
-# 2) versioni web con keyframe fitti (indispensabili per lo scrubbing)
-ffmpeg -i master-src.mp4 -an -c:v libvpx-vp9 -crf 33 -b:v 0 -g 8 \
-  -deadline good -cpu-used 4 -row-mt 1 master.webm
+# 2) versione web con keyframe fitti (indispensabili per lo scrubbing)
 ffmpeg -i master-src.mp4 -an -c:v libx264 -crf 23 -preset slow -g 12 \
   -movflags +faststart -pix_fmt yuv420p master.mp4
 ffmpeg -i master-src.mp4 -frames:v 1 -q:v 3 master.jpg
