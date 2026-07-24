@@ -53,8 +53,8 @@ export function Navbar() {
               : "bg-background/65 backdrop-blur-lg border-border/70"
           )}
         >
-        <a href="#" className="flex items-center gap-2.5 group">
-          <Logo className="h-9 w-9 group-hover:scale-105 transition-transform" />
+        <a href="#" className="flex items-center gap-3 group">
+          <Logo className="text-lg md:text-xl group-hover:-translate-y-0.5 transition-transform" />
           <div className="leading-tight">
           <span className="block text-base md:text-lg font-bold font-heading tracking-tight text-primary">
             Samuele Felici<span className="text-foreground">.</span>
