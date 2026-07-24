@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
 import { PrivacyDialog } from "@/components/PrivacyDialog";
 import { Scene } from "@/components/Scene";
+import { Eyebrow } from "@/components/Eyebrow";
 import { trackLead } from "@/lib/tracking";
 import { Mail, Linkedin, Github, MapPin, Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 
@@ -72,8 +73,8 @@ export function Contact() {
       <div className="container mx-auto px-4 md:px-6 w-full">
         <div className="max-w-4xl mx-auto">
           <div data-from="0.04" data-to="2" className="text-center mb-12">
-            <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Contatto</p>
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">Parliamo del tuo progetto</h2>
+            <div className="flex justify-center mb-4"><Eyebrow>Contatto</Eyebrow></div>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">Apriamo un canale</h2>
             <p className="text-muted-foreground text-lg">
               Ti rispondo con una proposta concreta e comprensibile, senza tecnicismi inutili.
             </p>

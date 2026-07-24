@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
 import logo from "@assets/logo_1771503161578.png";
 
@@ -60,7 +59,7 @@ export function Navbar() {
           <span className="block text-base md:text-lg font-bold font-heading tracking-tight text-primary">
             Samuele Felici<span className="text-foreground">.</span>
           </span>
-          <span className="hidden md:block text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Software & Web Studio</span>
+          <span className="hidden md:block font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Software &amp; Web Studio</span>
           </div>
         </a>
 
@@ -78,7 +77,6 @@ export function Navbar() {
               {item.name}
             </a>
           ))}
-          <ThemeToggle />
           <Button variant="default" size="sm" className="rounded-full px-5" asChild data-testid="button-nav-call">
             <a href="#contact">Prenota una call</a>
           </Button>
@@ -86,7 +84,6 @@ export function Navbar() {
 
         {/* Mobile controls */}
         <div className="flex items-center gap-1 md:hidden">
-          <ThemeToggle />
           <button
             className="p-2 text-foreground"
             onClick={() => setIsOpen(!isOpen)}
