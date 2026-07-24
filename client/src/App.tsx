@@ -11,6 +11,7 @@ import { Contact } from "./components/sections/Contact";
 import { Footer } from "./components/sections/Footer";
 import { ConsentBanner } from "./components/ConsentBanner";
 import { ScrollVideoLayer } from "./components/ScrollVideoLayer";
+import { ScrollHint } from "./components/ScrollHint";
 
 function App() {
   useEffect(() => {
@@ -67,6 +68,7 @@ function App() {
         <Footer />
         <ConsentBanner />
       </div>
+      <ScrollHint />
     </div>
   );
 }

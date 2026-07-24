@@ -66,7 +66,10 @@ export function Scene({
           opacity = 0;
           y = -SHIFT;
         } else {
-          const tIn = Math.min(1, (p - from) / FADE);
+          // from <= 0 → l'elemento è già pieno a inizio scena (nessun
+          // fade-in dal nulla): così l'Hero è leggibile subito all'apertura,
+          // senza mostrare solo lo sfondo video
+          const tIn = from <= 0 ? 1 : Math.min(1, (p - from) / FADE);
           const tOut = Math.min(1, (to - p) / FADE);
           opacity = Math.min(tIn, tOut);
           y = (1 - tIn) * SHIFT - (1 - tOut) * SHIFT;
