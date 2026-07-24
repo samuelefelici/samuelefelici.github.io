@@ -49,10 +49,10 @@ const stats = [
 // le 4 scie colorate del video compaiono presto (blu→arancio→verde→viola) e
 // poi ondeggiano: le 4 card scorrono lungo la finestra leggibile (~0,78)
 const MOTOR_RANGES = [
-  [0.17, 0.34],
-  [0.34, 0.5],
-  [0.5, 0.64],
-  [0.64, 0.78],
+  [0.15, 0.34],
+  [0.34, 0.53],
+  [0.53, 0.72],
+  [0.72, 0.9],
 ] as const;
 
 export function CerberoShowcase() {

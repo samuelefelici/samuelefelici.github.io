@@ -33,7 +33,7 @@ export function Timeline() {
     <Scene id="competenze" heightVh={280}>
       <div className="absolute inset-0 flex items-center pt-16">
         <div className="container mx-auto px-4 md:px-6">
-          <div data-from="0.03" data-to="0.6" className="text-center mb-12">
+          <div data-from="0.03" data-to="0.9" className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">Competenze & Tecnologie</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Dalla gestione operativa allo sviluppo: unisco competenze tecniche solide alla conoscenza
@@ -46,7 +46,7 @@ export function Timeline() {
               <div
                 key={group.title}
                 data-from={CARD_FROM[index]}
-                data-to="0.62"
+                data-to="0.9"
                 className="rounded-xl border border-border bg-card/25 backdrop-blur-md p-5"
               >
                 <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">

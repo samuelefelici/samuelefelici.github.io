@@ -76,7 +76,7 @@ export function Services() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <div key={index} data-from={CARD_FROM[index]} data-to="0.66">
+              <div key={index} data-from={CARD_FROM[index]} data-to="0.9">
                 <Card className="h-full border border-border/80 bg-background/25 backdrop-blur-md shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group overflow-hidden" data-testid={`card-service-${index}`}>
                   <CardHeader>
                     <div className="flex items-center justify-between mb-4">
