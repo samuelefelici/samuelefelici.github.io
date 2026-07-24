@@ -8,7 +8,7 @@ export function Hero() {
       <div className="container mx-auto px-4 md:px-6 h-full flex items-center pt-16">
         <div className="grid lg:grid-cols-[1.08fr_0.92fr] gap-12 items-center w-full">
           <div>
-            <div data-from="0" data-to="0.5">
+            <div data-from="0" data-to="0.9">
               <h1 className="text-4xl md:text-6xl font-extrabold font-heading tracking-tight text-foreground mb-6 leading-[1.05]">
                 Siti web e software
                 <span className="block text-primary">che portano clienti</span>
@@ -19,7 +19,7 @@ export function Hero() {
               </p>
             </div>
 
-            <div data-from="0.06" data-to="0.5" className="flex flex-col sm:flex-row gap-4">
+            <div data-from="0.06" data-to="0.9" className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="gap-2 rounded-full px-7 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/20" asChild data-testid="button-contact">
                 <a href="#contact">
                   Richiedi una consulenza
@@ -34,14 +34,14 @@ export function Hero() {
               </Button>
             </div>
 
-            <div data-from="0.14" data-to="0.5" className="mt-8 grid sm:grid-cols-3 gap-3 text-sm">
+            <div data-from="0.14" data-to="0.9" className="mt-8 grid sm:grid-cols-3 gap-3 text-sm">
               <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Analisi obiettivi gratuita</div>
               <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Lavoro remoto in tutta Italia</div>
               <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Roadmap chiara fin dal giorno 1</div>
             </div>
           </div>
 
-          <div data-from="0.26" data-to="0.52" className="hidden lg:block">
+          <div data-from="0.26" data-to="0.9" className="hidden lg:block">
             <div className="rounded-3xl border border-border/80 bg-background/25 backdrop-blur-md p-6 md:p-7 shadow-xl">
               <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-primary mb-5">Come lavoro</p>
               <div className="space-y-4">

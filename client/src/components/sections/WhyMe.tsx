@@ -13,7 +13,7 @@ export function WhyMe() {
   return (
     <Scene id="about" heightVh={260}>
       {/* fase 1: chi sono */}
-      <div data-from="0.03" data-to="0.3" className="absolute inset-0 flex items-center pt-16">
+      <div data-from="0.03" data-to="0.46" className="absolute inset-0 flex items-center pt-16">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="rounded-3xl border border-border/60 bg-background/25 backdrop-blur-md p-6 md:p-8">
@@ -43,7 +43,7 @@ export function WhyMe() {
       </div>
 
       {/* fase 2: come lavoro con te */}
-      <div data-from="0.33" data-to="0.6" className="absolute inset-0 flex items-center pt-16">
+      <div data-from="0.5" data-to="0.9" className="absolute inset-0 flex items-center pt-16">
         <div className="container mx-auto px-4 md:px-6 max-w-3xl">
           <div className="rounded-3xl border border-border/60 bg-background/25 backdrop-blur-md p-6 md:p-10">
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
