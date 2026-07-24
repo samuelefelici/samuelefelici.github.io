@@ -1,7 +1,8 @@
 # Video di sfondo scroll-driven (Google Flow)
 
-Lo sfondo del sito è **un unico video master** (`master.mp4` 1080p primario,
-`master.webm` 720p di sola riserva, poster `master.jpg`): i 7 filmati delle
+Lo sfondo del sito è **un video master per tema**: chiaro `master.*` (fondo
+bianco) e scuro `master-dark.*` (fondo nero), scambiati dal toggle. Per
+ognuno: `.mp4` 1080p primario, `.webm` 720p di riserva, poster `.jpg`: i 7 filmati delle
 scene concatenati con dissolvenze di 0,5 s già renderizzate nel file.
 `ScrollVideoLayer` mappa lo scroll dell'intera pagina sul tempo del video con
 una funzione **continua**: le transizioni scorrono con la rotella come ogni

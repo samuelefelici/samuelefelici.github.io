@@ -71,9 +71,17 @@
   </head>
   <body>
     <script>
-      // Tema unico chiaro (si fonde col bianco dei video di sfondo):
-      // assicura che nessuna classe dark resti da sessioni precedenti
-      document.documentElement.classList.remove("dark");
+      // Applica il tema salvato prima del render (chiaro di default) per
+      // evitare il flash. Il chiaro si fonde col video bianco, lo scuro col
+      // video dark.
+      (function () {
+        try {
+          if (localStorage.getItem("theme") === "dark")
+            document.documentElement.classList.add("dark");
+        } catch (e) {
+          /* localStorage non disponibile: resta chiaro */
+        }
+      })();
     </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

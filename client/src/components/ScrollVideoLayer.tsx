@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useIsDark } from "@/components/ThemeToggle";
 
 /**
  * Sfondo video guidato dallo scroll ("scrubbing"), stile Apple.
@@ -39,6 +40,10 @@ export function ScrollVideoLayer() {
   const debugRef = useRef<HTMLDivElement | null>(null);
   const debugEnabled =
     typeof window !== "undefined" && window.location.search.includes("debug");
+  // il tema sceglie il master: chiaro (bianco) o dark (nero). Stessa durata
+  // e stesse scene → stessa mappa SEGMENTS.
+  const dark = useIsDark();
+  const base = dark ? "master-dark" : "master";
 
   useEffect(() => {
     const video = videoRef.current;
@@ -155,7 +160,9 @@ export function ScrollVideoLayer() {
 
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [debugEnabled]);
+    // `base` fra le dipendenze: al cambio tema il <video> viene rimontato
+    // (key={base}) e l'effetto si riaggancia al nuovo elemento
+  }, [debugEnabled, base]);
 
   return (
     <>
@@ -164,23 +171,26 @@ export function ScrollVideoLayer() {
         className="fixed inset-0 z-[1] pointer-events-none overflow-hidden bg-cover bg-center"
         // fallback: primo frame come sfondo, così mentre il video bufferizza
         // (o se non parte) non si vede mai il vuoto
-        style={{ backgroundImage: "url(/assets/videos/master.jpg)" }}
+        style={{ backgroundImage: `url(/assets/videos/${base}.jpg)` }}
       >
         {/* mp4 H.264 PER PRIMO, con la stringa codec esplicita: tutti i
             browser reali (Safari compreso) lo scelgono e lo decodificano in
             hardware. Il webm resta solo come riserva per ambienti senza
             H.264. Mai il contrario: Safari dichiara di supportare il webm
-            ma il suo decoder VP9 non produce frame (readyState fermo a 1) */}
+            ma il suo decoder VP9 non produce frame (readyState fermo a 1).
+            key={base}: rimonta al cambio tema per caricare il master giusto.
+            Nessun filtro: il video dark è già scuro di suo. */}
         <video
+          key={base}
           ref={videoRef}
           muted
           playsInline
           preload="auto"
-          poster="/assets/videos/master.jpg"
-          className="absolute inset-0 w-full h-full object-cover will-change-transform dark:brightness-[.25] dark:contrast-125 dark:saturate-150"
+          poster={`/assets/videos/${base}.jpg`}
+          className="absolute inset-0 w-full h-full object-cover will-change-transform"
         >
-          <source src="/assets/videos/master.mp4" type='video/mp4; codecs="avc1.64001f"' />
-          <source src="/assets/videos/master.webm" type='video/webm; codecs="vp9"' />
+          <source src={`/assets/videos/${base}.mp4`} type='video/mp4; codecs="avc1.64001f"' />
+          <source src={`/assets/videos/${base}.webm`} type='video/webm; codecs="vp9"' />
         </video>
       </div>
       {debugEnabled && (
