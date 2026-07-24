@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import logo from "@assets/logo_1771503161578.png";
+import { Logo } from "@/components/Logo";
 
 const navItems = [
   { name: "Servizi", href: "#services" },
@@ -53,8 +53,8 @@ export function Navbar() {
               : "bg-background/65 backdrop-blur-lg border-border/70"
           )}
         >
-        <a href="#" className="flex items-center gap-2 group">
-          <img src={logo} alt="SF Logo" className="h-10 w-10 object-contain group-hover:scale-105 transition-transform" />
+        <a href="#" className="flex items-center gap-2.5 group">
+          <Logo className="h-9 w-9 group-hover:scale-105 transition-transform" />
           <div className="leading-tight">
           <span className="block text-base md:text-lg font-bold font-heading tracking-tight text-primary">
             Samuele Felici<span className="text-foreground">.</span>
