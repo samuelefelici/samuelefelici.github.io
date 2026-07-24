@@ -69,16 +69,9 @@
   </head>
   <body>
     <script>
-      // Imposta il tema prima del render (chiaro di default, coerente con i
-      // video di sfondo bianchi) per evitare il flash
-      (function () {
-        try {
-          var t = localStorage.getItem("theme") || "light";
-          if (t === "dark") document.documentElement.classList.add("dark");
-        } catch (e) {
-          /* tema chiaro di default */
-        }
-      })();
+      // Tema unico chiaro (si fonde col bianco dei video di sfondo):
+      // assicura che nessuna classe dark resti da sessioni precedenti
+      document.documentElement.classList.remove("dark");
     </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

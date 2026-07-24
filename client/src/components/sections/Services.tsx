@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Globe, AppWindow, Workflow, Bot, LineChart, ShieldCheck, Rocket, Layers3, Wand2 } from "lucide-react";
 import { Scene } from "@/components/Scene";
+import { Eyebrow } from "@/components/Eyebrow";
 
 const services = [
   {
@@ -42,12 +43,12 @@ export function Services() {
           <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-background/25 backdrop-blur-md p-7 md:p-10">
             <div className="relative grid lg:grid-cols-[1.25fr_0.75fr] gap-8 items-end">
               <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Servizi</p>
+                <Eyebrow className="mb-4">Servizi</Eyebrow>
                 <h2 className="text-3xl md:text-5xl font-bold font-heading mb-4 leading-tight">
-                  Soluzioni digitali pensate per farti crescere
+                  Tre modi per accendere il tuo lavoro
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-2xl">
-                  Non pacchetti standard: ogni progetto viene costruito attorno ai tuoi obiettivi, con un percorso semplice e misurabile.
+                  Non pacchetti standard: ogni progetto nasce attorno ai tuoi obiettivi, con un percorso semplice e misurabile.
                 </p>
               </div>
 

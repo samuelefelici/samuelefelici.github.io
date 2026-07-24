@@ -40,36 +40,41 @@
   
   --font-sans: 'Manrope', 'Segoe UI', sans-serif;
   --font-heading: 'Sora', 'Manrope', sans-serif;
+  /* monospazio di sistema per etichette/dati: "lettura da laboratorio",
+     coerente col tema fibre/AI del video, senza dipendenze da caricare */
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Menlo', monospace;
 }
 
 :root {
-  --background: 210 40% 98%;
-  --foreground: 222 48% 12%;
+  /* Tema "laboratorio di luce": bianco luminoso caldo + arancio energia
+     #FF5F00, coerente con lo sfondo video. Un solo accento caldo. */
+  --background: 36 33% 98%;      /* bianco luminoso caldo #FCFBF9 */
+  --foreground: 24 22% 9%;       /* inchiostro caldo #1C1712 */
 
-  --card: 0 0% 100%;
-  --card-foreground: 222 48% 12%;
+  --card: 40 40% 99%;
+  --card-foreground: 24 22% 9%;
 
-  --popover: 0 0% 100%;
-  --popover-foreground: 222 48% 12%;
+  --popover: 40 40% 99%;
+  --popover-foreground: 24 22% 9%;
 
-  --primary: 205 90% 38%;
-  --primary-foreground: 210 40% 98%;
+  --primary: 21 100% 46%;        /* arancio energia (#FF5F00, cupo q.b. per il testo) */
+  --primary-foreground: 40 40% 99%;
 
-  --secondary: 208 38% 95%;
-  --secondary-foreground: 222 48% 12%;
+  --secondary: 30 32% 95%;       /* crema calda */
+  --secondary-foreground: 24 22% 9%;
 
-  --muted: 208 32% 94%;
-  --muted-foreground: 216 15% 38%;
+  --muted: 30 26% 94%;
+  --muted-foreground: 24 10% 40%; /* grigio caldo #6B615A */
 
-  --accent: 45 95% 93%;
-  --accent-foreground: 222 48% 12%;
+  --accent: 28 78% 94%;          /* alone crema per hover */
+  --accent-foreground: 21 100% 34%;
 
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
+  --destructive: 0 72% 48%;
+  --destructive-foreground: 40 40% 99%;
 
-  --border: 212 28% 86%;
-  --input: 212 28% 86%;
-  --ring: 205 90% 38%;
+  --border: 30 22% 88%;
+  --input: 30 22% 88%;
+  --ring: 21 100% 46%;
 
   --radius: 0.5rem;
 }

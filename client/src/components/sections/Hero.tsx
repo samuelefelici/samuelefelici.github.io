@@ -43,7 +43,7 @@ export function Hero() {
 
           <div data-from="0.26" data-to="0.52" className="hidden lg:block">
             <div className="rounded-3xl border border-border/80 bg-background/25 backdrop-blur-md p-6 md:p-7 shadow-xl">
-              <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-5">Come lavoro</p>
+              <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-primary mb-5">Come lavoro</p>
               <div className="space-y-4">
                 <div className="flex items-start gap-3 rounded-xl border border-border/80 bg-secondary/15 backdrop-blur-sm p-4">
                   <CircleCheckBig className="w-5 h-5 text-primary mt-0.5" />
@@ -60,7 +60,7 @@ export function Hero() {
                   </div>
                 </div>
                 <div className="rounded-2xl bg-primary text-primary-foreground p-5">
-                  <p className="text-xs uppercase tracking-[0.16em] opacity-90">Obiettivo tipico</p>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] opacity-90">Obiettivo tipico</p>
                   <p className="text-lg font-bold mt-1">Più richieste qualificate e meno attività manuali</p>
                 </div>
               </div>

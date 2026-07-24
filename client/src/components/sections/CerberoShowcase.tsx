@@ -1,5 +1,6 @@
 import { Scene } from "@/components/Scene";
 import { Counter } from "@/components/Counter";
+import { Eyebrow } from "@/components/Eyebrow";
 
 const V = "?v=3";
 
@@ -60,8 +61,8 @@ export function CerberoShowcase() {
       {/* fase 1: intro con i contatori */}
       <div data-from="0.02" data-to="0.14" className="absolute inset-0 flex items-center pt-16">
         <div className="container mx-auto px-4 md:px-6 text-center">
-          <span className="text-sm font-semibold uppercase tracking-wider text-primary">Caso studio</span>
-          <h2 className="text-4xl md:text-6xl font-bold font-heading mt-3 mb-5">Dentro Cerbero</h2>
+          <Eyebrow className="justify-center">Caso studio</Eyebrow>
+          <h2 className="text-4xl md:text-6xl font-bold font-heading mt-4 mb-5">Dentro Cerbero</h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-10">
             Una piattaforma full-stack di intelligence per il Trasporto Pubblico Locale, su dati reali.
             Quattro motori, un solo sistema.
@@ -69,10 +70,10 @@ export function CerberoShowcase() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
             {stats.map((s) => (
               <div key={s.label} className="text-center rounded-2xl border border-border/60 bg-background/25 backdrop-blur-md p-4">
-                <div className="text-3xl md:text-4xl font-bold text-foreground">
+                <div className="font-mono text-3xl md:text-4xl font-bold text-foreground tabular-nums">
                   <Counter to={s.to} prefix={s.prefix ?? ""} />
                 </div>
-                <div className="text-xs md:text-sm text-muted-foreground mt-1">{s.label}</div>
+                <div className="font-mono text-[11px] md:text-xs uppercase tracking-[0.16em] text-muted-foreground mt-1.5">{s.label}</div>
               </div>
             ))}
           </div>
