@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/Logo";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navItems = [
   { name: "Servizi", href: "#services" },
@@ -77,6 +78,7 @@ export function Navbar() {
               {item.name}
             </a>
           ))}
+          <ThemeToggle />
           <Button variant="default" size="sm" className="rounded-full px-5" asChild data-testid="button-nav-call">
             <a href="#contact">Prenota una call</a>
           </Button>
@@ -84,6 +86,7 @@ export function Navbar() {
 
         {/* Mobile controls */}
         <div className="flex items-center gap-1 md:hidden">
+          <ThemeToggle />
           <button
             className="p-2 text-foreground"
             onClick={() => setIsOpen(!isOpen)}

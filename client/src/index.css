@@ -80,34 +80,35 @@
 }
 
 .dark {
-  /* Dark Mode: Deep Blue/Slate */
-  --background: 222 47% 11%;
-  --foreground: 210 40% 98%;
+  /* Dark Mode "laboratorio al buio": nero caldo + arancio energia, coerente
+     con la versione dark dei video */
+  --background: 24 14% 6%;        /* nero caldo, come lo sfondo del video dark */
+  --foreground: 36 22% 92%;       /* off-white caldo */
 
-  --card: 222 47% 11%;
-  --card-foreground: 210 40% 98%;
+  --card: 24 13% 9%;
+  --card-foreground: 36 22% 92%;
 
-  --popover: 222 47% 11%;
-  --popover-foreground: 210 40% 98%;
+  --popover: 24 13% 9%;
+  --popover-foreground: 36 22% 92%;
 
-  --primary: 217 91% 60%;
-  --primary-foreground: 222 47.4% 11.2%;
+  --primary: 22 100% 55%;         /* arancio energia, un filo più acceso al buio */
+  --primary-foreground: 24 30% 8%;
 
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
+  --secondary: 26 12% 15%;
+  --secondary-foreground: 36 22% 92%;
 
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
+  --muted: 26 12% 15%;
+  --muted-foreground: 30 10% 62%;
 
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
+  --accent: 24 30% 16%;
+  --accent-foreground: 22 100% 62%;
 
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
+  --destructive: 0 62% 45%;
+  --destructive-foreground: 36 22% 92%;
 
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 224.3 76.3% 48%;
+  --border: 28 12% 20%;
+  --input: 28 12% 20%;
+  --ring: 22 100% 55%;
 }
 
 @layer base {
