@@ -1,32 +1,23 @@
 /**
- * Marchio "nodo & impulso" — il motivo dei video: un impulso che percorre la
- * fibra ed entra in un nodo luminoso cinto da un anello orbitante. Disegnato
- * in arancio energia (#FF5F00) con un lieve bagliore, coerente con lo sfondo.
+ * Marchio "<sf/>" — segno da sviluppatore: le iniziali dentro un tag di
+ * codice, con una riga arancione (l'impulso) sotto. Monospazio, coerente con
+ * le etichette del sito e col tema arancio #FF5F00.
  */
 export function Logo({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 44 44"
-      className={className}
-      role="img"
+    <span
       aria-label="Samuele Felici"
-      fill="none"
+      className={`inline-flex flex-col items-center font-mono font-extrabold leading-none tracking-tight ${className ?? ""}`}
     >
-      {/* anello orbitante */}
-      <circle cx="22" cy="22" r="18.5" stroke="#FF5F00" strokeWidth="2.5" opacity="0.32" />
-      {/* impulso lungo la fibra, verso il nodo */}
-      <line
-        x1="2.5"
-        y1="22"
-        x2="22"
-        y2="22"
-        stroke="#FF5F00"
-        strokeWidth="3"
-        strokeLinecap="round"
+      <span className="whitespace-nowrap">
+        <span className="text-primary">&lt;</span>
+        <span className="text-foreground">sf</span>
+        <span className="text-primary">/&gt;</span>
+      </span>
+      <span
+        aria-hidden
+        className="mt-1 h-[2px] w-full rounded-full bg-primary shadow-[0_0_8px_hsl(var(--primary)/0.6)]"
       />
-      {/* nodo luminoso */}
-      <circle cx="22" cy="22" r="6.5" fill="#FF5F00" />
-      <circle cx="22" cy="22" r="6.5" fill="#FF5F00" opacity="0.35" style={{ filter: "blur(3px)" }} />
-    </svg>
+    </span>
   );
 }
