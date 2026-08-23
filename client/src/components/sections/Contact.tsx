@@ -8,7 +8,7 @@ import { PrivacyDialog } from "@/components/PrivacyDialog";
 import { Scene } from "@/components/Scene";
 import { Eyebrow } from "@/components/Eyebrow";
 import { trackLead } from "@/lib/tracking";
-import { Mail, Linkedin, Github, MapPin, Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
+import { Mail, Phone, Linkedin, Github, MapPin, Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 
 /**
  * Web3Forms — invio email gratuito senza backend.
@@ -90,6 +90,10 @@ export function Contact() {
                       <Mail className="w-5 h-5" />
                       info@samuelefelici.com
                     </a>
+                    <a href="tel:+393341265750" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors" data-testid="link-phone">
+                      <Phone className="w-5 h-5" />
+                      +39 334 126 5750
+                    </a>
                     <a href="https://github.com/samuelefelici" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors" data-testid="link-github">
                       <Github className="w-5 h-5" />
                       github.com/samuelefelici
@@ -100,7 +104,7 @@ export function Contact() {
                     </a>
                     <div className="flex items-center gap-3 text-muted-foreground">
                       <MapPin className="w-5 h-5" />
-                      Ancona (Disponibile da remoto)
+                      Camerano (AN) · da remoto e in trasferta
                     </div>
                   </div>
                 </div>
