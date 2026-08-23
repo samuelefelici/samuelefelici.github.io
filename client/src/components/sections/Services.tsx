@@ -1,26 +1,26 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Globe, AppWindow, Workflow, Bot, LineChart, ShieldCheck, Rocket, Layers3, Wand2 } from "lucide-react";
+import { AppWindow, Workflow, Bot, LineChart, ShieldCheck, Rocket, Layers3, Wand2 } from "lucide-react";
 import { Scene } from "@/components/Scene";
 import { Eyebrow } from "@/components/Eyebrow";
 
 const services = [
   {
-    icon: Globe,
-    title: "Siti Web & Landing Page",
-    description: "Un sito chiaro, veloce e professionale che racconta il tuo valore e converte visite in richieste.",
-    details: ["Design su misura e mobile-first", "SEO tecnica e performance elevate", "Messa online completa senza stress"]
-  },
-  {
     icon: AppWindow,
-    title: "App & Software su misura",
-    description: "Applicativi che ti fanno risparmiare tempo, riducono errori e rendono i processi più semplici da gestire.",
-    details: ["Analisi operativa del tuo flusso", "Sviluppo moduli realmente utili", "Supporto e miglioramenti continui"]
+    title: "Gestionali & applicativi su misura",
+    description: "Software che nasce dal problema reale: pianificazione, prenotazioni, gestione di flotta e personale. Costruito per essere usato tutti i giorni, non per una demo.",
+    details: ["Analisi del flusso operativo", "Moduli che servono davvero", "Su dati reali, non di prova"]
   },
   {
     icon: Workflow,
-    title: "Automazioni & Script",
-    description: "Automazioni pratiche per eliminare attività ripetitive e liberare tempo per attività ad alto valore.",
-    details: ["Integrazione tra strumenti esistenti", "Flussi automatici affidabili", "Report e controlli in tempo reale"]
+    title: "Automazioni & script",
+    description: "Elimino il lavoro manuale ripetitivo: parser di PDF ed Excel, generazione di documenti, integrazioni tra gli strumenti che già usi.",
+    details: ["Estrazione dati da PDF ed Excel", "Documenti generati in automatico", "Meno errori, più tempo"]
+  },
+  {
+    icon: LineChart,
+    title: "Dati, dashboard & ottimizzazione",
+    description: "I numeri che contano in tempo reale, e problemi di turni o coperture risolti con solver di ottimizzazione invece che a mano.",
+    details: ["Power BI e dashboard su misura", "KPI aggiornati in automatico", "Scheduling con OR-Tools CP-SAT"]
   }
 ];
 
@@ -29,10 +29,10 @@ const CARD_FROM = [0.28, 0.4, 0.52];
 
 export function Services() {
   const stackBadges = [
-    { icon: Layers3, label: "React" },
-    { icon: Bot, label: "Automazioni" },
-    { icon: LineChart, label: "Analytics" },
-    { icon: ShieldCheck, label: "Affidabilita" },
+    { icon: Layers3, label: "Next.js" },
+    { icon: Bot, label: "Python" },
+    { icon: LineChart, label: "Power BI" },
+    { icon: ShieldCheck, label: "PostgreSQL" },
   ];
 
   return (
@@ -48,7 +48,7 @@ export function Services() {
                   Tre modi per accendere il tuo lavoro
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-2xl">
-                  Non pacchetti standard: ogni progetto nasce attorno ai tuoi obiettivi, con un percorso semplice e misurabile.
+                  Quello che costruisco per il mio lavoro e per chi lavora con me. Ogni progetto parte da un processo vero, non da un template.
                 </p>
               </div>
 

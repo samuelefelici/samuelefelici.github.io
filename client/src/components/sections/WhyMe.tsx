@@ -4,10 +4,9 @@ import { Scene } from "@/components/Scene";
 
 export function WhyMe() {
   const paragraphs = [
-    "Gestisci ancora la tua azienda tra fogli Excel, messaggi WhatsApp e carta? C'e un modo migliore.",
-    "Sono Samuele Felici. Sviluppo applicazioni su misura per piccole imprese che vogliono smettere di perdere tempo in operazioni manuali.",
-    "Non sono il classico sviluppatore che parla solo di tecnologia. Vengo da anni di gestione operativa - coordinamento del personale, pianificazione, organizzazione dei processi. So com'e mandare avanti un'azienda da dentro, non da dietro uno schermo.",
-    "Quando un imprenditore mi racconta che perde due ore al giorno a copiare dati da un foglio all'altro, o che non riesce a capire come sta andando il mese senza chiamare il commercialista, non ho bisogno che me lo spieghi due volte.",
+    "Sono Samuele Felici. Nel trasporto pubblico ho iniziato alla guida, poi sono passato alla programmazione del servizio e alla pianificazione del personale. Oggi coordino turni, rotazioni e coperture di oltre 320 conducenti in Conerobus.",
+    "Non sono un tecnico che parla solo di codice. I processi che gestisco ogni giorno — turni, coperture, vincoli di contratto e di legge — li conosco da dentro. E quando un processo è ripetitivo o fragile, lo riscrivo in software.",
+    "Internamente ho automatizzato la formattazione dei cartellini, rivisto i programmi che generano il servizio giornaliero e alimentano il payroll, e costruito la reportistica Power BI sul personale.",
   ];
 
   return (
@@ -18,7 +17,7 @@ export function WhyMe() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="rounded-3xl border border-border/60 bg-background/25 backdrop-blur-md p-6 md:p-8">
               <h2 className="text-3xl font-bold font-heading mb-6">
-                Dalla tua operativita quotidiana a <span className="text-primary">strumenti digitali semplici</span>.
+                Conosco i processi <span className="text-primary">da dentro</span>. Poi li scrivo in codice.
               </h2>
               <div className="space-y-4">
                 {paragraphs.map((text, i) => (
@@ -47,15 +46,15 @@ export function WhyMe() {
         <div className="container mx-auto px-4 md:px-6 max-w-3xl">
           <div className="rounded-3xl border border-border/60 bg-background/25 backdrop-blur-md p-6 md:p-10">
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
-              Studio Ingegneria Informatica al Politecnico di Milano e costruisco strumenti semplici: un'app che consulti dal telefono, un gestionale che fa in automatico quello che oggi fai a mano, un pannello dove vedi i numeri che contano senza aspettare nessuno.
+              In parallelo sviluppo prodotti verticali per il settore — pianificazione, scheduling con solver di ottimizzazione, GTFS, gestionali — con Next.js, Python e PostgreSQL. Studio Ingegneria Informatica e dell'Automazione all'Università Politecnica delle Marche.
             </p>
             <p className="text-base md:text-lg font-semibold text-foreground mb-8">
-              Lavori direttamente con me, dall'inizio alla consegna - e anche dopo.
+              Lavori direttamente con me, dall'inizio alla consegna — e anche dopo.
             </p>
             <div className="space-y-4">
               {[
-                "Esperienza operativa e gestionale reale",
-                "Individuo i colli di bottiglia nei processi",
+                "Otto anni di operatività reale, non teoria",
+                "Individuo i colli di bottiglia perché li ho vissuti",
                 "Software che parte dal problema, non dal codice",
                 "Rapporto diretto e supporto dopo la consegna"
               ].map((item, i) => (

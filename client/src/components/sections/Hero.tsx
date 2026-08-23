@@ -10,12 +10,11 @@ export function Hero() {
           <div>
             <div data-from="0" data-to="0.9">
               <h1 className="text-4xl md:text-6xl font-extrabold font-heading tracking-tight text-foreground mb-6 leading-[1.05]">
-                Siti web e software
-                <span className="block text-primary">che portano clienti</span>
-                e semplificano il lavoro.
+                Otto anni dentro il trasporto pubblico.
+                <span className="block text-primary">Oggi ne costruisco il software.</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-9 max-w-2xl leading-relaxed">
-                Aiuto aziende e professionisti a trasformare idee in strumenti concreti: siti web che comunicano valore, applicativi su misura e automazioni che eliminano attività ripetitive.
+                Coordino il servizio di oltre 320 conducenti in Conerobus e sviluppo prodotti per il settore: pianificazione, scheduling con solver di ottimizzazione, GTFS, gestionali. Capisco il problema prima di scrivere la soluzione.
               </p>
             </div>
 
@@ -35,9 +34,9 @@ export function Hero() {
             </div>
 
             <div data-from="0.14" data-to="0.9" className="mt-8 grid sm:grid-cols-3 gap-3 text-sm">
-              <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Analisi obiettivi gratuita</div>
-              <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Lavoro remoto in tutta Italia</div>
-              <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Roadmap chiara fin dal giorno 1</div>
+              <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Dominio TPL + sviluppo full-stack</div>
+              <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Da remoto in tutta Italia + trasferte</div>
+              <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Software su dati reali, non demo</div>
             </div>
           </div>
 
@@ -48,20 +47,20 @@ export function Hero() {
                 <div className="flex items-start gap-3 rounded-xl border border-border/80 bg-secondary/15 backdrop-blur-sm p-4">
                   <CircleCheckBig className="w-5 h-5 text-primary mt-0.5" />
                   <div>
-                    <p className="font-semibold">Focus sul risultato</p>
-                    <p className="text-sm text-muted-foreground">Ogni soluzione nasce da un obiettivo di business, non da una moda tecnica.</p>
+                    <p className="font-semibold">Dal problema, non dalla tecnologia</p>
+                    <p className="text-sm text-muted-foreground">Capisco il processo prima di scrivere una riga di codice.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 rounded-xl border border-border/80 bg-secondary/15 backdrop-blur-sm p-4">
                   <Clock3 className="w-5 h-5 text-primary mt-0.5" />
                   <div>
-                    <p className="font-semibold">Tempi e budget sotto controllo</p>
-                    <p className="text-sm text-muted-foreground">Step chiari, priorita condivise e rilasci progressivi senza sorprese.</p>
+                    <p className="font-semibold">Un solo interlocutore</p>
+                    <p className="text-sm text-muted-foreground">Lavori con me dall'analisi alla consegna, e anche dopo.</p>
                   </div>
                 </div>
                 <div className="rounded-2xl bg-primary text-primary-foreground p-5">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] opacity-90">Obiettivo tipico</p>
-                  <p className="text-lg font-bold mt-1">Più richieste qualificate e meno attività manuali</p>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] opacity-90">Cosa ottieni</p>
+                  <p className="text-lg font-bold mt-1">Meno lavoro manuale, numeri chiari in tempo reale</p>
                 </div>
               </div>
             </div>

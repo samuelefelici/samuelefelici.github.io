@@ -63,9 +63,13 @@ export function CerberoShowcase() {
         <div className="container mx-auto px-4 md:px-6 text-center">
           <Eyebrow className="justify-center">Caso studio</Eyebrow>
           <h2 className="text-4xl md:text-6xl font-bold font-heading mt-4 mb-5">Dentro Cerbero</h2>
-          <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-10">
-            Una piattaforma full-stack di intelligence per il Trasporto Pubblico Locale, su dati reali.
-            Quattro motori, un solo sistema.
+          <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-6">
+            Piattaforma SaaS multi-tenant per le aziende di TPL, alternativa ai gestionali di settore
+            per le PMI. Su dati reali: dall'analisi della domanda sul territorio ai turni del singolo
+            conducente. Quattro motori, un solo sistema.
+          </p>
+          <p className="font-mono text-[11px] md:text-xs uppercase tracking-[0.14em] text-muted-foreground/80 max-w-3xl mx-auto mb-10">
+            Next.js 15 · OR-Tools CP-SAT · PostgreSQL · 131 endpoint OpenAPI · 140+ test · Hetzner
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
             {stats.map((s) => (

@@ -6,22 +6,22 @@ const groups = [
   {
     icon: Layers,
     title: "Frontend",
-    skills: ["React", "TypeScript", "Tailwind CSS", "Vite", "Mapbox GL", "Recharts"],
+    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Mapbox GL"],
   },
   {
     icon: Server,
     title: "Backend & Database",
-    skills: ["Node.js", "Express", "PostgreSQL", "Drizzle ORM", "API REST"],
+    skills: ["Node.js", "Express", "PostgreSQL", "Drizzle ORM", "OpenAPI", "Vitest / Pytest"],
   },
   {
     icon: Cpu,
-    title: "Python & Ottimizzazione",
-    skills: ["Python", "Google OR-Tools (CP-SAT)", "Automazioni", "Streamlit", "Power BI"],
+    title: "Dati & Ottimizzazione",
+    skills: ["Python", "OR-Tools CP-SAT", "SQL", "Power BI", "Power Query / DAX", "Looker Studio"],
   },
   {
     icon: Wrench,
-    title: "Dominio & Strumenti",
-    skills: ["GTFS / GTFS-Fares", "SQL", "GIS", "Git & GitHub"],
+    title: "Dominio & Metodo",
+    skills: ["GTFS", "CCNL Autoferrotranvieri", "Git", "Claude Code / Copilot"],
   },
 ];
 
