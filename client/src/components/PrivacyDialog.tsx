@@ -27,7 +27,7 @@ export function PrivacyDialog({ trigger }: { trigger: ReactNode }) {
 
           <div>
             <h4 className="font-semibold text-foreground mb-1">Titolare del trattamento</h4>
-            <p>Samuele Felici — Ancona — email: info@samuelefelici.com</p>
+            <p>Samuele Felici — Ancona — P.IVA 03061920421 — email: info@samuelefelici.com</p>
           </div>
 
           <div>

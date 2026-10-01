@@ -12,6 +12,7 @@ export function Footer() {
       <div className="container mx-auto px-4 md:px-6 flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="text-sm text-muted-foreground text-center md:text-left" data-testid="text-copyright">
           © {new Date().getFullYear()} Samuele Felici. Ancona | Sviluppo software & siti web.
+          <span className="block md:inline md:ml-2" data-testid="text-vat">P.IVA 03061920421</span>
         </div>
 
         <div className="flex items-center gap-4">
