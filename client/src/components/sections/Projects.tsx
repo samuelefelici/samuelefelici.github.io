@@ -104,7 +104,7 @@ function FeaturedCard({ p, n, onOpen }: { p: Project; n: number; onOpen: OnOpen 
 
         <div className="rounded-3xl border border-border/60 bg-background/90 p-5 shadow-xl backdrop-blur-xl dark:bg-background/70 md:p-7">
           <div className="mb-4 flex flex-wrap items-center gap-3 md:mb-5">
-            <ProjectLogo p={p} className={p.logo.className} />
+            <ProjectLogo p={p} className={p.logo?.className} />
             <span className="inline-block rounded-full bg-[color:var(--brand)]/10 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[color:var(--brand-ink)] dark:text-[color:var(--brand-ink-dark)]">
               0{n} — {p.kind}
             </span>
@@ -187,8 +187,8 @@ export function Projects() {
               Software vero, schermate reali
             </h2>
             <p className="mx-auto mb-8 max-w-3xl text-base leading-relaxed text-foreground/80 md:mb-10 md:text-lg [@media(max-height:620px)]:hidden">
-              Una piattaforma per il trasporto pubblico locale con il suo modulo flotta, un navigatore di linea e un
-              servizio di prenotazione a chiamata. Accanto, gestionali su misura anche fuori dal TPL.
+              Alcuni dei sistemi che ho progettato e sviluppato: gestionali, sistemi di controllo e app per chi lavora
+              sul campo. Ognuno è partito da un processo reale e da un problema concreto.
             </p>
             <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
               {featured.map((p) => (

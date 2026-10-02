@@ -1,11 +1,11 @@
 import { Scene } from "@/components/Scene";
 
 const steps = [
-  { num: "01", title: "Briefing", desc: "Capiamo insieme cosa ti serve e qual è l'obiettivo." },
-  { num: "02", title: "Preventivo", desc: "Stima chiara di tempi e costi, senza sorprese." },
-  { num: "03", title: "Sviluppo", desc: "Costruisco la soluzione mostrandoti avanzamenti reali." },
-  { num: "04", title: "Revisione", desc: "Affiniamo i dettagli in base al tuo feedback." },
-  { num: "05", title: "Consegna", desc: "Messa online, codice e breve guida all'uso." }
+  { num: "01", title: "Analisi", desc: "Studiamo insieme il processo: chi fa cosa, dove si perde tempo, quali controlli servono." },
+  { num: "02", title: "Alternative", desc: "Ti propongo più strade, dall'automazione mirata al gestionale completo, con costi e tempi a confronto." },
+  { num: "03", title: "Sviluppo", desc: "Costruisco la soluzione scelta con rilasci frequenti che puoi provare subito." },
+  { num: "04", title: "Avvio", desc: "Importazione dei dati, formazione e avvio affiancato del tuo team." },
+  { num: "05", title: "Assistenza", desc: "Manutenzione, nuove funzioni e supporto anche dopo la consegna." }
 ];
 
 // i cinque step compaiono in cascata, come gli impulsi lungo la treccia nel video
@@ -17,7 +17,7 @@ export function Process() {
       <div className="absolute inset-0 flex items-center pt-16">
         <div className="container mx-auto px-4 md:px-6">
           <div data-from="0.03" data-to="0.9">
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-16 text-center">Il mio processo di lavoro</h2>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-16 text-center">Dal processo alla soluzione, in cinque passi</h2>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8">

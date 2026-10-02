@@ -111,7 +111,7 @@ export function Contact() {
 
                 <div className="p-4 bg-primary/5 rounded-lg border border-primary/10 space-y-2">
                   <p className="text-sm text-muted-foreground font-medium">Risposta media: entro 24 ore lavorative</p>
-                  <p className="text-sm text-muted-foreground">Analizziamo insieme priorita, tempi e budget prima di iniziare.</p>
+                  <p className="text-sm text-muted-foreground">Analizziamo insieme il processo e ti propongo più alternative, con tempi e budget, prima di iniziare.</p>
                 </div>
               </CardContent>
             </Card>
@@ -156,7 +156,7 @@ export function Contact() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="objective" className="text-sm font-medium">Di cosa hai bisogno? (es. sito web, app gestionale, automazione)</label>
+                  <label htmlFor="objective" className="text-sm font-medium">Di cosa hai bisogno? (es. gestionale, sistema di controllo, automazione)</label>
                   <Input
                     id="objective"
                     placeholder="Breve descrizione del progetto"

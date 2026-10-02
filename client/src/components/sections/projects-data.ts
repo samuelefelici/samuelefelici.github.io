@@ -39,7 +39,8 @@ export type Project = {
   ink: string;
   /** testo su fondo scuro, se il colore del marchio non ha contrasto sufficiente */
   inkDark?: string;
-  logo: {
+  /** marchio del prodotto; senza, si mostra solo il nome */
+  logo?: {
     src: string;
     /** variante per il tema scuro */
     dark?: string;
@@ -559,7 +560,6 @@ export const others: Project[] = [
       "Web app per un'azienda di trasporto pubblico: raccoglie le segnalazioni dei conducenti sulle corse critiche, propone con un ottimizzatore le squadre di verifica e le corse da coprire, porta il piano in calendario e ne consuntiva gli esiti con export in PDF.",
     color: "#1EC5FD",
     ink: "#065F87",
-    logo: { src: `${P}/controllerie/logo.webp`, plate: "light", className: "h-8" },
     features: [
       "Segnalazioni dei conducenti da mobile, con linea, direzione e tratto presi dal feed GTFS",
       "Assistente di pianificazione con ottimizzatore: squadre, fasce orarie e corse da coprire su mappa",

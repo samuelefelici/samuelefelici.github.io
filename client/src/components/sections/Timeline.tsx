@@ -20,8 +20,8 @@ const groups = [
   },
   {
     icon: Wrench,
-    title: "Dominio & Metodo",
-    skills: ["GTFS", "CCNL Autoferrotranvieri", "Git", "Claude Code / Copilot"],
+    title: "Metodo & Rilascio",
+    skills: ["Analisi dei processi", "Test automatici", "Git", "Docker", "Claude Code / Copilot"],
   },
 ];
 
@@ -36,8 +36,8 @@ export function Timeline() {
           <div data-from="0.03" data-to="0.9" className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">Competenze & Tecnologie</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Dalla gestione operativa allo sviluppo: unisco competenze tecniche solide alla conoscenza
-              diretta dei processi reali. Ecco gli strumenti con cui costruisco le soluzioni.
+              Tecnologie moderne e collaudate, scelte per durare: gli strumenti con cui costruisco
+              gestionali, sistemi di controllo e automazioni.
             </p>
           </div>
 

@@ -10,11 +10,11 @@ export function Hero() {
           <div>
             <div data-from="0" data-to="0.9">
               <h1 className="text-4xl md:text-6xl font-extrabold font-heading tracking-tight text-foreground mb-6 leading-[1.05]">
-                Otto anni dentro il trasporto pubblico.
-                <span className="block text-primary">Oggi ne costruisco il software.</span>
+                Gestionali e sistemi di controllo su misura.
+                <span className="block text-primary">Costruiti sul tuo modo di lavorare.</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-9 max-w-2xl leading-relaxed">
-                Coordino il servizio di oltre 320 conducenti in Conerobus e sviluppo prodotti per il settore: pianificazione, scheduling con solver di ottimizzazione, GTFS, gestionali. Capisco il problema prima di scrivere la soluzione.
+                Quando fogli Excel, email e passaggi a mano non bastano più, analizzo il tuo processo, ti propongo più strade con costi e tempi chiari e sviluppo quella giusta: gestionali, sistemi di monitoraggio e controllo, automazioni.
               </p>
             </div>
 
@@ -34,9 +34,9 @@ export function Hero() {
             </div>
 
             <div data-from="0.14" data-to="0.9" className="mt-8 grid sm:grid-cols-3 gap-3 text-sm">
-              <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Dominio TPL + sviluppo full-stack</div>
+              <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Analisi del processo prima del codice</div>
               <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Da remoto in tutta Italia + trasferte</div>
-              <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Software su dati reali, non demo</div>
+              <div className="rounded-xl bg-background/25 backdrop-blur-md border border-border p-3 font-medium text-muted-foreground">Più alternative, un preventivo chiaro</div>
             </div>
           </div>
 
