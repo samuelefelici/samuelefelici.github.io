@@ -26,6 +26,13 @@ const services = [
 
 // le tre card entrano una dopo l'altra, come i tre moduli che si accendono nel video
 const CARD_FROM = [0.28, 0.4, 0.52];
+// su telefono non stanno tutte e tre in uno schermo: si alternano, una per volta
+// (entro ~0,67: con 300vh la scena resta fissa fino a lì)
+const MOBILE_RANGES = [
+  [0.23, 0.39],
+  [0.39, 0.55],
+  [0.55, 0.73],
+];
 
 export function Services() {
   const stackBadges = [
@@ -36,7 +43,7 @@ export function Services() {
   ];
 
   return (
-    <Scene id="services" heightVh={300}>
+    <Scene id="services" heightVh={300} fade={0.04}>
       {/* fase 1: banner di presentazione */}
       <div data-from="0.02" data-to="0.22" className="absolute inset-0 flex items-center pt-16">
         <div className="container mx-auto px-4 md:px-6">
@@ -72,7 +79,7 @@ export function Services() {
       </div>
 
       {/* fase 2: le tre card servizio, in sincrono con i moduli del video */}
-      <div className="absolute inset-0 flex items-center pt-16">
+      <div className="absolute inset-0 hidden items-center pt-16 md:flex">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-3 gap-8">
             {services.map((service, index) => (
@@ -106,6 +113,41 @@ export function Services() {
           </div>
         </div>
       </div>
+
+      {/* su telefono: una card alla volta, centrata */}
+      {services.map((service, index) => (
+        <div
+          key={service.title}
+          data-from={MOBILE_RANGES[index][0]}
+          data-to={MOBILE_RANGES[index][1]}
+          className="absolute inset-0 flex items-center pt-16 md:hidden"
+        >
+          <div className="container mx-auto px-4">
+            <Card className="border border-border/80 bg-background/70 backdrop-blur-xl shadow-lg">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center text-primary ring-1 ring-primary/20">
+                    <service.icon className="w-5 h-5" />
+                  </div>
+                  <span className="text-sm font-extrabold text-primary/90 bg-primary/10 border border-primary/20 px-2.5 py-1 rounded-full">0{index + 1}</span>
+                </div>
+                <CardTitle className="text-xl">{service.title}</CardTitle>
+                <CardDescription className="text-base mt-2 leading-relaxed">{service.description}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2.5">
+                  {service.details.map((detail) => (
+                    <li key={detail} className="flex items-center text-sm text-muted-foreground">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary mr-2 shrink-0" />
+                      {detail}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      ))}
     </Scene>
   );
 }

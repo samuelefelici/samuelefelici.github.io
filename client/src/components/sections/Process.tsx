@@ -17,17 +17,17 @@ export function Process() {
       <div className="absolute inset-0 flex items-center pt-16">
         <div className="container mx-auto px-4 md:px-6">
           <div data-from="0.03" data-to="0.9">
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-16 text-center">Dal processo alla soluzione, in cinque passi</h2>
+            <h2 className="text-2xl md:text-4xl font-bold font-heading mb-6 md:mb-16 text-center">Dal processo alla soluzione, in cinque passi</h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-5 md:grid-cols-5 md:gap-8">
             {steps.map((step, index) => (
               <div key={index} data-from={STEP_FROM[index]} data-to="0.9" className="relative text-center group">
-                <div className="text-6xl font-black text-primary/65 dark:text-primary/75 mb-4 group-hover:text-primary transition-colors font-mono drop-shadow-[0_2px_10px_hsl(var(--primary)/0.28)]">
+                <div className="text-4xl md:text-6xl font-black text-primary/65 dark:text-primary/75 mb-1 md:mb-4 group-hover:text-primary transition-colors font-mono drop-shadow-[0_2px_10px_hsl(var(--primary)/0.28)]">
                   {step.num}
                 </div>
-                <h3 className="text-lg font-bold mb-2">{step.title}</h3>
-                <p className="text-sm text-muted-foreground">{step.desc}</p>
+                <h3 className="text-base md:text-lg font-bold mb-1 md:mb-2">{step.title}</h3>
+                <p className="text-xs md:text-sm text-muted-foreground">{step.desc}</p>
               </div>
             ))}
           </div>
