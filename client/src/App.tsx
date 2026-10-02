@@ -3,7 +3,7 @@ import Lenis from "lenis";
 import { Navbar } from "./components/sections/Navbar";
 import { Hero } from "./components/sections/Hero";
 import { Services } from "./components/sections/Services";
-import { CerberoShowcase } from "./components/sections/CerberoShowcase";
+import { Projects } from "./components/sections/Projects";
 import { WhyMe } from "./components/sections/WhyMe";
 import { Timeline } from "./components/sections/Timeline";
 import { Process } from "./components/sections/Process";
@@ -15,7 +15,13 @@ import { ScrollHint } from "./components/ScrollHint";
 
 function App() {
   useEffect(() => {
-    const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+    const lenis = new Lenis({
+      duration: 1.1,
+      smoothWheel: true,
+      // con un dialog aperto (Radix mette data-scroll-locked sul body) la
+      // rotella non deve far scorrere la pagina dietro
+      virtualScroll: () => !document.body.hasAttribute("data-scroll-locked"),
+    });
     let raf = 0;
     const loop = (t: number) => {
       lenis.raf(t);
@@ -32,7 +38,14 @@ function App() {
       const el = document.querySelector(href);
       if (el) {
         e.preventDefault();
-        lenis.scrollTo(el as HTMLElement, { offset: -70 });
+        // data-focus: id dell'elemento a cui dare il focus ad arrivo avvenuto
+        const focusId = (el as HTMLElement).dataset.focus;
+        lenis.scrollTo(el as HTMLElement, {
+          offset: -70,
+          onComplete: () => {
+            if (focusId) document.getElementById(focusId)?.focus({ preventScroll: true });
+          },
+        });
       }
     };
     document.addEventListener("click", onClick);
@@ -59,7 +72,7 @@ function App() {
         <main>
           <Hero />
           <Services />
-          <CerberoShowcase />
+          <Projects />
           <WhyMe />
           <Timeline />
           <Process />

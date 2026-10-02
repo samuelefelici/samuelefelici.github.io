@@ -1,0 +1,24 @@
+<svg viewBox="0 0 64 64" width="64" height="64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CONDO.IT">
+  <rect width="64" height="64" rx="14" fill="#ffffff"/>
+  <g transform="translate(32 32) scale(0.68) translate(-32 -32)">
+    <rect x="10" y="54" width="44" height="4" rx="1" fill="#122a45"/>
+    <rect x="18" y="14" width="9" height="8" fill="#122a45"/>
+    <rect x="14" y="22" width="16" height="32" fill="#122a45"/>
+    <g fill="#ffffff">
+      <rect x="20" y="17" width="5" height="1.4"/>
+      <rect x="16.5" y="26" width="11" height="1.6"/>
+      <rect x="16.5" y="31" width="11" height="1.6"/>
+      <rect x="16.5" y="36" width="11" height="1.6"/>
+      <rect x="16.5" y="41" width="11" height="1.6"/>
+      <rect x="16.5" y="46" width="11" height="1.6"/>
+    </g>
+    <rect x="30" y="30" width="22" height="24" fill="#9cc2e2"/>
+    <g stroke="#ffffff" stroke-width="1.4" stroke-linecap="square">
+      <line x1="30" y1="36" x2="52" y2="36"/>
+      <line x1="30" y1="42" x2="52" y2="42"/>
+      <line x1="30" y1="48" x2="52" y2="48"/>
+      <line x1="37" y1="30" x2="37" y2="54"/>
+      <line x1="45" y1="30" x2="45" y2="54"/>
+    </g>
+  </g>
+</svg>

@@ -7,7 +7,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navItems = [
   { name: "Servizi", href: "#services" },
-  { name: "Caso Studio", href: "#cerbero" },
+  { name: "Casi Studio", href: "#cerbero" },
   { name: "Chi Sono", href: "#about" },
   { name: "Processo", href: "#process" },
   { name: "Contatti", href: "#contact" },

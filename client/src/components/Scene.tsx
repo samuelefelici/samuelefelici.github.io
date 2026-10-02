@@ -12,18 +12,25 @@ import { useEffect, useRef, type ReactNode } from "react";
  * applicati direttamente in requestAnimationFrame, senza re-render React.
  * Non annidare un elemento data-from dentro un altro.
  *
- * Con prefers-reduced-motion la coreografia è disattivata e tutto resta
- * visibile in flusso normale.
+ * Le fasi nascoste restano nel flusso di tastiera e lettori di schermo: se il
+ * focus finisce dentro una fase non visibile, la pagina scorre fino a lì.
  */
 export function Scene({
   id,
   heightVh,
   className,
+  rail,
+  fade = 0.07,
   children,
 }: {
   id: string;
   heightVh: number;
   className?: string;
+  /** elementi posizionati lungo il binario di scroll (fuori dallo schermo
+   *  sticky), es. ancore `#id` che portano a una fase precisa della scena */
+  rail?: ReactNode;
+  /** frazione di progresso usata per fade-in/out di ogni fase */
+  fade?: number;
   children: ReactNode;
 }) {
   const ref = useRef<HTMLElement>(null);
@@ -40,7 +47,7 @@ export function Scene({
     // promuovi subito gli item a layer compositor: evita la creazione di
     // layer a metà transizione, uno dei punti in cui l'animazione scatta
     for (const item of items) item.style.willChange = "opacity, transform";
-    const FADE = 0.07; // frazione di progresso usata per fade-in/out
+    const FADE = fade;
     const SHIFT = reduced ? 0 : 44; // px di slide verticale in entrata/uscita
     let raf = 0;
 
@@ -76,18 +83,41 @@ export function Scene({
         }
         item.style.opacity = opacity.toFixed(3);
         item.style.transform = `translateY(${y.toFixed(1)}px)`;
-        // gli elementi nascosti non devono intercettare i click di quelli visibili
-        item.style.visibility = opacity < 0.02 ? "hidden" : "visible";
+        // gli elementi nascosti non devono intercettare i click di quelli
+        // visibili (ma restano raggiungibili da tastiera, vedi onFocusIn)
+        item.style.pointerEvents = opacity < 0.02 ? "none" : "";
       }
     };
 
+    // focus da tastiera dentro una fase non visibile: porta la scena al
+    // centro di quella fase (i click non arrivano qui: pointer-events none)
+    const onFocusIn = (e: FocusEvent) => {
+      const item = (e.target as HTMLElement).closest<HTMLElement>("[data-from]");
+      if (!item || !el.contains(item) || parseFloat(item.style.opacity || "1") > 0.5) return;
+      const from = parseFloat(item.dataset.from ?? "0");
+      const to = parseFloat(item.dataset.to ?? "1");
+      const r = el.getBoundingClientRect();
+      window.scrollTo({ top: window.scrollY + r.top + ((from + to) / 2) * r.height, behavior: "instant" });
+    };
+    el.addEventListener("focusin", onFocusIn);
+
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, []);
+    return () => {
+      cancelAnimationFrame(raf);
+      el.removeEventListener("focusin", onFocusIn);
+    };
+  }, [fade]);
 
   return (
     <section id={id} ref={ref} style={{ height: `${heightVh}vh` }} className="relative">
-      <div className={`sticky top-0 h-screen overflow-hidden ${className ?? ""}`}>{children}</div>
+      {rail}
+      {/* svh: sui telefoni lo schermo pinnato non finisce sotto la barra del
+          browser; overflow clip: il focus non può far scorrere il riquadro */}
+      <div
+        className={`sticky top-0 h-screen overflow-hidden supports-[height:100svh]:h-svh supports-[overflow:clip]:overflow-clip ${className ?? ""}`}
+      >
+        {children}
+      </div>
     </section>
   );
 }

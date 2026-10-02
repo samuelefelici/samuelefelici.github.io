@@ -28,7 +28,7 @@ export function Hero() {
               <Button size="lg" variant="outline" className="gap-2 rounded-full px-7 transition-all hover:-translate-y-0.5" asChild data-testid="button-projects">
                 <a href="#cerbero">
                   <Code2 className="w-4 h-4" />
-                  Vedi caso studio
+                  Vedi i casi studio
                 </a>
               </Button>
             </div>
