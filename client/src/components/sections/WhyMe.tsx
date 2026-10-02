@@ -4,9 +4,9 @@ import { Scene } from "@/components/Scene";
 
 export function WhyMe() {
   const paragraphs = [
-    "Sono Samuele Felici. Nel trasporto pubblico ho iniziato alla guida, poi sono passato alla programmazione del servizio e alla pianificazione del personale. Oggi coordino turni, rotazioni e coperture di oltre 320 conducenti in Conerobus.",
-    "Non sono un tecnico che parla solo di codice. I processi che gestisco ogni giorno — turni, coperture, vincoli di contratto e di legge — li conosco da dentro. E quando un processo è ripetitivo o fragile, lo riscrivo in software.",
-    "Internamente ho automatizzato la formattazione dei cartellini, rivisto i programmi che generano il servizio giornaliero e alimentano il payroll, e costruito la reportistica Power BI sul personale.",
+    "Lavoro con aziende e professionisti che gestiscono processi complessi — ordini, turni, flotte, magazzino, controlli — e vogliono smettere di inseguirli tra fogli Excel, email e telefonate.",
+    "Prima di scrivere codice studio come lavorate davvero: chi inserisce i dati, dove si perdono, quali controlli servono e chi deve vedere cosa. Da lì nascono le alternative che ti propongo, ognuna con costi, tempi e limiti chiari.",
+    "Vengo dall'operatività: so cosa vuol dire usare un software tutti i giorni, sotto pressione. Per questo costruisco strumenti semplici da usare e solidi sotto il cofano.",
   ];
 
   return (
@@ -17,7 +17,7 @@ export function WhyMe() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="rounded-3xl border border-border/60 bg-background/25 backdrop-blur-md p-6 md:p-8">
               <h2 className="text-3xl font-bold font-heading mb-6">
-                Conosco i processi <span className="text-primary">da dentro</span>. Poi li scrivo in codice.
+                Prima capisco il <span className="text-primary">processo</span>. Poi lo scrivo in codice.
               </h2>
               <div className="space-y-4">
                 {paragraphs.map((text, i) => (
@@ -46,16 +46,16 @@ export function WhyMe() {
         <div className="container mx-auto px-4 md:px-6 max-w-3xl">
           <div className="rounded-3xl border border-border/60 bg-background/25 backdrop-blur-md p-6 md:p-10">
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
-              In parallelo sviluppo prodotti verticali per il settore — pianificazione, scheduling con solver di ottimizzazione, GTFS, gestionali — con Next.js, Python e PostgreSQL. Studio Ingegneria Informatica e dell'Automazione all'Università Politecnica delle Marche.
+              Sviluppo gestionali, sistemi di controllo e app per chi lavora sul campo con Next.js, Python e PostgreSQL, con codice e dati che restano tuoi.
             </p>
             <p className="text-base md:text-lg font-semibold text-foreground mb-8">
               Lavori direttamente con me, dall'inizio alla consegna — e anche dopo.
             </p>
             <div className="space-y-4">
               {[
-                "Otto anni di operatività reale, non teoria",
-                "Individuo i colli di bottiglia perché li ho vissuti",
-                "Software che parte dal problema, non dal codice",
+                "Analisi del processo prima del preventivo",
+                "Più alternative, con costi e tempi a confronto",
+                "Rilasci frequenti: vedi il software crescere",
                 "Rapporto diretto e supporto dopo la consegna"
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">

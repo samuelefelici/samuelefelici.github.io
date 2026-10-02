@@ -6,21 +6,21 @@ import { Eyebrow } from "@/components/Eyebrow";
 const services = [
   {
     icon: AppWindow,
-    title: "Gestionali & applicativi su misura",
-    description: "Software che nasce dal problema reale: pianificazione, prenotazioni, gestione di flotta e personale. Costruito per essere usato tutti i giorni, non per una demo.",
-    details: ["Analisi del flusso operativo", "Moduli che servono davvero", "Su dati reali, non di prova"]
+    title: "Gestionali su misura",
+    description: "Un unico sistema al posto di fogli sparsi: anagrafiche, ordini, prenotazioni, magazzino, flotte, personale, documenti. Con i ruoli e i passaggi che usate davvero.",
+    details: ["Web app accessibile da ufficio e smartphone", "Ruoli, permessi e storico delle modifiche", "Dati tuoi, esportabili in ogni momento"]
+  },
+  {
+    icon: ShieldCheck,
+    title: "Sistemi di controllo & monitoraggio",
+    description: "Sapere cosa succede mentre succede: segnalazioni dal campo, scadenze, anomalie e KPI raccolti in un solo posto, con avvisi quando qualcosa esce dai binari.",
+    details: ["Dashboard e indicatori in tempo reale", "Avvisi, scadenze e controlli automatici", "Pianificazione ottimizzata con solver"]
   },
   {
     icon: Workflow,
-    title: "Automazioni & script",
-    description: "Elimino il lavoro manuale ripetitivo: parser di PDF ed Excel, generazione di documenti, integrazioni tra gli strumenti che già usi.",
-    details: ["Estrazione dati da PDF ed Excel", "Documenti generati in automatico", "Meno errori, più tempo"]
-  },
-  {
-    icon: LineChart,
-    title: "Dati, dashboard & ottimizzazione",
-    description: "I numeri che contano in tempo reale, e problemi di turni o coperture risolti con solver di ottimizzazione invece che a mano.",
-    details: ["Power BI e dashboard su misura", "KPI aggiornati in automatico", "Scheduling con OR-Tools CP-SAT"]
+    title: "Automazioni & integrazioni",
+    description: "Il lavoro ripetitivo lo fa il software: dati estratti da PDF ed Excel, documenti generati da soli, strumenti che già usi collegati tra loro.",
+    details: ["Estrazione dati da PDF ed Excel", "Documenti e report in automatico", "Integrazione con i tuoi strumenti"]
   }
 ];
 
@@ -45,10 +45,10 @@ export function Services() {
               <div>
                 <Eyebrow className="mb-4">Servizi</Eyebrow>
                 <h2 className="text-3xl md:text-5xl font-bold font-heading mb-4 leading-tight">
-                  Tre modi per accendere il tuo lavoro
+                  Tre modi per far lavorare meglio la tua azienda
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-2xl">
-                  Quello che costruisco per il mio lavoro e per chi lavora con me. Ogni progetto parte da un processo vero, non da un template.
+                  Ogni progetto parte da come lavorate oggi, non da un template: prima capiamo il processo, poi scegliamo insieme la soluzione più adatta.
                 </p>
               </div>
 

@@ -17,7 +17,9 @@ export const brandVars = (p: Project) =>
  * o scura) in entrambi i temi.
  */
 export function ProjectLogo({ p, className }: { p: Project; className?: string }) {
-  const size = className ?? p.logo.className ?? "h-12";
+  const logo = p.logo;
+  if (!logo) return null;
+  const size = className ?? logo.className ?? "h-12";
   const img = (src: string, extra = "") => (
     <img
       src={`${src}?v=${ASSET_V}`}
@@ -27,19 +29,19 @@ export function ProjectLogo({ p, className }: { p: Project; className?: string }
       className={`block w-auto object-contain ${size} ${extra}`}
     />
   );
-  const mark = p.logo.dark ? (
+  const mark = logo.dark ? (
     <>
-      {img(p.logo.src, "dark:hidden")}
-      {img(p.logo.dark, "hidden dark:block")}
+      {img(logo.src, "dark:hidden")}
+      {img(logo.dark, "hidden dark:block")}
     </>
   ) : (
-    img(p.logo.src, p.logo.plate ? "" : "drop-shadow-md")
+    img(logo.src, logo.plate ? "" : "drop-shadow-md")
   );
-  if (!p.logo.plate) return <span className="inline-flex shrink-0">{mark}</span>;
+  if (!logo.plate) return <span className="inline-flex shrink-0">{mark}</span>;
   return (
     <span
       className={`inline-flex shrink-0 rounded-xl px-2.5 py-1.5 shadow-sm ring-1 ${
-        p.logo.plate === "dark" ? "bg-[#0f1115] ring-white/10" : "bg-white ring-black/5"
+        logo.plate === "dark" ? "bg-[#0f1115] ring-white/10" : "bg-white ring-black/5"
       }`}
     >
       {mark}
