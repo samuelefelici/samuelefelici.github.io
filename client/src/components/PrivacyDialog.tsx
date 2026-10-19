@@ -34,7 +34,8 @@ export function PrivacyDialog({ trigger }: { trigger: ReactNode }) {
             <h4 className="font-semibold text-foreground mb-1">Dati raccolti</h4>
             <p>
               Nome, indirizzo email e il contenuto del messaggio (obiettivo del progetto ed eventuali
-              dettagli) che decidi liberamente di comunicare.
+              dettagli) che decidi liberamente di comunicare. Al messaggio si aggiunge la provenienza
+              della visita (per esempio la campagna o il sito da cui sei arrivato), senza cookie.
             </p>
           </div>
 

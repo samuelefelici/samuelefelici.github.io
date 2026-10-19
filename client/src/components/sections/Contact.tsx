@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { PrivacyDialog } from "@/components/PrivacyDialog";
 import { Scene } from "@/components/Scene";
 import { Eyebrow } from "@/components/Eyebrow";
-import { trackLead } from "@/lib/tracking";
+import { getAttribution, trackLead } from "@/lib/tracking";
 import { Mail, Phone, Linkedin, Github, MapPin, Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 
 /**
@@ -44,6 +44,7 @@ export function Contact() {
       email: formData.email,
       obiettivo: formData.objective,
       message: formData.message,
+      provenienza: getAttribution(),
       // honeypot anti-spam: deve restare vuoto
       botcheck: (e.currentTarget.elements.namedItem("botcheck") as HTMLInputElement)?.checked
     };
