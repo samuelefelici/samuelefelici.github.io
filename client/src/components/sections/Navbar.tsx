@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { callLink } from "@/lib/tracking";
 
 const navItems = [
   { name: "Servizi", href: "#services" },
@@ -80,7 +81,7 @@ export function Navbar() {
           ))}
           <ThemeToggle />
           <Button variant="default" size="sm" className="rounded-full px-5" asChild data-testid="button-nav-call">
-            <a href="#contact">Prenota una call</a>
+            <a {...callLink} data-where="navbar">Prenota una call</a>
           </Button>
         </div>
 

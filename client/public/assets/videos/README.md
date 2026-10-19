@@ -64,3 +64,16 @@ ffmpeg -i master-src.mp4 -frames:v 1 -q:v 3 master.jpg
 
 rm master-src.mp4
 ```
+
+## Versione leggera per telefoni (`*-m.mp4`)
+
+Sotto i 1024 px di larghezza, o con "risparmio dati" attivo, `ScrollVideoLayer`
+carica `master-m.mp4` / `master-dark-m.mp4`: 720p, stessi keyframe fitti,
+qualità più bassa (circa 5 e 9 MB invece di 39 e 67). Si rigenerano dal master:
+
+```bash
+ffmpeg -i master.mp4 -an -vf "scale=-2:720" -c:v libx264 -crf 31 -preset slow -g 12 \
+  -movflags +faststart -pix_fmt yuv420p master-m.mp4
+ffmpeg -i master-dark.mp4 -an -vf "scale=-2:720" -c:v libx264 -crf 31 -preset slow -g 12 \
+  -movflags +faststart -pix_fmt yuv420p master-dark-m.mp4
+```

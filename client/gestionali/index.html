@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
+    
+    <!-- SEO & Metadata -->
+    <title>Gestionali su misura per PMI | Samuele Felici</title>
+    <meta name="description" content="Basta Excel e passaggi a mano: un gestionale costruito sul vostro processo, dall'ufficio e dallo smartphone. Analisi, alternative con costi e tempi chiari, assistenza." />
+    <meta name="author" content="Samuele Felici" />
+    <meta name="keywords" content="gestionali su misura, software gestionale, sistemi di controllo, monitoraggio e KPI, automazione processi aziendali, dashboard, web app, sviluppo software Ancona, Next.js, Python, PostgreSQL" />
+    <link rel="canonical" href="https://samuelefelici.com/gestionali/" />
+    <meta name="geo.region" content="IT-57" />
+    <meta name="geo.placename" content="Camerano (AN)" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://samuelefelici.com/gestionali/" />
+    <meta property="og:title" content="Gestionali su misura per PMI | Samuele Felici" />
+    <meta property="og:description" content="Basta Excel e passaggi a mano: un gestionale costruito sul vostro processo, dall'ufficio e dallo smartphone. Analisi, alternative con costi e tempi chiari, assistenza." />
+    <meta property="og:image" content="https://samuelefelici.com/og-cover.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://samuelefelici.com/gestionali/" />
+    <meta property="twitter:title" content="Gestionali su misura per PMI | Samuele Felici" />
+    <meta property="twitter:description" content="Basta Excel e passaggi a mano: un gestionale costruito sul vostro processo, dall'ufficio e dallo smartphone. Analisi, alternative con costi e tempi chiari, assistenza." />
+    <meta property="twitter:image" content="https://samuelefelici.com/og-cover.jpg" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+      </head>
+  <body data-landing="gestionali">
+    <script>
+      // Applica il tema salvato prima del render (chiaro di default) per
+      // evitare il flash. Il chiaro si fonde col video bianco, lo scuro col
+      // video dark.
+      (function () {
+        try {
+          if (localStorage.getItem("theme") === "dark")
+            document.documentElement.classList.add("dark");
+        } catch (e) {
+          /* localStorage non disponibile: resta chiaro */
+        }
+      })();
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/landing.tsx"></script>
+  </body>
+</html>

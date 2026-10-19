@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Creative template</title>
+<!-- Font del sito (Sora titoli, Manrope testo, JetBrains Mono marchio) salvati in locale;
+     se mancano si ripiega sui font di sistema. -->
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; }
+  body { -webkit-font-smoothing: antialiased; }
+
+  /* Token presi da client/src/index.css (tema "laboratorio di luce" / "al buio") */
+  .canvas {
+    --orange: #FF6E1A;          /* --primary dark: hsl(22 100% 55%) */
+    --orange-ink: #EB5200;      /* --primary light: hsl(21 100% 46%) */
+    --cyan: #39C2F9;            /* hsl(197 94% 60%), alone secondario del sito */
+    --violet: #8B5CF6;
+    --pad: 64px;
+    --top: 56px;
+    --bottom: 56px;
+    position: relative; width: var(--W); height: var(--H); overflow: hidden;
+    font-family: 'Manrope', 'Segoe UI', system-ui, sans-serif; color: var(--fg); background: var(--bg);
+  }
+  .canvas[data-format="st"] { --top: 250px; --bottom: 250px; }
+
+  .canvas[data-theme="dark"] {
+    --bg: #110F0D; --fg: #EFEBE6; --muted: #B3A99E; --card: #1C1814; --line: rgba(239,235,230,.14);
+    --accent: var(--orange); --chip-bg: var(--orange); --chip-fg: #1A0E06; --shadow: rgba(0,0,0,.55);
+  }
+  .canvas[data-theme="navy"] {
+    --bg: #0B1120; --fg: #EEF2F8; --muted: #A7B3C6; --card: #131C30; --line: rgba(238,242,248,.14);
+    --accent: var(--orange); --chip-bg: var(--orange); --chip-fg: #1A0E06; --shadow: rgba(0,0,0,.6);
+  }
+  .canvas[data-theme="light"] {
+    --bg: #FCFBF9; --fg: #1C1712; --muted: #5E554E; --card: #FFFFFF; --line: rgba(28,23,18,.12);
+    --accent: var(--orange-ink); --chip-bg: #1C1712; --chip-fg: #FCFBF9; --shadow: rgba(60,35,10,.28);
+  }
+
+  /* ---------- sfondo ---------- */
+  .bg { position: absolute; inset: 0; z-index: 0; }
+  .canvas[data-theme="dark"] .bg {
+    background:
+      radial-gradient(60% 45% at 8% 6%, rgba(255,110,26,.30), transparent 70%),
+      radial-gradient(50% 40% at 100% 30%, rgba(57,194,249,.12), transparent 70%),
+      radial-gradient(70% 50% at 60% 105%, rgba(255,110,26,.22), transparent 70%),
+      linear-gradient(165deg, #17120E, #0D0B09);
+  }
+  .canvas[data-theme="navy"] .bg {
+    background:
+      radial-gradient(55% 40% at 0% 0%, rgba(255,110,26,.28), transparent 70%),
+      radial-gradient(60% 45% at 100% 20%, rgba(57,194,249,.26), transparent 70%),
+      radial-gradient(70% 50% at 50% 110%, rgba(139,92,246,.20), transparent 70%),
+      linear-gradient(165deg, #0E1525, #0A0F1A);
+  }
+  .canvas[data-theme="light"] .bg {
+    background:
+      radial-gradient(55% 40% at 0% 0%, rgba(255,95,0,.20), transparent 70%),
+      radial-gradient(55% 40% at 100% 18%, rgba(57,194,249,.20), transparent 70%),
+      radial-gradient(70% 45% at 55% 105%, rgba(250,190,60,.22), transparent 70%),
+      linear-gradient(165deg, #FCFBF9, #F4EFE8);
+  }
+  .bg::after { /* griglia a punti leggera, "laboratorio" */
+    content: ""; position: absolute; inset: 0;
+    background-image: radial-gradient(var(--line) 1.4px, transparent 1.6px);
+    background-size: 36px 36px; opacity: .55;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 65%);
+            mask-image: linear-gradient(180deg, #000 0%, transparent 65%);
+  }
+
+  /* ---------- testata: marchio + dominio | etichetta ---------- */
+  .top { position: absolute; z-index: 20; left: var(--pad); right: var(--pad); top: var(--top);
+         display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 18px; }
+  .logo { display: inline-flex; flex-direction: column; align-items: center;
+          font-family: 'JetBrains Mono', ui-monospace, 'DejaVu Sans Mono', monospace; font-weight: 800;
+          font-size: 34px; line-height: 1; letter-spacing: -0.02em; }
+  .logo .o { color: var(--accent); } .logo .f { color: var(--fg); }
+  .logo .u { margin-top: 5px; height: 3px; width: 100%; border-radius: 3px; background: var(--accent);
+             box-shadow: 0 0 10px var(--accent); }
+  .domain { font-weight: 700; font-size: 24px; color: var(--muted); letter-spacing: .01em; }
+  .kicker { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; font-size: 19px;
+            letter-spacing: .16em; text-transform: uppercase; color: var(--accent);
+            border: 2px solid currentColor; border-radius: 999px; padding: 9px 18px; white-space: nowrap; }
+
+  /* ---------- testi ---------- */
+  .copy { position: absolute; z-index: 20; left: var(--pad); right: var(--pad); }
+  h1 { font-family: 'Sora', 'Manrope', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.035em;
+       line-height: 1.04; color: var(--fg); text-wrap: balance; }
+  h1 em, h2 em { font-style: normal; color: var(--accent); }
+  .sub { margin-top: 20px; font-weight: 600; color: var(--muted); line-height: 1.32; text-wrap: balance; }
+  .canvas[data-format="sq"] h1 { font-size: 76px; } .canvas[data-format="sq"] .sub { font-size: 30px; }
+  .canvas[data-format="pt"] h1 { font-size: 82px; } .canvas[data-format="pt"] .sub { font-size: 31px; }
+  .canvas[data-format="st"] h1 { font-size: 92px; } .canvas[data-format="st"] .sub { font-size: 36px; }
+
+  .cta { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+  .copy .cta { margin-top: 30px; }
+  .cta-chip { display: inline-flex; align-items: center; gap: 14px; background: var(--chip-bg); color: var(--chip-fg);
+              font-family: 'Sora', system-ui, sans-serif; font-weight: 700; font-size: 29px; letter-spacing: -0.01em;
+              padding: 18px 30px; border-radius: 999px; box-shadow: 0 14px 36px var(--shadow); }
+  .cta-chip svg { width: 30px; height: 30px; }
+  .cta-note { font-size: 22px; font-weight: 600; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+  .cta-note::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #22C55E;
+                      box-shadow: 0 0 0 5px rgba(34,197,94,.22); }
+  .bottom-cta { position: absolute; z-index: 30; left: var(--pad); right: var(--pad); bottom: var(--bottom); }
+
+  /* ---------- dispositivi ---------- */
+  .dev { position: absolute; z-index: 5; }
+  .browser { border-radius: 16px; overflow: hidden; background: #1E1B18;
+             box-shadow: 0 40px 90px var(--shadow), 0 0 0 1.5px rgba(255,255,255,.10); }
+  .canvas[data-theme="light"] .browser { background: #EDE7DF; box-shadow: 0 34px 80px var(--shadow), 0 0 0 1.5px rgba(28,23,18,.10); }
+  .browser .bar { height: 42px; display: flex; align-items: center; gap: 9px; padding: 0 18px; }
+  .browser .bar i { width: 13px; height: 13px; border-radius: 50%; background: #FF5F57; }
+  .browser .bar i:nth-child(2) { background: #FEBC2E; } .browser .bar i:nth-child(3) { background: #28C840; }
+  .browser .bar span { margin-left: 16px; flex: 1; max-width: 62%; height: 24px; border-radius: 8px;
+                       background: rgba(255,255,255,.08); color: rgba(255,255,255,.62);
+                       font-size: 14px; font-weight: 600; line-height: 24px; padding: 0 12px; white-space: nowrap; overflow: hidden; }
+  .canvas[data-theme="light"] .browser .bar span { background: rgba(28,23,18,.07); color: rgba(28,23,18,.6); }
+  .browser .scr { display: block; width: 100%; overflow: hidden; background: #fff; }
+  .browser .scr img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+
+  .phone { border-radius: 58px; padding: 13px; background: #0B0B0C;
+           box-shadow: 0 40px 90px var(--shadow), inset 0 0 0 2px #3A3A3E, 0 0 0 2px rgba(255,255,255,.08); }
+  .phone .scr { position: relative; border-radius: 46px; overflow: hidden; background: #fff; width: 100%; }
+  .phone .sbar { height: 50px; } /* barra di stato: l'isola non copre l'intestazione dell'app */
+  .phone .img { position: relative; width: 100%; overflow: hidden; }
+  .phone .img img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+  .phone .island { position: absolute; z-index: 2; top: 12px; left: 50%; transform: translateX(-50%);
+                   width: 31%; height: 28px; border-radius: 20px; background: #0B0B0C; }
+  .redact { position: absolute; z-index: 3; border-radius: 8px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            background: rgba(246,243,238,.93); }
+
+  .tablet { border-radius: 34px; padding: 18px; background: #0B0B0C;
+            box-shadow: 0 40px 90px var(--shadow), inset 0 0 0 2px #3A3A3E; }
+  .tablet .scr { border-radius: 18px; overflow: hidden; }
+  .tablet .scr img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+
+  /* ---------- elementi di contorno ---------- */
+  .badge { position: absolute; z-index: 15; background: var(--card); color: var(--fg); border-radius: 22px;
+           padding: 20px 26px; box-shadow: 0 24px 60px var(--shadow); border: 1.5px solid var(--line); }
+  .badge .k { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 50px; letter-spacing: -0.03em; line-height: 1; color: var(--accent); }
+  .badge .l { margin-top: 8px; font-size: 19px; font-weight: 600; color: var(--muted); line-height: 1.3; }
+  .badge .t { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 25px; line-height: 1.2; }
+
+  .tap { position: absolute; z-index: 16; display: inline-flex; align-items: center; gap: 12px;
+         background: var(--card); color: var(--fg); border: 1.5px solid var(--line); border-radius: 999px;
+         padding: 14px 24px 14px 14px; font-family: 'Sora', sans-serif; font-weight: 700; font-size: 26px;
+         box-shadow: 0 18px 44px var(--shadow); white-space: nowrap; }
+  .tap .ic { width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; color: #fff; }
+  .tap .ic svg { width: 26px; height: 26px; }
+
+  .pills { position: absolute; z-index: 16; display: flex; flex-direction: column; gap: 14px; }
+  .pill { display: inline-flex; align-items: center; gap: 12px; align-self: flex-start;
+          background: var(--card); border: 1.5px solid var(--line); border-radius: 999px;
+          padding: 12px 22px 12px 14px; font-size: 23px; font-weight: 700; color: var(--fg);
+          box-shadow: 0 14px 34px var(--shadow); }
+  .pill svg { width: 30px; height: 30px; color: var(--accent); flex: none; }
+
+  .foot-note { position: absolute; z-index: 40; right: 24px; bottom: 20px; font-size: 16px; font-weight: 600;
+               color: rgba(255,255,255,.82); background: rgba(10,8,6,.62); padding: 6px 12px; border-radius: 8px; }
+  .canvas[data-format="st"] .foot-note { bottom: 200px; right: var(--pad); }
+  .canvas[data-theme="light"] .foot-note { color: #4A423B; background: rgba(255,255,255,.78); }
+
+  /* ---------- carosello ---------- */
+  .card-label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; font-size: 20px;
+                letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+  h2 { font-family: 'Sora', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.03em; line-height: 1.06;
+       font-size: 62px; color: var(--fg); text-wrap: balance; }
+  .facts { position: absolute; z-index: 20; display: flex; flex-direction: column; gap: 14px; }
+  .fact { display: flex; align-items: center; gap: 14px; font-size: 25px; font-weight: 700; color: var(--fg); }
+  .fact svg { width: 30px; height: 30px; color: var(--accent); flex: none; }
+
+  .files { position: absolute; z-index: 10; }
+  .file { position: absolute; display: flex; align-items: center; gap: 16px; white-space: nowrap;
+          background: var(--card); border: 1.5px solid var(--line); border-radius: 18px; padding: 18px 26px;
+          font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 27px; color: var(--muted);
+          box-shadow: 0 20px 50px var(--shadow); }
+  .file .x { width: 40px; height: 40px; border-radius: 9px; background: #1F7A45; color: #fff; display: grid; place-items: center;
+             font-family: 'Sora', sans-serif; font-weight: 800; font-size: 20px; }
+  .file.struck span { text-decoration: line-through; text-decoration-color: var(--accent); text-decoration-thickness: 3px; }
+
+  .pains { position: absolute; z-index: 20; display: flex; flex-direction: column; gap: 18px; }
+  .pain { display: flex; align-items: center; gap: 22px; background: var(--card); border: 1.5px solid var(--line);
+          border-radius: 22px; padding: 22px 28px; font-size: 29px; font-weight: 700; color: var(--fg); }
+  .pain .n { flex: none; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center;
+             background: rgba(255,110,26,.14); color: var(--accent); }
+  .pain .n svg { width: 28px; height: 28px; }
+  .answer { position: absolute; z-index: 20; display: flex; align-items: center; gap: 18px;
+            font-family: 'Sora', sans-serif; font-weight: 700; font-size: 32px; color: var(--fg); }
+  .answer svg { width: 40px; height: 40px; color: var(--accent); }
+
+  .steps { position: absolute; z-index: 20; display: flex; flex-direction: column; gap: 16px; }
+  .step { display: flex; align-items: center; gap: 22px; padding: 20px 26px; border-radius: 22px;
+          background: var(--card); border: 1.5px solid var(--line); }
+  .step .n { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 26px; color: var(--accent); }
+  .step .t { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 29px; color: var(--fg); }
+  .step .d { font-size: 21px; font-weight: 600; color: var(--muted); margin-top: 4px; }
+  .swipe { position: absolute; z-index: 20; display: flex; align-items: center; gap: 12px; font-family: 'Sora', sans-serif;
+           font-weight: 700; font-size: 27px; color: var(--accent); }
+  .swipe svg { width: 34px; height: 34px; }
+  .pager { position: absolute; z-index: 20; display: flex; gap: 8px; }
+  .pager i { width: 12px; height: 12px; border-radius: 6px; background: var(--line); }
+  .pager i.on { width: 34px; background: var(--accent); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const ICONS = {
+  arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-width="2"/><path d="m7.5 12.5 3 3 6-6.5"/></svg>',
+  x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>',
+  chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></svg>',
+  pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-5.5 10.2-7.4 11.8a1 1 0 0 1-1.2 0C9.5 20.2 4 15 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
+  mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="14" height="14" rx="2"/><path d="M4 16a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2"/></svg>',
+};
+const SIZES = { sq: [1080, 1080], pt: [1080, 1350], st: [1080, 1920] };
+const ASSETS = '../../../client/public/assets/progetti/';
+const esc = (s) => String(s);
+const px = (v) => (typeof v === 'number' ? v + 'px' : v);
+
+function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+function place(e, o) {
+  if (o.x != null) e.style.left = px(o.x);
+  if (o.y != null) e.style.top = px(o.y);
+  if (o.r != null) e.style.right = px(o.r);
+  if (o.b != null) e.style.bottom = px(o.b);
+  if (o.w != null) e.style.width = px(o.w);
+  if (o.rot) e.style.transform = `rotate(${o.rot}deg)`;
+  if (o.z != null) e.style.zIndex = o.z;
+  return e;
+}
+
+function device(d) {
+  const src = ASSETS + d.src;
+  let e;
+  if (d.type === 'browser') {
+    e = el('div', 'dev browser');
+    e.innerHTML = `<div class="bar"><i></i><i></i><i></i><span>${esc(d.title || '')}</span></div>`;
+    const scr = el('div', 'scr'); scr.style.aspectRatio = d.ratio; // ratio = larghezza/altezza visibile
+    scr.innerHTML = `<img src="${src}" alt="">`; e.appendChild(scr);
+  } else if (d.type === 'phone') {
+    e = el('div', 'dev phone');
+    const scr = el('div', 'scr');
+    scr.innerHTML = `<div class="island"></div><div class="sbar" style="background:${d.bar || '#fff'}"></div>`;
+    const img = el('div', 'img'); img.style.aspectRatio = d.ratio || '0.4621';
+    img.innerHTML = `<img src="${src}" alt="">` +
+      (d.redact || []).map(([x, y, w, h]) => `<i class="redact" style="left:${x}%;top:${y}%;width:${w}%;height:${h}%"></i>`).join('');
+    scr.appendChild(img); e.appendChild(scr);
+  } else if (d.type === 'tablet') {
+    e = el('div', 'dev tablet');
+    const scr = el('div', 'scr'); scr.style.aspectRatio = d.ratio || '1.6';
+    scr.innerHTML = `<img src="${src}" alt="">`; e.appendChild(scr);
+  }
+  return place(e, d);
+}
+
+function logo() {
+  return `<div class="brand"><span class="logo"><span><span class="o">&lt;</span><span class="f">sf</span><span class="o">/&gt;</span></span><span class="u"></span></span><span class="domain">samuelefelici.com</span></div>`;
+}
+function cta(c) {
+  if (!c) return '';
+  return `<div class="cta"><span class="cta-chip">${esc(c.label)}${ICONS.arrow}</span>${c.note ? `<span class="cta-note">${esc(c.note)}</span>` : ''}</div>`;
+}
+
+window.render = function (cfg) {
+  const [W, H] = SIZES[cfg.format];
+  const c = el('div', 'canvas');
+  c.dataset.format = cfg.format; c.dataset.theme = cfg.theme;
+  c.style.setProperty('--W', W + 'px'); c.style.setProperty('--H', H + 'px');
+  c.appendChild(el('div', 'bg'));
+
+  const top = el('div', 'top', logo() + (cfg.kicker ? `<span class="kicker">${esc(cfg.kicker)}</span>` : ''));
+  c.appendChild(top);
+
+  if (cfg.h1 || cfg.h2) {
+    const copy = el('div', 'copy');
+    copy.style.top = px(cfg.copyY ?? (cfg.format === 'st' ? 360 : 150));
+    if (cfg.label) copy.appendChild(el('div', 'card-label', cfg.label));
+    if (cfg.h1) copy.appendChild(el('h1', null, cfg.h1));
+    if (cfg.h2) copy.appendChild(el('h2', null, cfg.h2));
+    if (cfg.copyMax) copy.querySelector('h1,h2').style.maxWidth = px(cfg.copyMax);
+    if (cfg.sub) { const s = el('p', 'sub', cfg.sub); if (cfg.subMax) s.style.maxWidth = px(cfg.subMax); copy.appendChild(s); }
+    if (cfg.cta && cfg.ctaAt !== 'bottom') copy.insertAdjacentHTML('beforeend', cta(cfg.cta));
+    c.appendChild(copy);
+  }
+  if (cfg.cta && cfg.ctaAt === 'bottom') {
+    const b = el('div', 'bottom-cta', cta(cfg.cta));
+    if (cfg.ctaPos) place(b, cfg.ctaPos);
+    c.appendChild(b);
+  }
+
+  for (const d of cfg.devices || []) c.appendChild(device(d));
+
+  for (const b of cfg.badges || []) {
+    const e = place(el('div', 'badge'), b);
+    e.innerHTML = b.k ? `<div class="k">${b.k}</div><div class="l">${b.l}</div>` : `<div class="t">${b.t}</div>${b.l ? `<div class="l">${b.l}</div>` : ''}`;
+    c.appendChild(e);
+  }
+  for (const t of cfg.taps || []) {
+    const e = place(el('div', 'tap'), t);
+    e.innerHTML = `<span class="ic" style="background:${t.color}">${ICONS[t.icon]}</span>${t.label}`;
+    c.appendChild(e);
+  }
+  if (cfg.pills) {
+    const p = place(el('div', 'pills'), cfg.pills);
+    p.innerHTML = cfg.pills.items.map((t) => `<span class="pill">${ICONS.check}${t}</span>`).join('');
+    c.appendChild(p);
+  }
+  if (cfg.facts) {
+    const f = place(el('div', 'facts'), cfg.facts);
+    f.innerHTML = cfg.facts.items.map((t) => `<div class="fact">${ICONS.check}<span>${t}</span></div>`).join('');
+    c.appendChild(f);
+  }
+  if (cfg.files) {
+    for (const f of cfg.files) {
+      const e = place(el('div', 'file' + (f.struck ? ' struck' : '')), f);
+      e.innerHTML = `<span class="x">X</span><span>${f.name}</span>`;
+      c.appendChild(e);
+    }
+  }
+  if (cfg.pains) {
+    const p = place(el('div', 'pains'), cfg.pains);
+    p.innerHTML = cfg.pains.items.map((t) => `<div class="pain"><span class="n">${ICONS.x}</span><span>${t}</span></div>`).join('');
+    c.appendChild(p);
+  }
+  if (cfg.answer) {
+    const a = place(el('div', 'answer'), cfg.answer);
+    a.innerHTML = `${ICONS.arrow}<span>${cfg.answer.text}</span>`;
+    c.appendChild(a);
+  }
+  if (cfg.steps) {
+    const s = place(el('div', 'steps'), cfg.steps);
+    s.innerHTML = cfg.steps.items.map(([n, t, d]) => `<div class="step"><span class="n">${n}</span><div><div class="t">${t}</div><div class="d">${d}</div></div></div>`).join('');
+    c.appendChild(s);
+  }
+  if (cfg.swipe) { const s = place(el('div', 'swipe'), cfg.swipe); s.innerHTML = `${cfg.swipe.text}${ICONS.arrow}`; c.appendChild(s); }
+  if (cfg.pager) {
+    const p = place(el('div', 'pager'), cfg.pager);
+    p.innerHTML = Array.from({ length: cfg.pager.n }, (_, i) => `<i class="${i === cfg.pager.i ? 'on' : ''}"></i>`).join('');
+    c.appendChild(p);
+  }
+  if (cfg.footNote) c.appendChild(el('div', 'foot-note', cfg.footNote));
+
+  const root = document.getElementById('root'); root.innerHTML = ''; root.appendChild(c);
+  return Promise.all([document.fonts.ready, ...[...c.querySelectorAll('img')].map((i) => i.decode().catch(() => { throw new Error('img ' + i.src); }))]);
+};
+</script>
+</body>
+</html>

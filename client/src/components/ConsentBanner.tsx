@@ -35,7 +35,7 @@ export function ConsentBanner() {
   return (
     <div className="fixed bottom-4 inset-x-4 md:inset-x-auto md:right-4 md:max-w-sm z-[60] rounded-xl border border-border bg-card shadow-2xl p-4">
       <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
-        Uso cookie tecnici e, con il tuo consenso, strumenti di statistica e marketing per migliorare il
+        Uso cookie tecnici e, con il tuo consenso, strumenti di statistica e marketing (Google, Meta, LinkedIn) per migliorare il
         sito. Dettagli nell'{" "}
         <PrivacyDialog
           trigger={<button type="button" className="underline hover:text-primary">informativa privacy</button>}

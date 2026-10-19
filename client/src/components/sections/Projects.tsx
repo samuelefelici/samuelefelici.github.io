@@ -4,6 +4,7 @@ import { Scene } from "@/components/Scene";
 import { Eyebrow } from "@/components/Eyebrow";
 import { BrowserFrame, PhoneFrame, ProjectGallery, ProjectLogo, TabletFrame, brandVars } from "@/components/ProjectGallery";
 import { featured, others, shotSrc, shotSrcSet, type Project } from "./projects-data";
+import { track } from "@/lib/tracking";
 
 /*
  * Coreografia (frazioni del progresso della scena, vedi Scene): intro, i
@@ -158,6 +159,7 @@ export function Projects() {
   const openAt = (project: Project) => (index: number, el: HTMLElement) => {
     openerRef.current = el;
     setOpen({ project, index });
+    track("project_view", { project: project.id });
   };
 
   // ancore lungo il binario di scroll: #progetto-<id> porta alla fase giusta
