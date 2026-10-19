@@ -210,7 +210,7 @@ export function Projects() {
               aria-label={`Vai agli altri progetti: ${others.map((o) => o.name).join(", ")}`}
               className="mt-5 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-full px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-foreground/75 transition hover:text-accent-foreground dark:hover:text-primary md:text-xs"
             >
-              e poi {others.map((o) => o.name).join(" · ")}
+              e poi altri {others.length} progetti: gestionali, strumenti operativi e siti
               <ArrowRight className="h-3.5 w-3.5" />
             </a>
           </div>
@@ -237,7 +237,7 @@ export function Projects() {
                 Su misura, dove serve
               </h3>
             </div>
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
+            <div className="grid grid-cols-2 gap-2.5 md:grid-cols-5 md:gap-4">
               {others.map((p) => {
                 const cover = p.shots[p.hero];
                 return (
@@ -250,25 +250,26 @@ export function Projects() {
                     style={brandVars(p)}
                     className="group overflow-hidden rounded-2xl border border-border/60 bg-background/80 text-left shadow-lg backdrop-blur-xl transition hover:-translate-y-1 hover:border-[color:var(--brand)]/60"
                   >
-                    <div className="relative overflow-hidden border-b border-border/60 [@media(max-height:500px)]:hidden">
+                    <div className="relative overflow-hidden border-b border-border/60 max-md:hidden md:[@media(max-height:680px)]:hidden">
                       <img
                         src={shotSrc(cover, cover.sizes[0])}
                         srcSet={shotSrcSet(cover)}
-                        sizes="(min-width: 768px) 24vw, 46vw"
+                        sizes="19vw"
                         alt=""
                         loading="lazy"
                         decoding="async"
                         className={`block aspect-[16/10] w-full object-cover transition duration-500 group-hover:scale-[1.03] ${cover.kind === "mobile" ? "object-[50%_15%]" : "object-left-top"}`}
                       />
                     </div>
-                    <div className="p-3 md:p-4">
-                      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
-                        <ProjectLogo p={p} className="h-6 max-w-[96px] md:h-7" />
-                        <span className="text-sm font-bold leading-tight md:text-base">{p.name}</span>
+                    <div className="p-2.5 md:p-3">
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                        <ProjectLogo p={p} className="h-5 max-w-[84px] md:h-6" />
+                        <span className="text-sm font-bold leading-tight">{p.name}</span>
                       </div>
+                      <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">{p.kind}</p>
                       <p
                         id={`tagline-${p.id}`}
-                        className="mt-2 text-xs leading-relaxed text-muted-foreground line-clamp-2 max-sm:hidden md:text-sm [@media(max-height:500px)]:hidden"
+                        className="mt-1.5 text-xs leading-relaxed text-muted-foreground line-clamp-2 max-lg:hidden [@media(max-height:820px)]:hidden"
                       >
                         {p.tagline}
                       </p>
