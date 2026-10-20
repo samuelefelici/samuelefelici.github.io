@@ -1,0 +1,29 @@
+{
+  "name": "Errori flussi → Telegram",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "b2c3d4e5-0001-4000-8000-000000000001",
+      "name": "Errore in un flusso",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "text": "=⚠️ Errore nel flusso «{{ $json.workflow.name }}»\n🧩 Blocco: {{ $json.execution.lastNodeExecuted || '—' }}\n❗ {{ $json.execution.error.message || 'errore sconosciuto' }}\n🔗 {{ $json.execution.url || '' }}\n\nIl contatto è comunque arrivato via email (Web3Forms).",
+        "additionalFields": { "appendAttribution": false }
+      },
+      "id": "b2c3d4e5-0002-4000-8000-000000000002",
+      "name": "Avviso errore",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [260, 0]
+    }
+  ],
+  "connections": {
+    "Errore in un flusso": { "main": [[{ "node": "Avviso errore", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" }
+}
