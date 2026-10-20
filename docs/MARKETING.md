@@ -60,7 +60,6 @@ rifiuta il banner (di solito la maggioranza).
 1. Coolify → **+ New → Service → n8n** (con PostgreSQL), dominio per esempio
    `https://n8n.samuelefelici.com`.
 2. Variabili d'ambiente del servizio:
-   - `NODE_FUNCTION_ALLOW_BUILTIN=crypto` (il nodo Code calcola gli hash SHA-256)
    - `N8N_BLOCK_ENV_ACCESS_IN_NODE=false` (il workflow legge le variabili qui sotto)
    - `META_PIXEL_ID=1665173445302537`
    - `META_CAPI_TOKEN=` → Gestione eventi Meta → il Pixel → **Impostazioni →
