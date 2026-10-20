@@ -40,3 +40,9 @@ Le schermate vengono da `client/public/assets/progetti/` e non sono copiate qui.
 - Stories: testi e CTA stanno tra y=250 e y=1670, lasciando liberi 250 px sopra e sotto.
 - Si usano solo schermate con dati dimostrativi e fatti o numeri presenti in `projects-data.ts`. Niente prezzi, clienti o testimonianze.
 - Nel sito di Beatrice l'indirizzo e il numero di telefono del negozio sono sfocati (`redact` in `creatives.mjs`). Non sono state usate le schermate del biglietto AG form, perché mostrano viso e nome di una persona reale.
+
+## Foto profilo
+
+`profilo-sf-dark-1080.jpg` e `profilo-sf-light-1080.jpg`: il marchio `<sf/>` centrato
+su 1080×1080, per Instagram, Facebook e LinkedIn (resta intero nel ritaglio rotondo).
+Font JetBrains Mono 800, arancio `#FF6E1A` sul nero e `#EB5200` sul chiaro, come nel sito.
