@@ -25,7 +25,7 @@ export const TRACKING = {
   bookingUrl: "",
   // numero WhatsApp in formato internazionale senza "+" (es. "393341265750"):
   // se c'è, compare il pulsante WhatsApp in basso a destra
-  whatsapp: "",
+  whatsapp: "393341265750",
 };
 
 /** Link per "Prenota una call": la pagina di prenotazione se c'è, altrimenti il form. */
