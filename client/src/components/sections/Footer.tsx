@@ -1,4 +1,4 @@
-import { ArrowUp, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowUp, Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrivacyDialog } from "@/components/PrivacyDialog";
 
@@ -40,6 +40,11 @@ export function Footer() {
           <Button variant="ghost" size="icon" asChild aria-label="LinkedIn">
             <a href="https://www.linkedin.com/in/samuele-felici-a58197139/" target="_blank" rel="noopener noreferrer" data-testid="link-footer-linkedin">
               <Linkedin className="w-4 h-4" />
+            </a>
+          </Button>
+          <Button variant="ghost" size="icon" asChild aria-label="Instagram">
+            <a href="https://www.instagram.com/samuelefelici.dev/" target="_blank" rel="noopener noreferrer" data-testid="link-footer-instagram">
+              <Instagram className="w-4 h-4" />
             </a>
           </Button>
           <Button variant="ghost" size="icon" asChild aria-label="Email">
