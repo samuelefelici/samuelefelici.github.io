@@ -9,7 +9,7 @@ Gli ID si incollano tutti in un solo posto: `client/src/lib/tracking.ts`.
 | Strumento | Dove gira | A cosa serve | Stato |
 | --- | --- | --- | --- |
 | Landing `/gestionali/`, `/tpl/`, `/siti/` | sito (GitHub Pages) | una pagina per pubblico, leggera, un solo obiettivo: il form | pronte |
-| Umami | Coolify (istanza di `stats.agform.it`) | statistiche anonime senza cookie e senza banner: visite, UTM, eventi, funnel | manca `websiteId` |
+| Umami | Coolify (`stats.samuelefelici.com`) | statistiche anonime senza cookie e senza banner: visite, UTM, eventi, funnel | attivo |
 | Meta Pixel | Meta | Lead, Contact, ViewContent, Schedule; pubblici personalizzati | attivo (`1005756371856293`) |
 | Meta Conversions API | n8n su Coolify | il Lead arriva a Meta anche quando il browser blocca il Pixel; deduplicato con `event_id` | da attivare |
 | Avviso a ogni richiesta | n8n su Coolify → Telegram | sai subito che è arrivato un contatto (l'email di Web3Forms resta) | da attivare |

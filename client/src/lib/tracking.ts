@@ -14,9 +14,9 @@ export const TRACKING = {
   linkedinPartnerId: "", // LinkedIn Insight Tag — es. "1234567"
   linkedinLeadConversion: "", // ID della conversione "Lead" in Campaign Manager — es. "12345678"
   umami: {
-    // istanza Umami su Coolify (la stessa di agform.it); websiteId dal pannello Umami
-    src: "https://stats.agform.it/s.js",
-    websiteId: "",
+    // istanza Umami su Coolify (stats.samuelefelici.com); websiteId dal pannello Umami
+    src: "https://stats.samuelefelici.com/s.js",
+    websiteId: "65b8a454-634d-4b97-a8de-0ce9d1eb247c",
   },
   // webhook n8n su Coolify: riceve ogni richiesta del form e la inoltra a
   // Meta (Conversions API), Telegram/email e CRM — vedi docs/coolify/
