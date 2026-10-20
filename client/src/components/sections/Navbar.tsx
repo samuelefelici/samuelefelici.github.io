@@ -112,7 +112,12 @@ export function Navbar() {
               {item.name}
             </a>
           ))}
-          <Button className="w-full mt-2" asChild>
+          {callLink.href !== "#contact" && (
+            <Button className="w-full mt-2" asChild>
+              <a {...callLink} data-where="menu-mobile" onClick={() => setIsOpen(false)}>Prenota una call</a>
+            </Button>
+          )}
+          <Button className="w-full mt-2" variant={callLink.href !== "#contact" ? "outline" : "default"} asChild>
             <a href="#contact" onClick={() => setIsOpen(false)}>Scrivimi</a>
           </Button>
         </div>
