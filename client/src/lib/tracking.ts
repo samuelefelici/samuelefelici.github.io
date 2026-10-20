@@ -10,7 +10,7 @@ export const TRACKING = {
   ga4: "G-5YHCDZF5SE", // Google Analytics 4 — es. "G-XXXXXXXXXX"
   googleAds: "", // Google Ads — es. "AW-XXXXXXXXXX"
   googleAdsLead: "", // etichetta della conversione "Lead" di Google Ads — es. "AbCdEfGh123"
-  metaPixel: "1005756371856293", // Meta (Facebook / Instagram) Pixel
+  metaPixel: "1665173445302537", // Meta (Facebook / Instagram) Pixel — dataset "samuelefelici.com"
   linkedinPartnerId: "", // LinkedIn Insight Tag — es. "1234567"
   linkedinLeadConversion: "", // ID della conversione "Lead" in Campaign Manager — es. "12345678"
   umami: {

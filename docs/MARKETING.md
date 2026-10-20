@@ -10,7 +10,7 @@ Gli ID si incollano tutti in un solo posto: `client/src/lib/tracking.ts`.
 | --- | --- | --- | --- |
 | Landing `/gestionali/`, `/tpl/`, `/siti/` | sito (GitHub Pages) | una pagina per pubblico, leggera, un solo obiettivo: il form | pronte |
 | Umami | Coolify (`stats.samuelefelici.com`) | statistiche anonime senza cookie e senza banner: visite, UTM, eventi, funnel | attivo |
-| Meta Pixel | Meta | Lead, Contact, ViewContent, Schedule; pubblici personalizzati | attivo (`1005756371856293`) |
+| Meta Pixel | Meta | Lead, Contact, ViewContent, Schedule; pubblici personalizzati | attivo (`1665173445302537`) |
 | Meta Conversions API | n8n su Coolify | il Lead arriva a Meta anche quando il browser blocca il Pixel; deduplicato con `event_id` | da attivare |
 | Avviso a ogni richiesta | n8n su Coolify → Telegram | sai subito che è arrivato un contatto (l'email di Web3Forms resta) | da attivare |
 | Google Analytics 4 | Google | con consenso | attivo (`G-5YHCDZF5SE`) |
@@ -62,7 +62,7 @@ rifiuta il banner (di solito la maggioranza).
 2. Variabili d'ambiente del servizio:
    - `NODE_FUNCTION_ALLOW_BUILTIN=crypto` (il nodo Code calcola gli hash SHA-256)
    - `N8N_BLOCK_ENV_ACCESS_IN_NODE=false` (il workflow legge le variabili qui sotto)
-   - `META_PIXEL_ID=1005756371856293`
+   - `META_PIXEL_ID=1665173445302537`
    - `META_CAPI_TOKEN=` → Gestione eventi Meta → il Pixel → **Impostazioni →
      API Conversioni → Genera token di accesso**
    - `TELEGRAM_CHAT_ID=` → il tuo ID (scrivi a @userinfobot)
