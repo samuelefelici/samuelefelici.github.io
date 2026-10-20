@@ -12,6 +12,7 @@ import { Footer } from "./components/sections/Footer";
 import { ConsentBanner } from "./components/ConsentBanner";
 import { ScrollVideoLayer } from "./components/ScrollVideoLayer";
 import { ScrollHint } from "./components/ScrollHint";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 function App() {
   useEffect(() => {
@@ -80,6 +81,7 @@ function App() {
         </main>
         <Footer />
         <ConsentBanner />
+        <WhatsAppButton />
       </div>
       <ScrollHint />
     </div>

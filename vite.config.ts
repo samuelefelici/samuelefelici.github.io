@@ -39,6 +39,15 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    // home + landing delle campagne (/gestionali/, /tpl/, /siti/)
+    rollupOptions: {
+      input: {
+        main: path.resolve(import.meta.dirname, "client", "index.html"),
+        gestionali: path.resolve(import.meta.dirname, "client", "gestionali", "index.html"),
+        tpl: path.resolve(import.meta.dirname, "client", "tpl", "index.html"),
+        siti: path.resolve(import.meta.dirname, "client", "siti", "index.html"),
+      },
+    },
   },
   server: {
     host: "0.0.0.0",

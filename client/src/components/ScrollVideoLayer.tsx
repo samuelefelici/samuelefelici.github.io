@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useIsDark } from "@/components/ThemeToggle";
 
 /**
@@ -44,6 +44,16 @@ export function ScrollVideoLayer() {
   // e stesse scene → stessa mappa SEGMENTS.
   const dark = useIsDark();
   const base = dark ? "master-dark" : "master";
+  // telefoni, tablet e "risparmio dati": master 720p leggero (5–9 MB invece
+  // di 39–67), stesse scene e stessa durata. Chi arriva da un annuncio è
+  // quasi sempre su rete mobile.
+  const [light] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      (window.matchMedia("(max-width: 1023px)").matches ||
+        Boolean((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData)),
+  );
+  const mp4 = light ? `${base}-m` : base;
 
   useEffect(() => {
     const video = videoRef.current;
@@ -189,7 +199,7 @@ export function ScrollVideoLayer() {
           poster={`/assets/videos/${base}.jpg`}
           className="absolute inset-0 w-full h-full object-cover will-change-transform"
         >
-          <source src={`/assets/videos/${base}.mp4`} type='video/mp4; codecs="avc1.64001f"' />
+          <source src={`/assets/videos/${mp4}.mp4`} type='video/mp4; codecs="avc1.64001f"' />
           <source src={`/assets/videos/${base}.webm`} type='video/webm; codecs="vp9"' />
         </video>
       </div>

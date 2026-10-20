@@ -33,8 +33,8 @@ export function PrivacyDialog({ trigger }: { trigger: ReactNode }) {
           <div>
             <h4 className="font-semibold text-foreground mb-1">Dati raccolti</h4>
             <p>
-              Nome, indirizzo email e il contenuto del messaggio (obiettivo del progetto ed eventuali
-              dettagli) che decidi liberamente di comunicare. Al messaggio si aggiunge la provenienza
+              Nome, indirizzo email, telefono (facoltativo) e il contenuto del messaggio (obiettivo del
+              progetto ed eventuali dettagli) che decidi liberamente di comunicare. Al messaggio si aggiunge la provenienza
               della visita (per esempio la campagna o il sito da cui sei arrivato), senza cookie.
             </p>
           </div>
@@ -52,8 +52,12 @@ export function PrivacyDialog({ trigger }: { trigger: ReactNode }) {
             <h4 className="font-semibold text-foreground mb-1">Modalità e destinatari</h4>
             <p>
               L'invio del modulo avviene tramite il servizio <strong>Web3Forms</strong>, che recapita il
-              messaggio via email e agisce come fornitore del servizio. I dati non vengono diffusi né
-              ceduti a terzi per finalità di marketing.
+              messaggio via email e agisce come fornitore del servizio. Una copia della richiesta passa da
+              un sistema di automazione (n8n) ospitato sul mio server nell'Unione Europea, che mi avvisa
+              dell'arrivo del messaggio. Solo se hai accettato i cookie di marketing, email e telefono
+              vengono inviati a Meta in forma cifrata (hash) per misurare l'efficacia delle campagne
+              pubblicitarie (Conversions API). I dati non vengono diffusi né ceduti a terzi per finalità di
+              marketing.
             </p>
           </div>
 
@@ -68,10 +72,12 @@ export function PrivacyDialog({ trigger }: { trigger: ReactNode }) {
           <div>
             <h4 className="font-semibold text-foreground mb-1">Cookie e statistiche</h4>
             <p>
-              Il sito usa cookie tecnici necessari al funzionamento. Solo previo tuo consenso (tramite
-              l'apposito banner) vengono attivati strumenti di statistica e marketing di terze parti
-              (es. Google Analytics, Google Ads, Meta Pixel) che possono installare cookie per misurare
-              le visite e l'efficacia delle campagne. Puoi modificare la scelta in qualsiasi momento dal
+              Il sito usa cookie tecnici necessari al funzionamento e una statistica delle visite
+              anonima e senza cookie (Umami), ospitata sul mio server nell'Unione Europea, che non
+              raccoglie dati personali. Solo previo tuo consenso (tramite l'apposito banner) vengono
+              attivati strumenti di statistica e marketing di terze parti (Google Analytics, Google Ads,
+              Meta Pixel, LinkedIn Insight Tag) che possono installare cookie e trasferire dati fuori
+              dall'Unione Europea per misurare le visite e l'efficacia delle campagne. Puoi modificare la scelta in qualsiasi momento dal
               link "Cookie" nel footer.
             </p>
           </div>
