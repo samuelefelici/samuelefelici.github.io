@@ -22,7 +22,7 @@ export const TRACKING = {
   // Meta (Conversions API), Telegram/email e CRM — vedi docs/coolify/
   leadWebhook: "https://n8n.samuelefelici.com/webhook/lead-sito",
   // pagina di prenotazione (Cal.com su Coolify): se c'è, "Prenota una call" la apre
-  bookingUrl: "",
+  bookingUrl: "https://cal.com/samuelefelici/call-conoscitiva",
   // numero WhatsApp in formato internazionale senza "+" (es. "393341265750"):
   // se c'è, compare il pulsante WhatsApp in basso a destra
   whatsapp: "393341265750",
