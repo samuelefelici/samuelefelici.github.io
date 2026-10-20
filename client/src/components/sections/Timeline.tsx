@@ -30,7 +30,7 @@ const CARD_FROM = [0.14, 0.26, 0.38, 0.5];
 
 export function Timeline() {
   return (
-    <Scene id="competenze" heightVh={280}>
+    <Scene id="competenze" heightVh={280} arrive={0.58}>
       <div className="absolute inset-0 flex items-center pt-16">
         <div className="container mx-auto px-4 md:px-6">
           <div data-from="0.03" data-to="0.9" className="text-center mb-5 md:mb-12">

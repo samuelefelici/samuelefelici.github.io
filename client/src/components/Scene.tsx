@@ -21,6 +21,7 @@ export function Scene({
   className,
   rail,
   fade = 0.07,
+  arrive,
   children,
 }: {
   id: string;
@@ -31,6 +32,10 @@ export function Scene({
   rail?: ReactNode;
   /** frazione di progresso usata per fade-in/out di ogni fase */
   fade?: number;
+  /** frazione di progresso a cui portano i link del menu (#id): il punto in
+   *  cui i contenuti della scena sono già comparsi, non l'inizio della scena
+   *  dove si vede solo lo sfondo */
+  arrive?: number;
   children: ReactNode;
 }) {
   const ref = useRef<HTMLElement>(null);
@@ -109,7 +114,7 @@ export function Scene({
   }, [fade]);
 
   return (
-    <section id={id} ref={ref} style={{ height: `${heightVh}vh` }} className="relative">
+    <section id={id} ref={ref} data-arrive={arrive} style={{ height: `${heightVh}vh` }} className="relative">
       {rail}
       {/* svh: sui telefoni lo schermo pinnato non finisce sotto la barra del
           browser; overflow clip: il focus non può far scorrere il riquadro */}

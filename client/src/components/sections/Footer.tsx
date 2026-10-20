@@ -8,7 +8,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="py-8 bg-background/90 border-t border-border/80 backdrop-blur-sm">
+    <footer className="pt-8 pb-24 md:pb-8 bg-background/90 border-t border-border/80 backdrop-blur-sm">
       <div className="container mx-auto px-4 md:px-6 flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="text-sm text-muted-foreground text-center md:text-left" data-testid="text-copyright">
           © {new Date().getFullYear()} Samuele Felici. Ancona | Sviluppo software & siti web.

@@ -108,7 +108,11 @@ export function ScrollVideoLayer() {
         pts.push([absTop, SEGMENTS[i][0]]); // inizio scena → inizio suo segmento
         if (i === last) {
           // ultima scena: dal suo inizio alla fine del video sul tratto pinnato
-          pts.push([absTop + r.height - vh, SEGMENTS[i][1]]);
+          // (Contatti non è pinnata: se è bassa il tratto finale dura
+          // almeno mezzo schermo, senza superare il fondo della pagina)
+          const maxScroll = document.documentElement.scrollHeight - vh;
+          const end = Math.min(maxScroll, absTop + Math.max(r.height - vh, vh * 0.5));
+          pts.push([Math.max(end, absTop + 1), SEGMENTS[i][1]]);
         }
       }
 
