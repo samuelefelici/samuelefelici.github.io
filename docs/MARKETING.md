@@ -79,6 +79,14 @@ Il workflow manda a Meta solo i lead con `marketing_consent: true` (cookie di
 marketing accettati), con email, telefono e nome cifrati SHA-256 come chiede
 Meta. Il webhook accetta richieste solo da `samuelefelici.com`.
 
+**Avviso se il flusso si rompe** (consigliato): importa anche
+`docs/coolify/n8n-error-workflow.json`, scegli nel nodo *Avviso errore* la
+stessa credenziale Telegram e salva (non serve pubblicarlo). Poi apri il
+flusso dei lead → `⋯` → **Settings** → **Error Workflow** → scegli
+"Errori flussi → Telegram" → Save. Da quel momento, se un'esecuzione fallisce
+(per esempio Meta rifiuta l'evento), ricevi su Telegram il nome del blocco,
+il messaggio d'errore e il link all'esecuzione.
+
 Estensioni utili sullo stesso n8n, quando servono: salvare i lead in un
 foglio Google o in un CRM (Twenty si installa da Coolify), e ricevere le
 prenotazioni di Cal.com via webhook.
