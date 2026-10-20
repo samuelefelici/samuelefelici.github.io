@@ -1,24 +1,27 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Scene } from "@/components/Scene";
+import { Reveal } from "@/components/Reveal";
 import { Eyebrow } from "@/components/Eyebrow";
 import { LeadForm } from "@/components/LeadForm";
 import { Mail, Phone, Linkedin, Github, MapPin } from "lucide-react";
 
 export function Contact() {
   return (
-    <Scene id="contact" heightVh={200} className="flex items-center pt-16">
+    // sezione normale, non pinnata: contatti e form insieme sono più alti dello
+    // schermo (sui telefoni quasi il doppio) e devono poter scorrere
+    <section id="contact" data-arrive="0" className="relative flex min-h-screen items-center pt-24 pb-16 md:pb-24">
       <div className="container mx-auto px-4 md:px-6 w-full">
         <div className="max-w-4xl mx-auto">
-          <div data-from="0.04" data-to="2" className="text-center mb-12">
+          <Reveal className="text-center mb-12">
             <div className="flex justify-center mb-4"><Eyebrow>Contatto</Eyebrow></div>
             <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">Apriamo un canale</h2>
             <p className="text-muted-foreground text-lg">
               Ti rispondo con una proposta concreta e comprensibile, senza tecnicismi inutili.
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <Card data-from="0.1" data-to="2" className="border-border/80 bg-background/25 backdrop-blur-md">
+            <Reveal>
+            <Card className="h-full border-border/80 bg-background/25 backdrop-blur-md">
               <CardContent className="p-8 space-y-8">
                 <div>
                   <h3 className="text-lg font-bold mb-4">Contatti</h3>
@@ -52,11 +55,14 @@ export function Contact() {
                 </div>
               </CardContent>
             </Card>
+            </Reveal>
 
-            <LeadForm source="home" data-from="0.16" data-to="2" />
+            <Reveal delay={0.1}>
+              <LeadForm source="home" />
+            </Reveal>
           </div>
         </div>
       </div>
-    </Scene>
+    </section>
   );
 }

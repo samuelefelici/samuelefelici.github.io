@@ -13,7 +13,7 @@ const STEP_FROM = [0.12, 0.23, 0.34, 0.45, 0.56];
 
 export function Process() {
   return (
-    <Scene id="process" heightVh={300}>
+    <Scene id="process" heightVh={300} arrive={0.64}>
       <div className="absolute inset-0 flex items-center pt-16">
         <div className="container mx-auto px-4 md:px-6">
           <div data-from="0.03" data-to="0.9">

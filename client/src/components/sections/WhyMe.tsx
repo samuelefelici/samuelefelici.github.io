@@ -10,7 +10,7 @@ export function WhyMe() {
   ];
 
   return (
-    <Scene id="about" heightVh={260}>
+    <Scene id="about" heightVh={260} arrive={0.1}>
       {/* fase 1: chi sono */}
       <div data-from="0.03" data-to="0.46" className="absolute inset-0 flex items-center pt-16">
         <div className="container mx-auto px-4 md:px-6">

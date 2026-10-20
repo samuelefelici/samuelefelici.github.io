@@ -41,8 +41,11 @@ function App() {
         e.preventDefault();
         // data-focus: id dell'elemento a cui dare il focus ad arrivo avvenuto
         const focusId = (el as HTMLElement).dataset.focus;
+        // data-arrive: le scene pinnate si raggiungono al punto in cui i
+        // contenuti sono già visibili (frazione della loro altezza)
+        const arrive = (el as HTMLElement).dataset.arrive;
         lenis.scrollTo(el as HTMLElement, {
-          offset: -70,
+          offset: arrive != null ? parseFloat(arrive) * (el as HTMLElement).offsetHeight : -70,
           onComplete: () => {
             if (focusId) document.getElementById(focusId)?.focus({ preventScroll: true });
           },

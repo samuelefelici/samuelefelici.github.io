@@ -43,7 +43,7 @@ export function Services() {
   ];
 
   return (
-    <Scene id="services" heightVh={300} fade={0.04}>
+    <Scene id="services" heightVh={300} fade={0.04} arrive={0.08}>
       {/* fase 1: banner di presentazione */}
       <div data-from="0.02" data-to="0.22" className="absolute inset-0 flex items-center pt-16">
         <div className="container mx-auto px-4 md:px-6">

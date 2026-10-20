@@ -180,7 +180,7 @@ export function Projects() {
 
   return (
     <>
-      <Scene id="cerbero" heightVh={HEIGHT_VH} rail={rail} fade={FADE}>
+      <Scene id="cerbero" heightVh={HEIGHT_VH} rail={rail} fade={FADE} arrive={0.02}>
         {/* fase 1: intro con l'indice dei progetti */}
         <div data-from={INTRO[0]} data-to={INTRO[1]} className="absolute inset-0 flex items-center pt-16">
           <div className="container mx-auto px-4 text-center md:px-6">
