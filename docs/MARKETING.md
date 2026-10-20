@@ -11,8 +11,8 @@ Gli ID si incollano tutti in un solo posto: `client/src/lib/tracking.ts`.
 | Landing `/gestionali/`, `/tpl/`, `/siti/` | sito (GitHub Pages) | una pagina per pubblico, leggera, un solo obiettivo: il form | pronte |
 | Umami | Coolify (`stats.samuelefelici.com`) | statistiche anonime senza cookie e senza banner: visite, UTM, eventi, funnel | attivo |
 | Meta Pixel | Meta | Lead, Contact, ViewContent, Schedule; pubblici personalizzati | attivo (`1665173445302537`) |
-| Meta Conversions API | n8n su Coolify | il Lead arriva a Meta anche quando il browser blocca il Pixel; deduplicato con `event_id` | da attivare |
-| Avviso a ogni richiesta | n8n su Coolify → Telegram | sai subito che è arrivato un contatto (l'email di Web3Forms resta) | da attivare |
+| Meta Conversions API | n8n su Coolify | il Lead arriva a Meta anche quando il browser blocca il Pixel; deduplicato con `event_id` | attivo |
+| Avviso a ogni richiesta | n8n su Coolify → Telegram | sai subito che è arrivato un contatto (l'email di Web3Forms resta) | attivo |
 | Google Analytics 4 | Google | con consenso | attivo (`G-5YHCDZF5SE`) |
 | Google Ads | Google | conversione "Lead" con Consent Mode v2 | mancano ID e etichetta |
 | LinkedIn Insight Tag | LinkedIn | pubblico B2B (aziende TPL, PMI), conversione "Lead" | mancano gli ID |
