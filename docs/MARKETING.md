@@ -17,7 +17,7 @@ Gli ID si incollano tutti in un solo posto: `client/src/lib/tracking.ts`.
 | Google Ads | Google | conversione "Lead" con Consent Mode v2 | mancano ID e etichetta |
 | LinkedIn Insight Tag | LinkedIn | pubblico B2B (aziende TPL, PMI), conversione "Lead" | mancano gli ID |
 | Prenotazione call | Cal.com (su Coolify o cloud) | "Prenota una call" apre il calendario invece del form | manca `bookingUrl` |
-| Pulsante WhatsApp | sito | contatto in un tocco, contato come evento `contact` | manca il numero |
+| Pulsante WhatsApp | sito | contatto in un tocco, contato come evento `contact` | attivo (+39 334 126 5750) |
 | Video leggero | sito | sotto i 1024 px: 5–9 MB invece di 39–67 MB | attivo |
 | Kit creatività | `marketing/creatives/` | immagini 1:1, 4:5 e 9:16 e testi per ogni campagna | pronto |
 
