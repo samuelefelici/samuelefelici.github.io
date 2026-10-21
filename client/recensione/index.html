@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
+    <title>Lascia una recensione | Samuele Felici</title>
+    <meta name="description" content="Racconta com'è andato il lavoro fatto insieme." />
+    <!-- pagina raggiungibile solo dal link di invito: fuori dai motori di ricerca -->
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("theme") === "dark")
+            document.documentElement.classList.add("dark");
+        } catch (e) {
+          /* localStorage non disponibile: resta chiaro */
+        }
+      })();
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/recensione.tsx"></script>
+  </body>
+</html>

@@ -62,6 +62,16 @@ export function PrivacyDialog({ trigger }: { trigger: ReactNode }) {
           </div>
 
           <div>
+            <h4 className="font-semibold text-foreground mb-1">Recensioni</h4>
+            <p>
+              I clienti con cui ho lavorato possono lasciare una recensione da un link personale. Con il loro
+              consenso pubblico sul sito nome, ruolo e azienda (se indicati), voto e testo; la recensione passa
+              dallo stesso sistema di automazione (n8n) e viene salvata nell'archivio del sito su GitHub. Puoi
+              chiederne la modifica o la rimozione in qualsiasi momento scrivendo a info@samuelefelici.com.
+            </p>
+          </div>
+
+          <div>
             <h4 className="font-semibold text-foreground mb-1">Conservazione</h4>
             <p>
               I dati sono conservati per il tempo necessario a gestire la tua richiesta e gli eventuali

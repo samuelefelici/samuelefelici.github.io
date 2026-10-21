@@ -26,6 +26,9 @@ export const TRACKING = {
   // numero WhatsApp in formato internazionale senza "+" (es. "393341265750"):
   // se c'è, compare il pulsante WhatsApp in basso a destra
   whatsapp: "393341265750",
+  // webhook n8n delle recensioni: riceve il form di /recensione/ (link su
+  // invito) e pubblica la recensione nel sito — vedi docs/MARKETING.md
+  reviewsWebhook: "https://n8n.samuelefelici.com/webhook/recensione",
 };
 
 /** Link per "Prenota una call": la pagina di prenotazione se c'è, altrimenti il form. */
