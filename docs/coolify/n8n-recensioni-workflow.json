@@ -1,0 +1,657 @@
+{
+  "name": "Recensioni sito",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "recensione",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "https://samuelefelici.com,https://www.samuelefelici.com"
+        }
+      },
+      "name": "Webhook recensione",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "5b1f3a2e-7c41-4d8e-9a60-2f3c9b7e1d01"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pulisce i campi del form e li controlla prima di qualunque altra cosa.\nconst b = $input.first().json.body || {};\nconst s = (v, max) => String(v ?? \"\").replace(/\\s+/g, \" \").trim().slice(0, max);\nconst r = {\n  c: s(b.c, 80),\n  p: s(b.p, 80),\n  t: s(b.t, 64).toLowerCase(),\n  nome: s(b.nome, 80),\n  ruolo: s(b.ruolo, 60),\n  azienda: s(b.azienda, 80),\n  voto: Math.round(Number(b.voto)),\n  // il testo tiene gli a capo, ma non più di una riga vuota di fila\n  testo: String(b.testo ?? \"\").replace(/\\r/g, \"\").replace(/[ \\t]+/g, \" \").replace(/ ?\\n ?/g, \"\\n\").replace(/\\n{3,}/g, \"\\n\\n\").trim().slice(0, 800),\n};\nlet errore = \"\";\nif (!r.c || !r.p || !/^[0-9a-f]{32}$/.test(r.t)) errore = \"Il link di invito non è completo.\";\nelse if (!r.nome) errore = \"Manca il nome.\";\nelse if (!(r.voto >= 1 && r.voto <= 5)) errore = \"Scegli un voto da 1 a 5 stelle.\";\nelse if (r.testo.length < 30) errore = \"La recensione deve avere almeno 30 caratteri.\";\nreturn [{ json: { ...r, errore } }];"
+      },
+      "name": "Controlla dati",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "c-12-440",
+              "leftValue": "={{ $json.errore }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "Dati validi?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: false, errore: $json.errore }) }}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "name": "Dati non validi",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        660,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "action": "hmac",
+        "type": "SHA256",
+        "value": "={{ $json.c + '|' + $json.p }}",
+        "dataPropertyName": "firma",
+        "secret": "={{ $env.RECENSIONI_SECRET }}",
+        "encoding": "hex"
+      },
+      "name": "Firma invito",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        660,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "c-14-880",
+              "leftValue": "={{ $json.firma.slice(0, 32) === $json.t }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "Invito valido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        880,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: false, errore: \"Questo link di invito non è valido: chiedimi un link nuovo.\" }) }}",
+        "options": {
+          "responseCode": 403
+        }
+      },
+      "name": "Invito non valido",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1100,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/samuelefelici/samuelefelici.github.io/contents/client/src/data/recensioni.json?ref=main",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.GITHUB_TOKEN_RECENSIONI }}"
+            },
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "X-GitHub-Api-Version",
+              "value": "2022-11-28"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Leggi recensioni",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Legge il file delle recensioni da GitHub, controlla che l'invito non sia\n// già stato usato e aggiunge la nuova recensione in cima.\nconst B64 = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/\";\nconst toBytes = (str) => Array.from(unescape(encodeURIComponent(str)), (ch) => ch.charCodeAt(0));\nconst fromBytes = (bytes) => {\n  let bin = \"\";\n  for (let i = 0; i < bytes.length; i += 8192) bin += String.fromCharCode(...bytes.slice(i, i + 8192));\n  return decodeURIComponent(escape(bin));\n};\nfunction b64encode(str) {\n  const b = toBytes(str);\n  let out = \"\";\n  for (let i = 0; i < b.length; i += 3) {\n    const n = (b[i] << 16) | ((b[i + 1] ?? 0) << 8) | (b[i + 2] ?? 0);\n    out += B64[(n >> 18) & 63] + B64[(n >> 12) & 63];\n    out += i + 1 < b.length ? B64[(n >> 6) & 63] : \"=\";\n    out += i + 2 < b.length ? B64[n & 63] : \"=\";\n  }\n  return out;\n}\nfunction b64decode(s) {\n  const clean = s.replace(/[^A-Za-z0-9+/]/g, \"\");\n  const bytes = [];\n  for (let i = 0; i < clean.length; i += 4) {\n    const n = (B64.indexOf(clean[i]) << 18) | (B64.indexOf(clean[i + 1]) << 12) |\n      ((B64.indexOf(clean[i + 2]) & 63) << 6) | (B64.indexOf(clean[i + 3]) & 63);\n    bytes.push((n >> 16) & 255);\n    if (clean[i + 2] !== undefined) bytes.push((n >> 8) & 255);\n    if (clean[i + 3] !== undefined) bytes.push(n & 255);\n  }\n  return fromBytes(bytes);\n}\n\nconst gh = $input.first().json;\nconst r = $(\"Invito valido?\").first().json;\nconst lista = JSON.parse(b64decode(gh.content || \"\") || \"[]\");\nconst id = r.t.slice(0, 12);\nif (lista.some((x) => x.id === id)) return [{ json: { usato: true } }];\n\nconst oggi = new Date().toLocaleDateString(\"sv-SE\", { timeZone: \"Europe/Rome\" });\nconst nuova = { id, nome: r.nome, ruolo: r.ruolo, azienda: r.azienda, progetto: r.p, voto: r.voto, testo: r.testo, data: oggi };\nlista.unshift(nuova);\nreturn [{\n  json: {\n    usato: false,\n    recensione: nuova,\n    github: {\n      message: `Recensione di ${r.nome} (${r.p})`,\n      content: b64encode(JSON.stringify(lista, null, 2) + \"\\n\"),\n      sha: gh.sha,\n      branch: \"main\",\n    },\n  },\n}];"
+      },
+      "name": "Aggiungi recensione",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "c-17-1540",
+              "leftValue": "={{ $json.usato }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "Invito già usato?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: false, errore: \"Con questo link è già stata lasciata una recensione. Per modificarla scrivimi a info@samuelefelici.com.\" }) }}",
+        "options": {
+          "responseCode": 409
+        }
+      },
+      "name": "Già usato",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1760,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.github.com/repos/samuelefelici/samuelefelici.github.io/contents/client/src/data/recensioni.json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.GITHUB_TOKEN_RECENSIONI }}"
+            },
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "X-GitHub-Api-Version",
+              "value": "2022-11-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.github) }}",
+        "options": {}
+      },
+      "name": "Pubblica sul sito",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1760,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: true }) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "name": "Fatto",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1980,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "text": "=⭐ Nuova recensione pubblicata ({{ $('Aggiungi recensione').first().json.recensione.voto }}/5)\n👤 {{ $('Aggiungi recensione').first().json.recensione.nome }} · {{ $('Aggiungi recensione').first().json.recensione.progetto }}\n💬 {{ $('Aggiungi recensione').first().json.recensione.testo }}\n\nPer toglierla: https://github.com/samuelefelici/samuelefelici.github.io/edit/main/client/src/data/recensioni.json",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "name": "Avviso Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1980,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "name": "Messaggio al bot",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        500
+      ],
+      "webhookId": "8d2c6e4a-1b5f-4c3e-8f7a-6e9d0c2b4a12"
+    },
+    {
+      "parameters": {
+        "jsCode": "// \"/invito Mario Rossi | Sipario\" scritto al bot Telegram → dati dell'invito.\nconst m = $input.first().json.message || {};\nconst testo = String(m.text || \"\").replace(/^\\/invito(@\\S+)?\\s*/i, \"\");\nconst [c, p] = testo.split(\"|\").map((x) => x.trim());\nconst mio = String(m.chat?.id) === String($env.TELEGRAM_CHAT_ID);\nreturn [{ json: { mio, c: c || \"\", p: p || \"\", ok: mio && Boolean(c && p) } }];"
+      },
+      "name": "Leggi comando",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "c-15-440",
+              "leftValue": "={{ $json.ok }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "Comando valido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        440,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "action": "hmac",
+        "type": "SHA256",
+        "value": "={{ $json.c + '|' + $json.p }}",
+        "dataPropertyName": "firma",
+        "secret": "={{ $env.RECENSIONI_SECRET }}",
+        "encoding": "hex"
+      },
+      "name": "Firma link",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        660,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const SITO = \"https://samuelefelici.com\";\nconst d = $input.first().json;\nconst t = String(d.firma).slice(0, 32);\nconst link = `${SITO}/recensione/?c=${encodeURIComponent(d.c)}&p=${encodeURIComponent(d.p)}&t=${t}`;\nreturn [{ json: { ...d, link } }];"
+      },
+      "name": "Crea link",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "text": "=Link per la recensione di {{ $json.c }} ({{ $json.p }}). Inoltralo al cliente:\n\nCiao {{ $json.c.split(' ')[0] }}, grazie ancora per aver lavorato con me! Se ti va, mi lasci due righe su com'è andata? Ci vuole un minuto: {{ $json.link }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true
+        }
+      },
+      "name": "Manda il link",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1100,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "c-17-660",
+              "leftValue": "={{ $json.mio }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "È il mio account?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        660,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "text": "Per creare un invito scrivi:\n/invito Nome Cliente | Progetto\n\nes. /invito Mario Rossi | Sipario",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "name": "Spiega il comando",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        600
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook recensione": {
+      "main": [
+        [
+          {
+            "node": "Controlla dati",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Controlla dati": {
+      "main": [
+        [
+          {
+            "node": "Dati validi?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dati validi?": {
+      "main": [
+        [
+          {
+            "node": "Firma invito",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dati non validi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Firma invito": {
+      "main": [
+        [
+          {
+            "node": "Invito valido?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Invito valido?": {
+      "main": [
+        [
+          {
+            "node": "Leggi recensioni",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Invito non valido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leggi recensioni": {
+      "main": [
+        [
+          {
+            "node": "Aggiungi recensione",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggiungi recensione": {
+      "main": [
+        [
+          {
+            "node": "Invito già usato?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Invito già usato?": {
+      "main": [
+        [
+          {
+            "node": "Già usato",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Pubblica sul sito",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pubblica sul sito": {
+      "main": [
+        [
+          {
+            "node": "Fatto",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Avviso Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Messaggio al bot": {
+      "main": [
+        [
+          {
+            "node": "Leggi comando",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leggi comando": {
+      "main": [
+        [
+          {
+            "node": "Comando valido?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Comando valido?": {
+      "main": [
+        [
+          {
+            "node": "Firma link",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "È il mio account?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Firma link": {
+      "main": [
+        [
+          {
+            "node": "Crea link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crea link": {
+      "main": [
+        [
+          {
+            "node": "Manda il link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "È il mio account?": {
+      "main": [
+        [
+          {
+            "node": "Spiega il comando",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

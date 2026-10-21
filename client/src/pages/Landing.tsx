@@ -8,6 +8,7 @@ import { LeadForm } from "@/components/LeadForm";
 import { ConsentBanner } from "@/components/ConsentBanner";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Footer } from "@/components/sections/Footer";
+import { Reviews } from "@/components/sections/Reviews";
 import { BrowserFrame, PhoneFrame, ProjectGallery, ProjectLogo, brandVars } from "@/components/ProjectGallery";
 import { featured, others, shotSrc, shotSrcSet, type Project } from "@/components/sections/projects-data";
 import { callLink, track } from "@/lib/tracking";
@@ -228,6 +229,8 @@ export function Landing({ id }: { id: LandingId }) {
             </div>
           </div>
         </section>
+
+        <Reviews max={3} className="!py-12 md:!py-16" />
 
         {/* metodo */}
         <section className="container mx-auto px-4 py-12 md:px-6 md:py-16">

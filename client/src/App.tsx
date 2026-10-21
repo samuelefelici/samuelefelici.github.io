@@ -7,6 +7,7 @@ import { Projects } from "./components/sections/Projects";
 import { WhyMe } from "./components/sections/WhyMe";
 import { Timeline } from "./components/sections/Timeline";
 import { Process } from "./components/sections/Process";
+import { Reviews } from "./components/sections/Reviews";
 import { Contact } from "./components/sections/Contact";
 import { Footer } from "./components/sections/Footer";
 import { ConsentBanner } from "./components/ConsentBanner";
@@ -80,6 +81,7 @@ function App() {
           <WhyMe />
           <Timeline />
           <Process />
+          <Reviews />
           <Contact />
         </main>
         <Footer />

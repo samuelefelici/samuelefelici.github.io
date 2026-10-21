@@ -19,6 +19,7 @@ Gli ID si incollano tutti in un solo posto: `client/src/lib/tracking.ts`.
 | Prenotazione call | Cal.com cloud (`cal.com/samuelefelici/call-conoscitiva`) | "Prenota una call" apre il calendario invece del form | attivo |
 | Pulsante WhatsApp | sito | contatto in un tocco, contato come evento `contact` | attivo (+39 334 126 5750) |
 | Video leggero | sito | sotto i 1024 px: 5–9 MB invece di 39–67 MB | attivo |
+| Recensioni dei clienti | sito + n8n su Coolify | solo chi riceve un link di invito può scriverla; si pubblica da sola | da attivare (sezione 3b) |
 | Kit creatività | `marketing/creatives/` | immagini 1:1, 4:5 e 9:16 e testi per ogni campagna | pronto |
 
 ## Eventi misurati
@@ -100,6 +101,51 @@ Crea un evento "Call conoscitiva, 30 minuti", collega il calendario e
 incolla il link in `TRACKING.bookingUrl`: "Prenota una call" nel menu e
 nelle landing aprirà il calendario, e ogni clic conta come `booking_click`
 (`Schedule` per Meta).
+
+## 3b. Recensioni dei clienti
+
+A lavoro finito mandi al cliente un link personale; lui compila il form su
+`samuelefelici.com/recensione/` e la recensione compare da sola sul sito
+(home, prima dei Contatti, e nelle tre landing). Finché non ce n'è nessuna la
+sezione non si vede.
+
+Come funziona: il link contiene nome del cliente, progetto e una firma
+(HMAC) che solo n8n sa calcolare, quindi nessuno può inventarsene uno; ogni
+link vale una recensione sola. n8n aggiunge la recensione a
+`client/src/data/recensioni.json` con un commit su GitHub, e il commit fa
+ripartire la pubblicazione del sito (un paio di minuti).
+
+Attivazione (una volta):
+
+1. **Token GitHub**: GitHub → Settings → Developer settings → **Fine-grained
+   tokens** → Generate new token. Repository access: solo
+   `samuelefelici.github.io`; Permissions → Repository → **Contents: Read and
+   write**. Scadenza a piacere (alla scadenza va rigenerato).
+2. Coolify → servizio n8n → variabili d'ambiente:
+   - `GITHUB_TOKEN_RECENSIONI=` il token del punto 1
+   - `RECENSIONI_SECRET=` una stringa casuale lunga (per esempio da
+     `openssl rand -hex 32`); se la cambi, i link già mandati smettono di valere
+   Poi **Restart** del servizio.
+3. n8n → **Import from file** → `docs/coolify/n8n-recensioni-workflow.json`.
+   Nei nodi Telegram (*Messaggio al bot*, *Avviso Telegram*, *Manda il link*,
+   *Spiega il comando*) scegli la credenziale del bot; in ⋯ → Settings →
+   Error Workflow scegli "Errori flussi → Telegram"; **Publish/Activate**.
+
+Usarlo: scrivi al tuo bot Telegram
+
+```
+/invito Mario Rossi | Sipario
+```
+
+e ti risponde con un messaggio già pronto da inoltrare al cliente (WhatsApp o
+email). Quando la recensione arriva ricevi un avviso su Telegram.
+
+Togliere o correggere una recensione: modifica
+`client/src/data/recensioni.json` su GitHub (il link è nell'avviso
+Telegram) e salva; il sito si aggiorna da solo.
+
+Il codice dei nodi sta in `script/n8n-recensioni.mjs`: se lo modifichi,
+rigenera il JSON con `node script/n8n-recensioni.mjs`.
 
 ## 4. Piattaforme pubblicitarie
 

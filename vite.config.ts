@@ -39,13 +39,15 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
-    // home + landing delle campagne (/gestionali/, /tpl/, /siti/)
+    // home + landing delle campagne (/gestionali/, /tpl/, /siti/) + /recensione/
     rollupOptions: {
       input: {
         main: path.resolve(import.meta.dirname, "client", "index.html"),
         gestionali: path.resolve(import.meta.dirname, "client", "gestionali", "index.html"),
         tpl: path.resolve(import.meta.dirname, "client", "tpl", "index.html"),
         siti: path.resolve(import.meta.dirname, "client", "siti", "index.html"),
+        // pagina della recensione, raggiungibile solo dal link di invito
+        recensione: path.resolve(import.meta.dirname, "client", "recensione", "index.html"),
       },
     },
   },
